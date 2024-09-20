@@ -66,7 +66,7 @@ class AvatarWidget extends StatelessWidget {
                 child: Center(
                   child: Icon(
                     Icons.face_3,
-                    size: width * 0.9,
+                    size: width * 0.8,
                     color: const Color(0xfff3a0a9),
                   ),
                 ),

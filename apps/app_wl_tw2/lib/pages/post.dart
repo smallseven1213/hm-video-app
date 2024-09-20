@@ -154,7 +154,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
               ),
             ),
           ),
-          bottomNavigationBar: buildCommentInput(),
+          bottomNavigationBar: UIBottomSafeArea(child: buildCommentInput()),
         );
       },
     );

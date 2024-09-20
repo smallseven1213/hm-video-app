@@ -3,6 +3,8 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/show_confirm_dialog.dart';
+import 'package:shared/widgets/avatar.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 class CommentInput extends StatefulWidget {
   final Function(String) onSend;
@@ -55,8 +57,15 @@ class _CommentInputState extends State<CommentInput> {
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
       child: Row(
         children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/images/play_count.webp'),
+          UserInfoConsumer(
+            child: (info, isVIP, isGuest, isLoading) {
+              return AvatarWidget(
+                photoSid: info.avatar,
+                width: 40,
+                height: 40,
+                backgroundColor: Colors.transparent,
+              );
+            },
           ),
           const SizedBox(width: 8),
           Expanded(
