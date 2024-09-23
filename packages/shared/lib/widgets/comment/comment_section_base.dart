@@ -14,6 +14,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   int get topicId;
   int get topicType;
   bool? get autoScrollToBottom => false;
+  bool? get showNoMoreComments => false;
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
     return CommentList(
       topicId: topicId,
       topicType: TopicType.values[topicType],
+      showNoMoreComments: showNoMoreComments ?? false,
     );
   }
 

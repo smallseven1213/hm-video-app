@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared/localization/shared_localization_delegate.dart';
+import 'package:shared/models/comment.dart';
+import 'package:shared/modules/comment/comment_consumer.dart';
+import 'package:shared/widgets/avatar.dart';
+
+import 'package:flutter/material.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/modules/comment/comment_consumer.dart';
 import 'package:shared/widgets/avatar.dart';
@@ -8,26 +14,42 @@ import 'no_data.dart';
 class CommentList extends StatelessWidget {
   final int topicId;
   final TopicType topicType;
+  final bool showNoMoreComments;
 
   const CommentList({
     super.key,
     required this.topicId,
     required this.topicType,
+    this.showNoMoreComments = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return CommentConsumer(
       topicId: topicId,
       topicType: topicType.index,
       child: (List<Comment> comments) {
-        return ListView.builder(
-          shrinkWrap: true, // 保證根據內容大小自適應
-          physics: const NeverScrollableScrollPhysics(), // 禁止內部滾動，讓外部處理滾動
-          itemCount: comments.length,
-          itemBuilder: (context, index) {
-            return CommentItem(item: comments[index]);
-          },
+        return Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: comments.length,
+              itemBuilder: (context, index) {
+                return CommentItem(item: comments[index]);
+              },
+            ),
+            if (comments.length < 5 && showNoMoreComments)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  localizations.translate('nothing_more'),
+                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+              ),
+          ],
         );
       },
     );

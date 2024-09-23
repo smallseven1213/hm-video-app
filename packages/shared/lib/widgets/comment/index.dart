@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/comment/comment_section_base.dart';
+import 'package:shared/widgets/comment/list.dart';
 
 class CommentSection extends StatefulWidget {
   final int topicId;
@@ -24,6 +25,9 @@ class _CommentSectionState extends CommentSectionBase<CommentSection> {
 
   @override
   int get topicType => widget.topicType.index;
+
+  @override
+  bool get showNoMoreComments => true;
 
   @override
   Widget build(BuildContext context) {
