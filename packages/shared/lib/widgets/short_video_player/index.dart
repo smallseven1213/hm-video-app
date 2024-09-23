@@ -82,7 +82,7 @@ class ShortCardState extends State<ShortCard> {
 
         double getAspectRatio() {
           if (widget.shortData.aspectRatio == null ||
-              widget.shortData.aspectRatio == '0.00') {
+              widget.shortData.aspectRatio == 0) {
             Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
             return videoSize.width /
                 (videoSize.height != 0.0 ? videoSize.height : 1);
