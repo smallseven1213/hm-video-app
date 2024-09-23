@@ -17,6 +17,7 @@ enum VideoType {
 class Vod {
   final int id;
   final String title;
+  final double? aspectRatio;
   final int? subScript;
   int? timeLength;
   final String? coverVertical;
@@ -71,6 +72,7 @@ class Vod {
   Vod(
     this.id,
     this.title, {
+    this.aspectRatio = 0.00,
     this.subScript = 0,
     this.timeLength = 0,
     this.coverHorizontal = '',
@@ -179,6 +181,7 @@ class Vod {
       return Vod(
         json['id'] ?? 0,
         json['title'] ?? '',
+        aspectRatio: double.parse(json['aspectRatio']),
         subScript: json['subScript'] ?? 0,
         timeLength: json['timeLength'] ?? 0,
         coverVertical: json['coverVertical'] ?? '',

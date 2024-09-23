@@ -79,10 +79,21 @@ class ShortCardState extends State<ShortCard> {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
         }
+
+        double getAspectRatio() {
+          if (widget.shortData.aspectRatio == null ||
+              widget.shortData.aspectRatio == '0.00') {
+            Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
+            return videoSize.width /
+                (videoSize.height != 0.0 ? videoSize.height : 1);
+          } else {
+            return widget.shortData.aspectRatio!;
+          }
+        }
+
+        double aspectRatio = getAspectRatio();
+
         if (uiController.isFullscreen.value == true) {
-          Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
-          var aspectRatio = videoSize.width /
-              (videoSize.height != 0.0 ? videoSize.height : 1);
           return Stack(
             children: [
               Center(
