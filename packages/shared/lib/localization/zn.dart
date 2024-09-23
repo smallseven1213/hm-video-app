@@ -85,4 +85,5 @@ const Map<String, String> sharedZhCnStrings = {
   "login": "登录",
   "send": "提交",
   "nothing_here": "这里什么都没有",
+  "nothing_more": "下面没有更多了",
 };

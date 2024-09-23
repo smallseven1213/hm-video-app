@@ -86,4 +86,5 @@ const Map<String, String> sharedJaJpStrings = {
   "login": "ログイン",
   "send": "送信",
   "nothing_here": "ここには何もありません",
+  "nothing_more": "もうない",
 };

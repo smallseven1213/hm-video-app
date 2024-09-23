@@ -93,4 +93,5 @@ const Map<String, String> sharedEnUsStrings = {
   "login": "Log in",
   "send": "Submit",
   "nothing_here": "There's nothing here",
+  "nothing_more": "No more for now",
 };

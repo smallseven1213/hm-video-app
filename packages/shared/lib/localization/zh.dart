@@ -85,4 +85,5 @@ const Map<String, String> sharedZhTwStrings = {
   "login": "登入",
   "send": "送出",
   "nothing_here": "這裡什麼都沒有",
+  "nothing_more": "下面沒有更多了",
 };

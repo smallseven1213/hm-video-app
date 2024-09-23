@@ -92,4 +92,5 @@ const Map<String, String> sharedViVnStrings = {
   "login": "Đăng nhập",
   "send": "Gửi",
   "nothing_here": "Ở đây không có gì",
+  "nothing_more": "không còn nữa",
 };
