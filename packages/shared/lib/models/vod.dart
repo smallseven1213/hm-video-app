@@ -177,7 +177,6 @@ class Vod {
   }
 
   factory Vod.fromJson(Map<String, dynamic> json) {
-    print(json);
     try {
       return Vod(
         json['id'] ?? 0,
