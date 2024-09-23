@@ -34,26 +34,30 @@ class PostStatsWidget extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildStatItem(Icons.remove_red_eye_outlined, viewCount),
-          _buildLikeItem(),
-          _buildCommentItem(context),
+          Expanded(
+              child: _buildStatItem(Icons.remove_red_eye_outlined, viewCount)),
+          Expanded(child: _buildLikeItem()),
+          Expanded(child: _buildCommentItem(context)),
         ],
       ),
     );
   }
 
   Widget _buildStatItem(IconData icon, int count) {
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: AppColors.contentText),
-        const SizedBox(width: 10),
-        Text(
-          count.toString(),
-          style: const TextStyle(fontSize: 14, color: AppColors.contentText),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 20, color: AppColors.contentText),
+          const SizedBox(width: 10),
+          Text(
+            count.toString(),
+            style: const TextStyle(fontSize: 14, color: AppColors.contentText),
+          ),
+        ],
+      ),
     );
   }
 
@@ -67,24 +71,28 @@ class PostStatsWidget extends StatelessWidget {
       builder: (controller) {
         bool isLiked = controller.isPostLiked(postId!);
         int currentLikeCount = controller.getLikeCount(postId!, likeCount);
-        return GestureDetector(
+        return InkWell(
           onTap: isInteractive == true
               ? () => controller.toggleLike(postId!, likeCount)
               : null,
-          child: Row(
-            children: [
-              Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
-                size: 20,
-                color: isLiked ? Colors.red : AppColors.contentText,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                currentLikeCount.toString(),
-                style:
-                    const TextStyle(fontSize: 14, color: AppColors.contentText),
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  size: 20,
+                  color: isLiked ? Colors.red : AppColors.contentText,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  currentLikeCount.toString(),
+                  style: const TextStyle(
+                      fontSize: 14, color: AppColors.contentText),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -92,24 +100,20 @@ class PostStatsWidget extends StatelessWidget {
   }
 
   Widget _buildCommentItem(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _showCommentBottomSheet(context),
+    return InkWell(
+      onTap: () => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.black.withOpacity(0.5),
+        builder: (BuildContext context) {
+          return CommentBottomSheet(
+            postId: postId!,
+          );
+        },
+      ),
       child: _buildStatItem(Icons.chat_bubble_outline_rounded, replyCount),
-    );
-  }
-
-  void _showCommentBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true, // 啟用點擊外部區域自動關閉
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.black.withOpacity(0.5), // 可選：設置點擊外部的遮罩顏色和透明度
-      builder: (BuildContext context) {
-        return CommentBottomSheet(
-          postId: postId!,
-        ); // 保持原本的 CommentBottomSheet
-      },
     );
   }
 }

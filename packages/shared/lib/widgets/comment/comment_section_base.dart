@@ -13,7 +13,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   // 子類別需實現這些抽象方法
   int get topicId;
   int get topicType;
-  bool? get autoScrollOnFocus => false;
+  bool? get autoScrollToBottom => false;
 
   @override
   void initState() {
@@ -65,13 +65,15 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
     return CommentInput(
       onSend: (String text) async {
         await _commentController.createComment(text);
-        _scrollToBottom();
+        if (autoScrollToBottom == true) {
+          _scrollToBottom();
+        }
       },
       onFocusChange: (bool hasFocus) {
         setState(() {
           _isKeyboardVisible = hasFocus;
         });
-        if (hasFocus && autoScrollOnFocus == true) {
+        if (hasFocus && autoScrollToBottom == true) {
           _scrollToBottom();
         }
       },

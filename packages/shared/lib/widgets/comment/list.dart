@@ -45,7 +45,7 @@ class CommentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: AvatarWidget(
-        photoSid: item.userAvatar,
+        photoSid: item.avatar,
         width: 36,
         height: 36,
         backgroundColor: Colors.transparent,

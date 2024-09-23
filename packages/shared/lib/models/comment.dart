@@ -10,18 +10,18 @@ class Comment {
   final int id;
   final int topicType;
   final int topicId;
-  final int userUid;
+  final int uid;
   final String userName;
-  final String userAvatar;
+  final String avatar;
   final String content;
 
   Comment({
     required this.id,
     required this.topicType,
     required this.topicId,
-    required this.userUid,
+    required this.uid,
     required this.userName,
-    required this.userAvatar,
+    required this.avatar,
     required this.content,
   });
 
@@ -30,9 +30,9 @@ class Comment {
       id: json['id'] ?? 0,
       topicType: json['topicType'] ?? 0,
       topicId: json['topicId'] ?? 0,
-      userUid: json['userUid'] ?? 0,
+      uid: json['uid'] ?? 0,
       userName: json['userName'] ?? '',
-      userAvatar: json['userAvatar'] ?? '',
+      avatar: json['avatar'] ?? '',
       content: json['content'] ?? '',
     );
   }
@@ -42,9 +42,9 @@ class Comment {
       'id': id,
       'topicType': topicType,
       'topicId': topicId,
-      'userUid': userUid,
+      'uid': uid,
       'userName': userName,
-      'userAvatar': userAvatar,
+      'avatar': avatar,
       'content': content,
     };
   }
