@@ -80,4 +80,9 @@ const Map<String, String> sharedZhTwStrings = {
   "view_details": "查看詳情",
   "want_to_watch": "看不過癮，",
   "unlock_now": "立即解鎖",
+  "say_something": "說些什麼...",
+  "please_login": "請先登入",
+  "login": "登入",
+  "send": "送出",
+  "nothing_here": "這裡什麼都沒有",
 };

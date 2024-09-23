@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared/localization/shared_localization_delegate.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
       child: Center(
@@ -17,10 +20,8 @@ class NoDataWidget extends StatelessWidget {
               height: 106,
             ),
             const SizedBox(height: 18),
-            Text('這裡什麼都沒有',
-                style: TextStyle(
-                  color: Colors.grey,
-                ))
+            Text(localizations.translate('nothing_here'),
+                style: const TextStyle(color: Colors.grey))
           ],
         ),
       ),

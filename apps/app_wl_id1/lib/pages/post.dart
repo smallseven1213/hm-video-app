@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/comment.dart';
 import 'package:shared/models/post_detail.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -12,34 +13,47 @@ import 'package:shared/widgets/posts/serial_list.dart';
 import 'package:shared/widgets/posts/recommend_list.dart';
 import 'package:shared/widgets/posts/file_list.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
+import 'package:shared/widgets/comment/comment_section_base.dart';
 
 import '../screens/nodata/index.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/button.dart';
 import '../widgets/custom_app_bar.dart';
 
-// 定義顏色配置
+// Define color configurations
 class AppColors {
   static const contentText = Colors.white;
   static const darkText = Color(0xff919bb3);
 }
 
-class PostPage extends StatelessWidget {
+class PostPage extends StatefulWidget {
   final int id;
   final bool? isDarkMode;
-  final bool? useGameDeposit;
 
   const PostPage({
     Key? key,
     required this.id,
     this.isDarkMode = true,
-    this.useGameDeposit = true,
   }) : super(key: key);
+
+  @override
+  _PostPageState createState() => _PostPageState();
+}
+
+class _PostPageState extends CommentSectionBase<PostPage> {
+  @override
+  int get topicId => widget.id;
+
+  @override
+  int get topicType => TopicType.post.index;
+
+  @override
+  bool get autoScrollOnFocus => true;
 
   @override
   Widget build(BuildContext context) {
     return PostConsumer(
-      id: id,
+      id: widget.id,
       child: (PostDetail? postDetail, {bool? isError}) {
         if (postDetail == null || isError == true) {
           return const NoDataScreen();
@@ -82,55 +96,61 @@ class PostPage extends StatelessWidget {
             ],
           ),
           body: SingleChildScrollView(
+            controller: scrollController,
             child: UIBottomSafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      postDetail.post.title,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.contentText,
-                      ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          postDetail.post.title,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.contentText,
+                          ),
+                        ),
+                        PostStatsWidget(
+                          viewCount: postDetail.post.viewCount ?? 0,
+                          likeCount: postDetail.post.likeCount ?? 0,
+                          postId: postDetail.post.id,
+                        ),
+                        HtmlWidget(
+                          postDetail.post.content ?? '',
+                          textStyle: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.contentText,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        TagsWidget(
+                          tags: postDetail.post.tags,
+                        ),
+                        const SizedBox(height: 8),
+                        // Photos or Videos
+                        FileListWidget(
+                          context: context,
+                          postDetail: postDetail.post,
+                          showConfirmDialog: showConfirmDialog,
+                          buttonBuilder: buttonBuilder,
+                        ),
+                        // Serial list component
+                        SerialListWidget(
+                          series: postDetail.series,
+                          totalChapter: postDetail.post.totalChapter ?? 0,
+                        ),
+                        RecommendWidget(recommendations: postDetail.recommend),
+                        buildCommentList(),
+                      ],
                     ),
-                    PostStatsWidget(
-                      viewCount: postDetail.post.viewCount ?? 0,
-                      likeCount: postDetail.post.likeCount ?? 0,
-                      postId: postDetail.post.id,
-                    ),
-                    HtmlWidget(
-                      postDetail.post.content ?? '',
-                      textStyle: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.contentText,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    TagsWidget(
-                      tags: postDetail.post.tags,
-                    ),
-                    const SizedBox(height: 8),
-                    // 照片 or 影片
-                    FileListWidget(
-                      context: context,
-                      postDetail: postDetail.post,
-                      showConfirmDialog: showConfirmDialog,
-                      buttonBuilder: buttonBuilder,
-                      useGameDeposit: useGameDeposit,
-                    ),
-                    // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
-                    SerialListWidget(
-                      series: postDetail.series,
-                      totalChapter: postDetail.post.totalChapter ?? 0,
-                    ),
-                    RecommendWidget(recommendations: postDetail.recommend)
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
+          bottomNavigationBar: buildCommentInput(),
         );
       },
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/show_confirm_dialog.dart';
@@ -23,6 +24,7 @@ class CommentInput extends StatefulWidget {
 class _CommentInputState extends State<CommentInput> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+
   bool _isKeyboardVisible = false;
 
   @override
@@ -52,6 +54,8 @@ class _CommentInputState extends State<CommentInput> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Container(
       color: const Color(0xff1c202f),
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
@@ -78,7 +82,7 @@ class _CommentInputState extends State<CommentInput> {
               style: const TextStyle(color: Colors.white),
               cursorColor: Colors.white,
               decoration: InputDecoration(
-                hintText: '說些什麼...',
+                hintText: localizations.translate('say_something'),
                 hintStyle: const TextStyle(color: Color(0xff5f6279)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -129,11 +133,11 @@ class _CommentInputState extends State<CommentInput> {
                     showConfirmDialog(
                       context: context,
                       title: '',
-                      message: '請先登入',
+                      message: localizations.translate('please_login'),
                       showCancelButton: true,
                       showConfirmButton: true,
-                      cancelButtonText: '取消',
-                      confirmButtonText: '登入',
+                      cancelButtonText: localizations.translate('cancel'),
+                      confirmButtonText: localizations.translate('login'),
                       onCancel: () {
                         Navigator.of(context).pop();
                       },
@@ -151,7 +155,8 @@ class _CommentInputState extends State<CommentInput> {
                     setState(() {});
                   }
                 },
-                child: const Text('送出', style: TextStyle(color: Colors.white)),
+                child: Text(localizations.translate('send'),
+                    style: const TextStyle(color: Colors.white)),
               );
             },
           ),
