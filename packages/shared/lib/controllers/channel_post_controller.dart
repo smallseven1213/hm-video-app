@@ -17,6 +17,7 @@ class ChannelPostController extends BasePostInfinityScrollController {
   final int? topicId;
   final RxInt postCount = 0.obs;
   final int? limit;
+  final int? areaId;
 
   var isError = false.obs;
 
@@ -30,6 +31,7 @@ class ChannelPostController extends BasePostInfinityScrollController {
     this.tagId,
     this.topicId,
     this.limit = 5,
+    this.areaId,
     bool loadDataOnInit = true,
   }) : super(
           loadDataOnInit: loadDataOnInit,
@@ -47,6 +49,7 @@ class ChannelPostController extends BasePostInfinityScrollController {
         publisherId: publisherId,
         tagId: tagId,
         topicId: topicId,
+        areaId: areaId,
       );
       bool hasMoreData = res.totalCount > limit! * page;
       postCount.value = res.totalCount;
@@ -64,5 +67,4 @@ class ChannelPostController extends BasePostInfinityScrollController {
       return InfinityPosts([], 0, false);
     }
   }
-
 }
