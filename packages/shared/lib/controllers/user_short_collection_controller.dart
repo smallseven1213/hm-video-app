@@ -38,18 +38,19 @@ class UserShortCollectionController extends GetxController {
 
   Future<void> _fetchAndSaveCollection() async {
     var blockData = await userApi.getVideoCollection(film: 2);
-    data.value = blockData.vods
-        .map((video) => Vod(
-              video.id,
-              video.title,
-              coverHorizontal: video.coverHorizontal!,
-              coverVertical: video.coverVertical!,
-              timeLength: video.timeLength!,
-              tags: video.tags!,
-              videoViewTimes: video.videoViewTimes!,
-              // detail: video.detail,
-            ))
-        .toList();
+    data.value = blockData.vods.map((video) {
+      return Vod(
+        video.id,
+        video.title,
+        coverHorizontal: video.coverHorizontal!,
+        coverVertical: video.coverVertical!,
+        timeLength: video.timeLength!,
+        tags: video.tags!,
+        videoViewTimes: video.videoViewTimes!,
+        aspectRatio: video.aspectRatio!,
+        // detail: video.detail,
+      );
+    }).toList();
     await _updateHive();
   }
 
@@ -67,6 +68,7 @@ class UserShortCollectionController extends GetxController {
       timeLength: video.timeLength!,
       tags: video.tags!,
       videoViewTimes: video.videoViewTimes!,
+      aspectRatio: video.aspectRatio!,
       // detail: video.detail,
     );
 

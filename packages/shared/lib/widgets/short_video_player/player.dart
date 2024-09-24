@@ -32,8 +32,9 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
       return Container();
     }
     Size videoSize = controller.videoPlayerController!.value.size;
-    var aspectRatio =
-        videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
+    double aspectRatio = (video.aspectRatio != null && video.aspectRatio != 0)
+        ? video.aspectRatio!
+        : (videoSize.height != 0 ? videoSize.width / videoSize.height : 1);
 
     return Container(
       color: Colors.black,
@@ -52,7 +53,12 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
             ] else if (controller.videoPlayerController?.value.isInitialized ==
                 true) ...[
               if (kIsWeb) ...[
-                VideoPlayer(controller.videoPlayerController!)
+                AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: VideoPlayer(
+                    controller.videoPlayerController!,
+                  ),
+                ),
               ] else ...[
                 videoSize.height / videoSize.width >= 1.4
                     ? SizedBox(
@@ -64,8 +70,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                               width: videoSize.width,
                               height: videoSize.height,
                               child: AspectRatio(
-                                aspectRatio: controller
-                                    .videoPlayerController!.value.aspectRatio,
+                                aspectRatio: aspectRatio,
                                 child: VideoPlayer(
                                     controller.videoPlayerController!),
                               )),
@@ -79,7 +84,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                       ),
               ],
 
-              // Controls
+              // 控制层
               GestureDetector(
                 onTap: () {
                   controller.toggle();
@@ -117,24 +122,24 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor:
-                          const Color(0xFF0e0e0e).withOpacity(0.5), // 文本和圖示顏色
+                          const Color(0xFF0e0e0e).withOpacity(0.5), // 文本和图标颜色
                       padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10), // 內間距
+                          vertical: 5, horizontal: 10), // 内边距
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25), // 圓角半徑
+                        borderRadius: BorderRadius.circular(25), // 圆角半径
                         side: const BorderSide(
-                            color: Color(0xFF353535), width: 0.5), // 邊框
+                            color: Color(0xFF353535), width: 0.5), // 边框
                       ),
                     ),
                     icon: const Icon(
                       Icons.screen_rotation_rounded,
-                      size: 15.0, // 圖示大小
+                      size: 15.0, // 图标大小
                     ),
                     label: Text(
                       localizations.translate('fullscreen_view'),
                       style: const TextStyle(
-                        fontSize: 12, // 字體大小
-                        color: Color(0xFFE7E7E7), // 字體顏色
+                        fontSize: 12, // 字体大小
+                        color: Color(0xFFE7E7E7), // 字体颜色
                       ),
                     ),
                   )),

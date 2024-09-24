@@ -135,7 +135,7 @@ class BaseShortPage extends StatelessWidget {
                                 isActive: isActive,
                                 id: shortData.id,
                                 title: shortData.title,
-                                shortData: shortData,
+                                shortData: video ?? Vod(0, ''),
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
                               )
@@ -145,7 +145,7 @@ class BaseShortPage extends StatelessWidget {
                                 isActive: isActive,
                                 id: shortData.id,
                                 title: shortData.title,
-                                shortData: shortData,
+                                shortData: video ?? Vod(0, ''),
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
                               ))),
