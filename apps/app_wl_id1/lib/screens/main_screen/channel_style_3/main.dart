@@ -11,6 +11,7 @@ import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_jingang_area_title.dart';
 import '../../../widgets/tab_bar.dart';
+import 'posts.dart';
 
 final logger = Logger();
 
@@ -152,7 +153,15 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             children: channelSharedData?.blocks
                     ?.asMap()
                     .entries
-                    .map((e) => Vods(
+                    .map((e) => e.value.film == 4
+                        ? Posts(
+                            key: Key('${widget.channelId}'),
+                            postId: widget.channelId,
+                            areaId: e.value.id ?? 0,
+                            isActive: e.key == _tabController!.index,
+                            isAreaAds: e.value.isAreaAds!,
+                          )
+                        : Vods(
                           key: Key('${e.key}'),
                           areaId: e.value.id ?? 0,
                           templateId: e.value.template,

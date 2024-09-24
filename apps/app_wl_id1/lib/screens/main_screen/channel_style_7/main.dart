@@ -27,21 +27,10 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   Timer? _debounceTimer;
   bool isRefreshing = false;
 
-  void _scrollListener() {
-    if (isRefreshing) return;
-    if (_scrollController!.position.pixels >=
-        _scrollController!.position.maxScrollExtent - 30) {
-      debounce(
-        fn: () => postController!.loadMoreData(),
-      );
-    }
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _scrollController = PrimaryScrollController.of(context);
-    _scrollController!.addListener(_scrollListener);
     postController ??= ChannelPostController(
       scrollController: _scrollController!,
     );
@@ -51,13 +40,7 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   void dispose() {
     _debounceTimer?.cancel();
     postController?.dispose();
-    _scrollController?.removeListener(_scrollListener);
     super.dispose();
-  }
-
-  void debounce({required Function() fn, int waitForMs = 500}) {
-    _debounceTimer?.cancel();
-    _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
   }
 
   void _onRefresh() async {

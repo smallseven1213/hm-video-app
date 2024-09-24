@@ -158,6 +158,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                             postId: widget.channelId,
                             areaId: e.value.id ?? 0,
                             isActive: e.key == _tabController!.index,
+                            isAreaAds: e.value.isAreaAds!,
                           )
                         : Vods(
                             key: Key('${e.key}'),
