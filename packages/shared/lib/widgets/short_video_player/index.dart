@@ -82,7 +82,7 @@ class ShortCardState extends State<ShortCard> {
         Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
         double aspectRatio = (widget.shortData.aspectRatio != null &&
                 widget.shortData.aspectRatio != 0)
-            ? widget.shortData.aspectRatio!
+            ? (1 / widget.shortData.aspectRatio!) // 取倒数以符合AspectRatio的要求
             : (videoSize.height != 0 ? videoSize.width / videoSize.height : 1);
 
         if (uiController.isFullscreen.value == true) {

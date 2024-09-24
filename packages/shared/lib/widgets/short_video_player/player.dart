@@ -33,7 +33,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
     }
     Size videoSize = controller.videoPlayerController!.value.size;
     double aspectRatio = (video.aspectRatio != null && video.aspectRatio != 0)
-        ? video.aspectRatio!
+        ? (1 / video.aspectRatio!) // 取倒数以符合AspectRatio的要求
         : (videoSize.height != 0 ? videoSize.width / videoSize.height : 1);
 
     return Container(
