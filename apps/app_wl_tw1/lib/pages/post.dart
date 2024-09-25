@@ -96,7 +96,6 @@ class _PostPageState extends CommentSectionBase<PostPage> {
             ],
           ),
           body: SingleChildScrollView(
-            controller: scrollController,
             child: UIBottomSafeArea(
               child: Column(
                 children: [
