@@ -43,7 +43,7 @@ class PostApi {
         queryParams['publisher_id'] = publisherId.toString();
       if (tagId != null) queryParams['tag_id'] = tagId.toString();
       if (topicId != null) queryParams['topic_id'] = topicId.toString();
-      if (areaId != null) queryParams['areaId'] = areaId.toString();
+      if (areaId != null) queryParams['area_id'] = areaId.toString();
       var uri =
           Uri.parse('$apiPrefix/list').replace(queryParameters: queryParams);
 
