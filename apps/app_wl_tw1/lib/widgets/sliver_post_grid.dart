@@ -38,7 +38,7 @@ class SliverPostGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      controller: customScrollController,
+      controller: PrimaryScrollController.of(context),
       slivers: [
         ...?headerExtends,
         if (isError)

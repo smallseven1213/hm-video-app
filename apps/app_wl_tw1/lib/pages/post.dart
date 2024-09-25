@@ -63,13 +63,11 @@ class _PostPageState extends CommentSectionBase<PostPage> {
               'postDetail-${postDetail.post.id}-${postDetail.post.isUnlock}'),
           appBar: CustomAppBar(
             titleWidget: InkWell(
-              onTap: () {
-                MyRouteDelegate.of(context).push(
-                  AppRoutes.supplier,
-                  args: {'id': postDetail.post.supplier!.id},
-                  removeSamePath: true,
-                );
-              },
+              onTap: () => MyRouteDelegate.of(context).push(
+                AppRoutes.supplier,
+                args: {'id': postDetail.post.supplier!.id},
+                removeSamePath: true,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -96,55 +94,49 @@ class _PostPageState extends CommentSectionBase<PostPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: UIBottomSafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          postDetail.post.title,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: AppColors.contentText,
-                          ),
-                        ),
-                        PostStatsWidget(
-                          viewCount: postDetail.post.viewCount ?? 0,
-                          likeCount: postDetail.post.likeCount ?? 0,
-                          postId: postDetail.post.id,
-                        ),
-                        HtmlWidget(
-                          postDetail.post.content ?? '',
-                          textStyle: const TextStyle(
-                            fontSize: 13,
-                            color: AppColors.contentText,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                        TagsWidget(
-                          tags: postDetail.post.tags,
-                        ),
-                        const SizedBox(height: 8),
-                        // Photos or Videos
-                        FileListWidget(
-                          context: context,
-                          postDetail: postDetail.post,
-                          showConfirmDialog: showConfirmDialog,
-                          buttonBuilder: buttonBuilder,
-                        ),
-                        // Serial list component
-                        SerialListWidget(
-                          series: postDetail.series,
-                          totalChapter: postDetail.post.totalChapter ?? 0,
-                        ),
-                        RecommendWidget(recommendations: postDetail.recommend),
-                        buildCommentList(),
-                      ],
+                  Text(
+                    postDetail.post.title,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColors.contentText,
                     ),
                   ),
+                  PostStatsWidget(
+                    viewCount: postDetail.post.viewCount ?? 0,
+                    likeCount: postDetail.post.likeCount ?? 0,
+                    postId: postDetail.post.id,
+                  ),
+                  HtmlWidget(
+                    postDetail.post.content ?? '',
+                    textStyle: const TextStyle(
+                      fontSize: 13,
+                      color: AppColors.contentText,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                  TagsWidget(
+                    tags: postDetail.post.tags,
+                  ),
+                  const SizedBox(height: 8),
+                  // Photos or Videos
+                  FileListWidget(
+                    context: context,
+                    postDetail: postDetail.post,
+                    showConfirmDialog: showConfirmDialog,
+                    buttonBuilder: buttonBuilder,
+                  ),
+                  // Serial list component
+                  SerialListWidget(
+                    series: postDetail.series,
+                    totalChapter: postDetail.post.totalChapter ?? 0,
+                  ),
+                  RecommendWidget(recommendations: postDetail.recommend),
+                  buildCommentList(),
                 ],
               ),
             ),
