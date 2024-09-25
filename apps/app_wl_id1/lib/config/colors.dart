@@ -24,5 +24,11 @@ class AppColors {
     ColorKeys.videoTitle: Color(0xffffffff),
     // dialog
     ColorKeys.noticeBg: Color(0xff3F4253),
+    // tabs
+    ColorKeys.tabBgColor: Color(0xff0F1320), // layout tab
+    ColorKeys.tabTextColor: Color(0xffb2bac5), // layout tab
+    ColorKeys.tabTextActiveColor: Color(0xffFFC700), // layout tab
+    ColorKeys.tabBarTextColor: Color(0xffb2bac5),
+    ColorKeys.tabBarTextActiveColor: Color(0xffFFC700),
   };
 }
