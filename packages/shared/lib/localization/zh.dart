@@ -86,4 +86,7 @@ const Map<String, String> sharedZhTwStrings = {
   "send": "送出",
   "nothing_here": "這裡什麼都沒有",
   "nothing_more": "下面沒有更多了",
+  "comment": "評論",
+  "collapse": "收起",
+  "expand": "展開",
 };

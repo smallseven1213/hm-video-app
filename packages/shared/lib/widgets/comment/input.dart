@@ -85,10 +85,10 @@ class _CommentInputState extends State<CommentInput> {
                 hintText: localizations.translate('say_something'),
                 hintStyle: const TextStyle(color: Color(0xff5f6279)),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(color: Color(0xff5f6279)),
                 ),
                 filled: true,
@@ -129,26 +129,26 @@ class _CommentInputState extends State<CommentInput> {
             child: (info, isVIP, isGuest, isLoading) {
               return TextButton(
                 onPressed: () {
-                  if (isGuest) {
-                    showConfirmDialog(
-                      context: context,
-                      title: '',
-                      message: localizations.translate('please_login'),
-                      showCancelButton: true,
-                      showConfirmButton: true,
-                      cancelButtonText: localizations.translate('cancel'),
-                      confirmButtonText: localizations.translate('login'),
-                      onCancel: () {
-                        Navigator.of(context).pop();
-                      },
-                      onConfirm: () {
-                        Navigator.of(context).pop();
-                        MyRouteDelegate.of(context).push(AppRoutes.login);
-                      },
-                    );
-                    return;
-                  }
                   if (_controller.text.isNotEmpty) {
+                    if (isGuest) {
+                      showConfirmDialog(
+                        context: context,
+                        title: '',
+                        message: localizations.translate('please_login'),
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        cancelButtonText: localizations.translate('cancel'),
+                        confirmButtonText: localizations.translate('login'),
+                        onCancel: () {
+                          Navigator.of(context).pop();
+                        },
+                        onConfirm: () {
+                          Navigator.of(context).pop();
+                          MyRouteDelegate.of(context).push(AppRoutes.login);
+                        },
+                      );
+                      return;
+                    }
                     widget.onSend(_controller.text);
                     _controller.clear(); // Clear the text field
                     FocusScope.of(context).unfocus();
@@ -156,7 +156,11 @@ class _CommentInputState extends State<CommentInput> {
                   }
                 },
                 child: Text(localizations.translate('send'),
-                    style: const TextStyle(color: Colors.white)),
+                    style: TextStyle(
+                      color: _controller.text.isNotEmpty
+                          ? Colors.white
+                          : Colors.grey,
+                    )),
               );
             },
           ),

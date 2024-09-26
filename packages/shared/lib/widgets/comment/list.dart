@@ -4,13 +4,6 @@ import 'package:shared/models/comment.dart';
 import 'package:shared/modules/comment/comment_consumer.dart';
 import 'package:shared/widgets/avatar.dart';
 
-import 'package:flutter/material.dart';
-import 'package:shared/models/comment.dart';
-import 'package:shared/modules/comment/comment_consumer.dart';
-import 'package:shared/widgets/avatar.dart';
-
-import 'no_data.dart';
-
 class CommentList extends StatelessWidget {
   final int topicId;
   final TopicType topicType;
@@ -33,6 +26,16 @@ class CommentList extends StatelessWidget {
       child: (List<Comment> comments) {
         return Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                localizations.translate('comment'),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14),
+              ),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -56,44 +59,90 @@ class CommentList extends StatelessWidget {
   }
 }
 
-class CommentItem extends StatelessWidget {
+class CommentItem extends StatefulWidget {
   final Comment item;
-  CommentItem({
-    Key? key,
-    required this.item,
-  }) : super(key: ValueKey(item.id));
+
+  const CommentItem({Key? key, required this.item}) : super(key: key);
+
+  @override
+  _CommentItemState createState() => _CommentItemState();
+}
+
+class _CommentItemState extends State<CommentItem> {
+  bool isExpanded = false;
+  bool showExpandButton = false;
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return ListTile(
-      leading: AvatarWidget(
-        photoSid: item.avatar,
-        width: 36,
-        height: 36,
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(widget.item.avatar),
+        radius: 18,
         backgroundColor: Colors.transparent,
       ),
-      title: Row(
-        verticalDirection: VerticalDirection.up,
+      title: Text(
+        widget.item.userName,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Text(
-              item.userName,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
-            ),
-          ),
-          const Row(
-            children: [
-              Text('0', style: TextStyle(color: Colors.grey, fontSize: 11)),
-              SizedBox(width: 4),
-              Icon(Icons.favorite_border, color: Colors.grey, size: 13),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final span = TextSpan(
+                text: widget.item.content,
+                style: const TextStyle(color: Colors.white, fontSize: 11),
+              );
+              final tp = TextPainter(
+                text: span,
+                maxLines: 5,
+                textDirection: TextDirection.ltr,
+              );
+              tp.layout(maxWidth: constraints.maxWidth);
+
+              if (tp.didExceedMaxLines) {
+                showExpandButton = true;
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.item.content,
+                    maxLines: isExpanded ? null : 5,
+                    overflow: isExpanded
+                        ? TextOverflow.visible
+                        : TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.white, fontSize: 11),
+                  ),
+                  if (showExpandButton)
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isExpanded = !isExpanded;
+                        });
+                      },
+                      child: Text(
+                        isExpanded
+                            ? localizations.translate('collapse')
+                            : localizations.translate('expand'),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
-      ),
-      subtitle: Text(
-        item.content,
-        style: const TextStyle(color: Colors.white, fontSize: 11),
       ),
     );
   }

@@ -93,4 +93,7 @@ const Map<String, String> sharedViVnStrings = {
   "send": "Gửi",
   "nothing_here": "Ở đây không có gì",
   "nothing_more": "không còn nữa",
+  "comment": "Bình luận",
+  "collapse": "Thu gọn",
+  "expand": "Mở rộng",
 };

@@ -94,4 +94,7 @@ const Map<String, String> sharedIdIdStrings = {
   "send": "Kirim",
   "nothing_here": "Tidak ada apa pun di sini",
   "nothing_more": "tidak ada lagi",
+  "comment": "Komentar",
+  "collapse": "Lipat",
+  "expand": "Buka",
 };

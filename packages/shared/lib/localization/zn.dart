@@ -86,4 +86,7 @@ const Map<String, String> sharedZhCnStrings = {
   "send": "提交",
   "nothing_here": "这里什么都没有",
   "nothing_more": "下面没有更多了",
+  "comment": "评论",
+  "collapse": "收起",
+  "expand": "展開",
 };
