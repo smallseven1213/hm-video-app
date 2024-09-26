@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:app_wl_tw1/widgets/flash_loading.dart';
 import 'package:get/get.dart';
 import 'package:shared/widgets/posts/card/index.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
@@ -53,46 +54,49 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshList(
-      onRefresh: _onRefresh,
-      child: Obx(() {
-        if (postController == null) {
-          return const SizedBox();
-        }
-        return CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(0.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) => PostCard(
-                    detail: postController!.postList[index],
-                  ),
-                  childCount: postController!.postList.length,
-                ),
-              ),
-            ),
-            if (postController!.isError.value)
-              SliverFillRemaining(
-                child: Center(
-                  child: ReloadButton(
-                    onPressed: () => _onRefresh(),
+    if (postController == null) {
+      return const SizedBox();
+    }
+    return Obx(() {
+      if (postController?.isLoading.value as bool && postController?.page.value == 0) {
+        return const Center(child: FlashLoading());
+      } else {
+        return RefreshList(
+            onRefresh: _onRefresh,
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.all(0.0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) => PostCard(
+                        detail: postController!.postList[index],
+                      ),
+                      childCount: postController!.postList.length,
+                    ),
                   ),
                 ),
-              ),
-            if (!postController!.isError.value &&
-                postController!.isListEmpty.value)
-              const SliverToBoxAdapter(
-                child: NoDataWidget(),
-              ),
-            if (postController!.displayLoading.value && !isRefreshing)
-              const SliverVideoPreviewSkeletonList(),
-            if (postController!.displayNoMoreData.value)
-              SliverToBoxAdapter(child: ListNoMore()),
-          ],
-        );
-      }),
-    );
+                if (postController!.isError.value)
+                  SliverFillRemaining(
+                    child: Center(
+                      child: ReloadButton(
+                        onPressed: () => _onRefresh(),
+                      ),
+                    ),
+                  ),
+                if (!postController!.isError.value &&
+                    postController!.isListEmpty.value)
+                  const SliverToBoxAdapter(
+                    child: NoDataWidget(),
+                  ),
+                if (postController!.displayLoading.value && !isRefreshing)
+                  const SliverVideoPreviewSkeletonList(),
+                if (postController!.displayNoMoreData.value)
+                  SliverToBoxAdapter(child: ListNoMore()),
+              ],
+            ));
+      }
+    });
   }
 }
