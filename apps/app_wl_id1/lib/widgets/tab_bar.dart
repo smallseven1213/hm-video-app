@@ -28,15 +28,16 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
             isScrollable: true,
             controller: controller,
             padding: const EdgeInsets.all(0),
+            labelColor: AppColors.colors[ColorKeys.tabBarTextActiveColor],
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            unselectedLabelColor: const Color(0xffb2bac5),
+            unselectedLabelColor:AppColors.colors[ColorKeys.tabBarTextColor],
             indicatorSize: TabBarIndicatorSize.label,
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(
                 width: 3.0,
-                color: AppColors.colors[ColorKeys.primary]!,
+                color: AppColors.colors[ColorKeys.tabBarTextActiveColor]!,
               ),
             ),
             tabs:
