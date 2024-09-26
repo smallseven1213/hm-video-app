@@ -24,7 +24,7 @@ class ControlsOverlay extends StatefulWidget {
   final bool? displayHeader;
   final bool? displayFullScreenIcon;
   final Color? themeColor;
-  final bool? post;
+  final bool? isVerticalDragEnabled;
 
   const ControlsOverlay({
     Key? key,
@@ -37,7 +37,7 @@ class ControlsOverlay extends StatefulWidget {
     this.displayHeader = true,
     this.displayFullScreenIcon = true,
     this.themeColor = Colors.blue,
-    this.post = false,
+    this.isVerticalDragEnabled = false,
   }) : super(key: key);
 
   @override
@@ -84,7 +84,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               videoPlayerInfo.videoPlayerController?.play();
             }
           },
-          onVerticalDragStart: (kIsWeb || !mounted || widget.post!)
+          onVerticalDragStart: (kIsWeb ||
+                  !mounted ||
+                  widget.isVerticalDragEnabled!)
               ? null
               : (DragStartDetails details) {
                   setState(() {
@@ -98,45 +100,49 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     }
                   });
                 },
-          onVerticalDragUpdate: (kIsWeb || !mounted || widget.post!)
+          onVerticalDragUpdate: (kIsWeb ||
+                  !mounted ||
+                  widget.isVerticalDragEnabled!)
               ? null
-              :(DragUpdateDetails details) {
-            lastDragPosition ??= details.globalPosition.dy;
-            // 計算滑動距離並將其正規化到0到1之間
-            double deltaY = details.globalPosition.dy - lastDragPosition!;
-            verticalDragPosition -= deltaY / (constraints.maxHeight * 0.3);
-            verticalDragPosition = verticalDragPosition.clamp(0.0, 1.0);
+              : (DragUpdateDetails details) {
+                  lastDragPosition ??= details.globalPosition.dy;
+                  // 計算滑動距離並將其正規化到0到1之間
+                  double deltaY = details.globalPosition.dy - lastDragPosition!;
+                  verticalDragPosition -=
+                      deltaY / (constraints.maxHeight * 0.3);
+                  verticalDragPosition = verticalDragPosition.clamp(0.0, 1.0);
 
-            // 檢查滑動是發生在畫面的左半邊還是右半邊
-            bool isVolume = details.globalPosition.dx >
-                MediaQuery.of(context).size.width / 2;
-            if (isVolume) {
-              volume = verticalDragPosition;
-              volume = volume.clamp(0.0, 1.0);
+                  // 檢查滑動是發生在畫面的左半邊還是右半邊
+                  bool isVolume = details.globalPosition.dx >
+                      MediaQuery.of(context).size.width / 2;
+                  if (isVolume) {
+                    volume = verticalDragPosition;
+                    volume = volume.clamp(0.0, 1.0);
 
-              FlutterVolumeController.setVolume(volume);
-              videoPlayerInfo.videoPlayerController?.setVolume(volume);
-              logger.i('volume: $volume');
-            } else {
-              brightness = verticalDragPosition;
-              brightness = brightness.clamp(0.15, 1.0);
-              ScreenBrightness().setScreenBrightness(brightness);
-              logger.i('brightness: $brightness');
-            }
+                    FlutterVolumeController.setVolume(volume);
+                    videoPlayerInfo.videoPlayerController?.setVolume(volume);
+                    logger.i('volume: $volume');
+                  } else {
+                    brightness = verticalDragPosition;
+                    brightness = brightness.clamp(0.15, 1.0);
+                    ScreenBrightness().setScreenBrightness(brightness);
+                    logger.i('brightness: $brightness');
+                  }
 
-            // 更新lastDragPosition以便于下次計算
-            lastDragPosition = details.globalPosition.dy;
-            setState(() {});
-          },
-          onVerticalDragEnd: (kIsWeb || !mounted || widget.post!)
-              ? null
-              :(DragEndDetails details) {
-            lastDragPosition = null;
-            setState(() {
-                // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
-                sideControlsType = SideControlsType.none;
-              });
-          },
+                  // 更新lastDragPosition以便于下次計算
+                  lastDragPosition = details.globalPosition.dy;
+                  setState(() {});
+                },
+          onVerticalDragEnd:
+              (kIsWeb || !mounted || widget.isVerticalDragEnabled!)
+                  ? null
+                  : (DragEndDetails details) {
+                      lastDragPosition = null;
+                      setState(() {
+                        // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
+                        sideControlsType = SideControlsType.none;
+                      });
+                    },
           onHorizontalDragStart: (details) {
             if (details.localPosition.dy > constraints.maxHeight - 30) {
               return;
@@ -371,7 +377,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               if (!GetPlatform.isWeb &&
                   (sideControlsType == SideControlsType.brightness ||
                       sideControlsType == SideControlsType.sound) &&
-                  !widget.post!)
+                  !widget.isVerticalDragEnabled!)
                 VolumeBrightness(
                   controller: videoPlayerInfo.videoPlayerController!,
                   verticalDragPosition: verticalDragPosition,

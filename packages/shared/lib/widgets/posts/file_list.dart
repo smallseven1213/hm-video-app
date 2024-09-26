@@ -80,7 +80,7 @@ class FileListWidget extends StatelessWidget {
             displayFullscreenIcon: false,
             displayHeader: false,
             hasPaymentProcess: false,
-            post: true,
+            isVerticalDragEnabled: true,
           );
         },
       ),
