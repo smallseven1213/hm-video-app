@@ -6,6 +6,7 @@ import 'package:shared/models/post_detail.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/avatar.dart';
+import 'package:shared/widgets/comment/comment_bottom_sheet.dart';
 import 'package:shared/widgets/posts/card/post_stats_with_comment.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
@@ -142,11 +143,34 @@ class _PostPageState extends CommentSectionBase<PostPage> {
             ),
           ),
           bottomNavigationBar: UIBottomSafeArea(
-            child: PostStatsWithCommentsWidget(
-              viewCount: postDetail.post.viewCount ?? 0,
-              likeCount: postDetail.post.likeCount ?? 0,
-              replyCount: postDetail.post.replyCount ?? 0,
-              postId: postDetail.post.id,
+            child: InkWell(
+              onTap: () => showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                isDismissible: true,
+                backgroundColor: Colors.transparent,
+                barrierColor: Colors.black.withOpacity(0.5),
+                builder: (BuildContext context) {
+                  return CommentBottomSheet(postId: postDetail.post.id);
+                },
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Icon(Icons.chat_bubble_outline_rounded,
+                        size: 20, color: Color(0xff919bb3)),
+                    const SizedBox(width: 10),
+                    Text(
+                      postDetail.post.replyCount.toString(),
+                      style: const TextStyle(
+                          fontSize: 14, color: Color(0xff919bb3)),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         );

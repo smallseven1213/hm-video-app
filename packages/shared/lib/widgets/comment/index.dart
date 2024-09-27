@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/comment/comment_section_base.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 class CommentSection extends StatefulWidget {
   final int topicId;
@@ -44,7 +45,8 @@ class _CommentSectionState extends CommentSectionBase<CommentSection> {
                   ),
                 )
               : buildCommentList(),
-          buildCommentInput(),
+         buildCommentInput(),
+        
         ],
       ),
     );
