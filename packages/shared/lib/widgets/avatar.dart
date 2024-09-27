@@ -26,6 +26,8 @@ class AvatarWidget extends StatelessWidget {
         hslColor.withLightness((hslColor.lightness + 0.3).clamp(0.0, 1.0));
     final Color secondColor = lighterHslColor.toColor();
 
+    print('AvatarWidget: photoSid: $photoSid');
+
     return Container(
       padding: const EdgeInsets.all(1),
       width: width,
@@ -61,11 +63,11 @@ class AvatarWidget extends StatelessWidget {
                 width: width,
                 height: height,
                 color: const Color(0xfff0f0f0),
-                child: const Center(
+                child: Center(
                   child: Icon(
                     Icons.face_3,
-                    size: 54,
-                    color: Color(0xfff3a0a9),
+                    size: width * 0.8,
+                    color: const Color(0xfff3a0a9),
                   ),
                 ),
               ),

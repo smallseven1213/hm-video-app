@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/posts/card/index.dart';
 import 'package:shared/widgets/posts/horizontal_card.dart';
-import 'package:shared/widgets/refresh_list.dart';
 
 import 'list_no_more.dart';
 import 'no_data.dart';
@@ -38,43 +37,40 @@ class SliverPostGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshList(
-      onRefresh: onReload,
-      child: CustomScrollView(
-        controller: customScrollController,
-        slivers: [
-          ...?headerExtends,
-          if (isError)
-            SliverFillRemaining(
-              child: Center(
-                child: ReloadButton(onPressed: onReload),
+    return CustomScrollView(
+      controller: PrimaryScrollController.of(context),
+      slivers: [
+        ...?headerExtends,
+        if (isError)
+          SliverFillRemaining(
+            child: Center(
+              child: ReloadButton(onPressed: onReload),
+            ),
+          ),
+        if (isListEmpty) const SliverToBoxAdapter(child: NoDataWidget()),
+        if (!isListEmpty)
+          SliverPadding(
+            padding: const EdgeInsets.all(0.0),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final post = posts[index];
+                  return vertical
+                      ? PostCard(
+                          detail: post,
+                          displaySupplierInfo: displaySupplierInfo,
+                        )
+                      : PostHorizontalCard(
+                          detail: post,
+                        );
+                },
+                childCount: posts.length,
               ),
             ),
-          if (isListEmpty) const SliverToBoxAdapter(child: NoDataWidget()),
-          if (!isListEmpty)
-            SliverPadding(
-              padding: const EdgeInsets.all(0.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    final post = posts[index];
-                    return vertical
-                        ? PostCard(
-                            detail: post,
-                            displaySupplierInfo: displaySupplierInfo,
-                          )
-                        : PostHorizontalCard(
-                            detail: post,
-                          );
-                  },
-                  childCount: posts.length,
-                ),
-              ),
-            ),
-          if (displayLoading) const SliverVideoPreviewSkeletonList(),
-          if (displayNoMoreData) SliverToBoxAdapter(child: ListNoMore()),
-        ],
-      ),
+          ),
+        if (displayLoading) const SliverVideoPreviewSkeletonList(),
+        if (displayNoMoreData) SliverToBoxAdapter(child: ListNoMore()),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:app_wl_tw1/widgets/flash_loading.dart';
 import 'package:get/get.dart';
 import 'package:shared/widgets/posts/card/index.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
@@ -27,21 +28,10 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   Timer? _debounceTimer;
   bool isRefreshing = false;
 
-  void _scrollListener() {
-    if (isRefreshing) return;
-    if (_scrollController!.position.pixels >=
-        _scrollController!.position.maxScrollExtent - 30) {
-      debounce(
-        fn: () => postController!.loadMoreData(),
-      );
-    }
-  }
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _scrollController = PrimaryScrollController.of(context);
-    _scrollController!.addListener(_scrollListener);
     postController ??= ChannelPostController(
       scrollController: _scrollController!,
     );
@@ -51,13 +41,7 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   void dispose() {
     _debounceTimer?.cancel();
     postController?.dispose();
-    _scrollController?.removeListener(_scrollListener);
     super.dispose();
-  }
-
-  void debounce({required Function() fn, int waitForMs = 500}) {
-    _debounceTimer?.cancel();
-    _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
   }
 
   void _onRefresh() async {
@@ -70,46 +54,49 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshList(
-      onRefresh: _onRefresh,
-      child: Obx(() {
-        if (postController == null) {
-          return const SizedBox();
-        }
-        return CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(0.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) => PostCard(
-                    detail: postController!.postList[index],
-                  ),
-                  childCount: postController!.postList.length,
-                ),
-              ),
-            ),
-            if (postController!.isError.value)
-              SliverFillRemaining(
-                child: Center(
-                  child: ReloadButton(
-                    onPressed: () => _onRefresh(),
+    if (postController == null) {
+      return const SizedBox();
+    }
+    return Obx(() {
+      if (postController?.isLoading.value as bool && postController?.page.value == 0) {
+        return const Center(child: FlashLoading());
+      } else {
+        return RefreshList(
+            onRefresh: _onRefresh,
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.all(0.0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) => PostCard(
+                        detail: postController!.postList[index],
+                      ),
+                      childCount: postController!.postList.length,
+                    ),
                   ),
                 ),
-              ),
-            if (!postController!.isError.value &&
-                postController!.isListEmpty.value)
-              const SliverToBoxAdapter(
-                child: NoDataWidget(),
-              ),
-            if (postController!.displayLoading.value && !isRefreshing)
-              const SliverVideoPreviewSkeletonList(),
-            if (postController!.displayNoMoreData.value)
-              SliverToBoxAdapter(child: ListNoMore()),
-          ],
-        );
-      }),
-    );
+                if (postController!.isError.value)
+                  SliverFillRemaining(
+                    child: Center(
+                      child: ReloadButton(
+                        onPressed: () => _onRefresh(),
+                      ),
+                    ),
+                  ),
+                if (!postController!.isError.value &&
+                    postController!.isListEmpty.value)
+                  const SliverToBoxAdapter(
+                    child: NoDataWidget(),
+                  ),
+                if (postController!.displayLoading.value && !isRefreshing)
+                  const SliverVideoPreviewSkeletonList(),
+                if (postController!.displayNoMoreData.value)
+                  SliverToBoxAdapter(child: ListNoMore()),
+              ],
+            ));
+      }
+    });
   }
 }

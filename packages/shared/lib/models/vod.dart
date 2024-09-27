@@ -17,6 +17,7 @@ enum VideoType {
 class Vod {
   final int id;
   final String title;
+  final double? aspectRatio;
   final int? subScript;
   int? timeLength;
   final String? coverVertical;
@@ -71,6 +72,7 @@ class Vod {
   Vod(
     this.id,
     this.title, {
+    this.aspectRatio = 0.00,
     this.subScript = 0,
     this.timeLength = 0,
     this.coverHorizontal = '',
@@ -179,15 +181,18 @@ class Vod {
       return Vod(
         json['id'] ?? 0,
         json['title'] ?? '',
+        aspectRatio: json['aspectRatio'] != null
+            ? double.tryParse(json['aspectRatio'].toString()) ?? 0.0
+            : 0.0,
         subScript: json['subScript'] ?? 0,
         timeLength: json['timeLength'] ?? 0,
-        coverVertical: json['coverVertical'] ?? '',
-        coverHorizontal: json['coverHorizontal'] ?? '',
-        videoUrl: json['videoUrl'] ?? '',
-        externalId: json['externalId'] ?? '',
-        titleSub: json['titleSub'] ?? '',
-        description: json['description'] ?? '',
-        detail: json['detail'] ?? '',
+        coverVertical: json['coverVertical']?.toString() ?? '',
+        coverHorizontal: json['coverHorizontal']?.toString() ?? '',
+        videoUrl: json['videoUrl']?.toString() ?? '',
+        externalId: json['externalId']?.toString() ?? '',
+        titleSub: json['titleSub']?.toString() ?? '',
+        description: json['description']?.toString() ?? '',
+        detail: json['detail']?.toString() ?? '',
         film: json['film'] ?? 0,
         currentNum: json['currentNum'] ?? 0,
         totalNum: json['totalNum'] ?? 0,
@@ -196,73 +201,77 @@ class Vod {
         isCollect: json['isCollected'] ?? false,
         chargeType: json['chargeType'] ?? 0,
         orderIndex: json['orderIndex'] ?? 0,
-        point: json['point'] == null ? '0' : json['point'].toString(),
-        buyPoint: json['buyPoints'] == null
-            ? null
-            : double.parse(json['buyPoints'].toString()),
-        videoCollectTimes: json['videoCollectTimes'] == null
-            ? 0
-            : int.parse(json['videoCollectTimes'].toString()),
-        videoFavoriteTimes: json['videoFavoriteTimes'] == null
-            ? 0
-            : int.parse(json['videoFavoriteTimes'].toString()),
-        videoViewTimes: json['videoViewTimes'] == null
-            ? 0
-            : int.parse(json['videoViewTimes'].toString()),
-        actors: (json['actor'] ?? json['actors']) == null
-            ? []
-            : List.from(
-                ((json['actor'] ?? json['actors']) as List<dynamic>).map((e) {
-                if (e is int) {
-                  return Actor(e, '', '');
-                }
-                return Actor.fromJson(e);
-              })),
-        tags: (json['tag'] ?? json['tags']) == null
-            ? []
-            : List.from(
-                ((json['tag'] ?? json['tags']) as List<dynamic>).map((e) {
-                if (e is int) {
-                  return Tag(e, '');
-                }
-                return Tag.fromJson(e);
-              })),
-        internalTagIds: (json['internalTag'] ?? json['internalTags']) == null
-            ? []
-            : List.from(
-                (json['internalTag'] ?? json['internalTags']) as List<dynamic>),
+        point: json['point']?.toString() ?? '0',
+        buyPoint: json['buyPoints'] != null
+            ? double.tryParse(json['buyPoints'].toString()) ?? 0.0
+            : 0.0,
+        videoCollectTimes: json['videoCollectTimes'] != null
+            ? int.tryParse(json['videoCollectTimes'].toString()) ?? 0
+            : 0,
+        videoFavoriteTimes: json['videoFavoriteTimes'] != null
+            ? int.tryParse(json['videoFavoriteTimes'].toString()) ?? 0
+            : 0,
+        videoViewTimes: json['videoViewTimes'] != null
+            ? int.tryParse(json['videoViewTimes'].toString()) ?? 0
+            : 0,
+        actors: _parseActors(json['actor'] ?? json['actors']),
+        tags: _parseTags(json['tag'] ?? json['tags']),
+        internalTagIds:
+            _parseInternalTags(json['internalTag'] ?? json['internalTags']),
         region: json['region'],
-        publisher: (json['publisher'] == null)
-            ? null
-            : Publisher.fromJson(json['publisher']),
-        supplier: (json['supplier'] == null)
-            ? null
-            : Supplier.fromJson(json['supplier']),
-        belongVods: json['belongVods'] == null
-            ? null
-            : List.from((json['belongVods'] as List<dynamic>)
-                .map((e) => Vod.fromJson(e))),
-        // 廣告用
-        appIcon: json['appIcon'],
-        adUrl: json['adUrl'],
+        publisher: json['publisher'] != null
+            ? Publisher.fromJson(json['publisher'])
+            : null,
+        supplier: json['supplier'] != null
+            ? Supplier.fromJson(json['supplier'])
+            : null,
+        belongVods: json['belongVods'] != null
+            ? List.from((json['belongVods'] as List<dynamic>)
+                .map((e) => Vod.fromJson(e)))
+            : null,
+        // Ad-related properties
+        appIcon: json['appIcon']?.toString(),
+        adUrl: json['adUrl']?.toString(),
         dataType: json['dataType'],
-        isAd: json['isAd'],
-        videoAdUrl: json['videoAdUrl'],
-        adCover: json['adCover'],
-        adTitle: json['adTitle'],
-        // 遊戲
-        gameId: json['gameId'] ?? '', // 默认值
-        gameUrl: json['gameUrl'] ?? '', // 默认值
-        verticalLogo: json['verticalLogo'] ?? '', // 默认值
-        horizontalLogo: json['horizontalLogo'] ?? '', // 默认值
-        jackpot: json['jackpot'] ?? '', // 默认值
-        multiple: json['multiple'] ?? 0, // 默认值
-        name: json['name'] ?? '', // 默认值
+        isAd: json['isAd'] ?? false,
+        videoAdUrl: json['videoAdUrl']?.toString() ?? '',
+        adCover: json['adCover']?.toString() ?? '',
+        adTitle: json['adTitle']?.toString() ?? '',
+        // Game-related properties
+        gameId: json['gameId']?.toString() ?? '',
+        gameUrl: json['gameUrl']?.toString() ?? '',
+        verticalLogo: json['verticalLogo']?.toString() ?? '',
+        horizontalLogo: json['horizontalLogo']?.toString() ?? '',
+        jackpot: json['jackpot']?.toString() ?? '',
+        multiple: json['multiple'] ?? 0,
+        name: json['name']?.toString() ?? '',
       );
     } catch (e) {
       logger.i('json: $e');
       return Vod(0, '');
     }
+  }
+
+  // Helper methods for parsing actors, tags, and internal tags
+  static List<Actor> _parseActors(dynamic actorsData) {
+    if (actorsData == null) return [];
+    return (actorsData as List<dynamic>).map((e) {
+      if (e is int) return Actor(e, '', '');
+      return Actor.fromJson(e);
+    }).toList();
+  }
+
+  static List<Tag> _parseTags(dynamic tagsData) {
+    if (tagsData == null) return [];
+    return (tagsData as List<dynamic>).map((e) {
+      if (e is int) return Tag(e, '');
+      return Tag.fromJson(e);
+    }).toList();
+  }
+
+  static List<int> _parseInternalTags(dynamic internalTagsData) {
+    if (internalTagsData == null) return [];
+    return List<int>.from(internalTagsData);
   }
 
   Vod fillDetail(Map<String, dynamic> json) {

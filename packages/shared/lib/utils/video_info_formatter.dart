@@ -26,12 +26,14 @@ String formatNumberToUnit(int videoViewTimes,
     formattedNumber = '${(times / 1000000000).floor()}G';
   } else if (timeStr.length > 6) {
     formattedNumber = '${(times / 1000000).floor()}M';
-  } else if (shouldCalculateThousands && timeStr.length > 4) {
-    if (locale == 'zh-CN' || locale == 'zh-TW' || locale == 'zh-HK') {
-      formattedNumber = '${formatNumber(times / 10000)}萬';
-    } else {
-      formattedNumber = '${formatNumber(times / 1000)}k';
-    }
+  } else if (shouldCalculateThousands &&
+      timeStr.length > 4 &&
+      (locale == 'zh_CN' || locale == 'zh_TW' || locale == 'zh_HK')) {
+    formattedNumber = '${formatNumber(times / 10000)}萬';
+  } else if (shouldCalculateThousands &&
+      timeStr.length > 3 &&
+      !(locale == 'zh_CN' || locale == 'zh_TW' || locale == 'zh_HK')) {
+    formattedNumber = '${formatNumber(times / 1000)}k';
   } else {
     formattedNumber = timeStr;
   }

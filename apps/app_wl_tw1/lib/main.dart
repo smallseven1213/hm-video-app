@@ -40,6 +40,13 @@ void main() async {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       useMaterial3: false,
+      dialogBackgroundColor: AppColors.colors[ColorKeys.noticeBg],
+      primaryColor: AppColors.colors[ColorKeys.primary],
+      disabledColor: AppColors.colors[ColorKeys.buttonBgCancel],
+      colorScheme: ColorScheme.fromSwatch().copyWith(
+        primaryContainer: AppColors.colors[ColorKeys.buttonBgPrimary],
+        primary: AppColors.colors[ColorKeys.textPrimary], // textPrimaryColor
+      ),
     ),
     globalLoadingWidget: ({String? text}) =>
         Loading(loadingText: text ?? '正在加载...'),

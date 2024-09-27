@@ -5,7 +5,7 @@ import '../../controllers/post_controller.dart';
 import '../../models/post_detail.dart';
 
 class PostConsumer extends StatefulWidget {
-  final Widget Function(PostDetail?) child;
+  final Widget Function(PostDetail?, {bool? isError}) child;
   final int id;
   const PostConsumer({
     Key? key,
@@ -35,7 +35,7 @@ class PostConsumerState extends State<PostConsumer> {
       if (postController.isLoading.value) {
         return const SizedBox.shrink();
       }
-      return widget.child(post);
+      return widget.child(post, isError: postController.isError.value);
     });
   }
 }

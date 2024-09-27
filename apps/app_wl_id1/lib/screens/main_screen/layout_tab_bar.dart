@@ -151,8 +151,8 @@ class LayoutTabBar extends StatelessWidget {
                         name,
                         style: TextStyle(
                           color: isActive
-                              ? AppColors.colors[ColorKeys.primary]
-                              : const Color(0xffCFCECE),
+                              ? AppColors.colors[ColorKeys.tabTextActiveColor]
+                              : AppColors.colors[ColorKeys.tabTextColor],
                         ),
                       ),
                     )),
@@ -175,7 +175,7 @@ class LayoutTabBar extends StatelessWidget {
                     letterSpacing: 0.05,
                     color: AppColors.colors[ColorKeys.primary],
                   ),
-                  unselectedLabelColor: const Color(0xffb2bac5),
+                  unselectedLabelColor: AppColors.colors[ColorKeys.tabTextColor],
                   indicator: UnderlineTabIndicator(
                     borderRadius: const BorderRadius.horizontal(
                         left: Radius.circular(3), right: Radius.circular(3)),

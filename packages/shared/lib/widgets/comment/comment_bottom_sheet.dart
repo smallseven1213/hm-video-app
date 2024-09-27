@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/comment/input.dart';
-import 'package:shared/widgets/comment/list.dart';
+import 'package:shared/models/comment.dart';
+import 'package:shared/widgets/comment/index.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 class AppColors {
@@ -8,32 +8,29 @@ class AppColors {
   static const background = Colors.black;
 }
 
-class CommentBottomSheet extends StatefulWidget {
-  const CommentBottomSheet({super.key});
+class CommentBottomSheet extends StatelessWidget {
+  final int postId;
 
-  @override
-  CommentBottomSheetState createState() => CommentBottomSheetState();
-}
-
-class CommentBottomSheetState extends State<CommentBottomSheet> {
-  bool showInput = true;
+  const CommentBottomSheet({
+    Key? key,
+    required this.postId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-
     return UIBottomSafeArea(
       child: Padding(
-        padding: EdgeInsets.only(
-            bottom: showInput ? MediaQuery.of(context).viewInsets.bottom : 16),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           height: 400,
           decoration: const BoxDecoration(
-            color: AppColors.background,
+            color: Color(0xff0f1320),
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
             children: [
+              // Draggable indicator
               Container(
                 height: 4,
                 width: 40,
@@ -43,32 +40,12 @@ class CommentBottomSheetState extends State<CommentBottomSheet> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  '評論',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+              Expanded(
+                child: CommentSection(
+                  topicId: postId,
+                  topicType: TopicType.post,
+                  isScrollable: true,
                 ),
-              ),
-              const Expanded(
-                child: CommentList(),
-              ),
-              CommentInput(
-                onFocus: () {
-                  setState(() {
-                    showInput = true;
-                  });
-                },
-                onSend: () {
-                  FocusScope.of(context).unfocus();
-                  setState(() {
-                    showInput = false;
-                  });
-                },
               ),
             ],
           ),

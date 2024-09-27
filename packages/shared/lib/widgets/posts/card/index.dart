@@ -74,7 +74,7 @@ class PostCard extends StatelessWidget {
               PostStatsWidget(
                 viewCount: detail.viewCount ?? 0,
                 likeCount: detail.likeCount ?? 0,
-                commentCount: 2,
+                replyCount: detail.replyCount ?? 0,
                 postId: detail.id,
               ),
             ],

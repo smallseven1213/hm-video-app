@@ -1,4 +1,3 @@
-import 'package:game/models/hm_api_response_pagination.dart';
 import 'package:get/get.dart';
 import '../controllers/system_config_controller.dart';
 import '../models/infinity_posts.dart';
@@ -29,6 +28,7 @@ class PostApi {
     int? publisherId,
     int? tagId,
     int? topicId,
+    int? areaId,
   }) async {
     try {
       Map<String, String> queryParams = {
@@ -43,7 +43,7 @@ class PostApi {
         queryParams['publisher_id'] = publisherId.toString();
       if (tagId != null) queryParams['tag_id'] = tagId.toString();
       if (topicId != null) queryParams['topic_id'] = topicId.toString();
-
+      if (areaId != null) queryParams['area_id'] = areaId.toString();
       var uri =
           Uri.parse('$apiPrefix/list').replace(queryParameters: queryParams);
 
@@ -100,5 +100,4 @@ class PostApi {
       return false;
     }
   }
-
 }

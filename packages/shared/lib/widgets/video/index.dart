@@ -29,6 +29,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final Color? themeColor;
   final Widget? buildLoadingWidget;
   final bool? useGameDeposit;
+  final bool? isVerticalDragEnabled;
 
   const VideoPlayerWidget({
     Key? key,
@@ -43,6 +44,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
     this.useGameDeposit = false,
+    this.isVerticalDragEnabled = false,
   }) : super(key: key);
 
   @override
@@ -212,6 +214,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                 toggleFullscreen: (status) {
                   toggleFullscreen(fullScreen: status);
                 },
+                isVerticalDragEnabled: widget.isVerticalDragEnabled,
               )
             ],
           );
