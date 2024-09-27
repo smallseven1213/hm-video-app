@@ -15,6 +15,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   int get topicType;
   bool? get autoScrollToBottom => false;
   bool? get showNoMoreComments => false;
+  bool? get autoFocusInput => false;
 
   @override
   void initState() {
@@ -65,6 +66,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   // 返回 CommentInput 小部件，包含發送評論的邏輯
   Widget buildCommentInput() {
     return CommentInput(
+      autoFocusInput: autoFocusInput,
       onSend: (String text) async {
         await _commentController.createComment(text);
         if (autoScrollToBottom == true) {

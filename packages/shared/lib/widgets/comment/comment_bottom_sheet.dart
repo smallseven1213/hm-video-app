@@ -9,10 +9,12 @@ class AppColors {
 
 class CommentBottomSheet extends StatelessWidget {
   final int postId;
+  final bool autoFocusInput;
 
   const CommentBottomSheet({
     Key? key,
     required this.postId,
+    this.autoFocusInput = false,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class CommentBottomSheet extends StatelessWidget {
                 topicId: postId,
                 topicType: TopicType.post,
                 isScrollable: true,
+                autoFocusInput: autoFocusInput,
               ),
             ),
           ],

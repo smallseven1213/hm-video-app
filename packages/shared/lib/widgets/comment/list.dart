@@ -1,61 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/comment_controller.dart';
 import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/models/comment.dart';
-import 'package:shared/modules/comment/comment_consumer.dart';
 import 'package:shared/widgets/avatar.dart';
 
-class CommentList extends StatelessWidget {
+class CommentList extends StatefulWidget {
   final int topicId;
   final TopicType topicType;
   final bool showNoMoreComments;
+  final ScrollController? scrollController;
 
   const CommentList({
-    super.key,
     required this.topicId,
     required this.topicType,
     this.showNoMoreComments = false,
+    this.scrollController, 
   });
+
+  @override
+  _CommentListState createState() => _CommentListState();
+}
+
+class _CommentListState extends State<CommentList> {
+  late ScrollController _scrollController;
+  late CommentController _commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentController =
+        Get.find<CommentController>(tag: 'comment-${widget.topicId}');
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    // 当滚动到距离底部100像素以内时，加载更多评论
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
+      if (!_commentController.isLoading.value &&
+          _commentController.hasMoreData) {
+        _commentController.loadMoreComments();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
-    return CommentConsumer(
-      topicId: topicId,
-      topicType: topicType.index,
-      child: (List<Comment> comments) {
-        return Column(
-          children: [
-            Padding(
+    return Obx(() {
+      int itemCount =
+          _commentController.comments.length + 1; // +1 for the header
+      bool showExtraItem = _commentController.isLoading.value ||
+          (!_commentController.hasMoreData && widget.showNoMoreComments);
+
+      if (showExtraItem) {
+        itemCount +=
+            1; // Add extra item for loading indicator or "no more comments" message
+      }
+
+      return ListView.builder(
+        controller: _scrollController,
+        itemCount: itemCount,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            // Return the header
+            return Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: Text(
-                localizations.translate('comment'),
-                style: const TextStyle(
+              child: Center(
+                child: Text(
+                  localizations.translate('comment'),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: comments.length,
-              itemBuilder: (context, index) {
-                return CommentItem(item: comments[index]);
-              },
-            ),
-            if (comments.length < 5 && showNoMoreComments)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  localizations.translate('nothing_more'),
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                    fontSize: 14,
+                  ),
                 ),
               ),
-          ],
-        );
-      },
-    );
+            );
+          } else if (index > 0 && index <= _commentController.comments.length) {
+            final comment =
+                _commentController.comments[index - 1]; // Adjust index
+            return CommentItem(item: comment);
+          } else {
+            // This is the extra item at the end
+            if (_commentController.isLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            } else if (!_commentController.hasMoreData &&
+                widget.showNoMoreComments) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                  child: Text(
+                    localizations.translate('nothing_more'),
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                ),
+              );
+            } else {
+              return SizedBox.shrink();
+            }
+          }
+        },
+      );
+    });
   }
 }
 

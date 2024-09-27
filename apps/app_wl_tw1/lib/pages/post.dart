@@ -7,7 +7,7 @@ import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/comment/comment_bottom_sheet.dart';
-import 'package:shared/widgets/posts/card/post_stats_with_comment.dart';
+import 'package:shared/widgets/comment/comment_hint.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
@@ -54,6 +54,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return PostConsumer(
       id: widget.id,
       child: (PostDetail? postDetail, {bool? isError}) {
@@ -137,32 +138,51 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                     totalChapter: postDetail.post.totalChapter ?? 0,
                   ),
                   RecommendWidget(recommendations: postDetail.recommend),
-                  // buildCommentList(),
                 ],
               ),
             ),
           ),
           bottomNavigationBar: UIBottomSafeArea(
             child: InkWell(
-              onTap: () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                isDismissible: true,
-                backgroundColor: Colors.transparent,
-                barrierColor: Colors.black.withOpacity(0.5),
-                builder: (BuildContext context) {
-                  return CommentBottomSheet(postId: postDetail.post.id);
-                },
-              ),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  isDismissible: true,
+                  backgroundColor: Colors.transparent,
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  builder: (BuildContext context) {
+                    return CommentBottomSheet(
+                      postId: postDetail.post.id,
+                    );
+                  },
+                );
+              },
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+                padding: const EdgeInsets.only(
+                    top: 16.0, bottom: 8, left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    Expanded(child: CommentHint(onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        isDismissible: true,
+                        backgroundColor: Colors.transparent,
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        builder: (BuildContext context) {
+                          return CommentBottomSheet(
+                            postId: postDetail.post.id,
+                            autoFocusInput: true,
+                          );
+                        },
+                      );
+                    })),
+                    const SizedBox(width: 10),
                     const Icon(Icons.chat_bubble_outline_rounded,
                         size: 20, color: Color(0xff919bb3)),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
                     Text(
                       postDetail.post.replyCount.toString(),
                       style: const TextStyle(

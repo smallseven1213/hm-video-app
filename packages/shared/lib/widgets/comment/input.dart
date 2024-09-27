@@ -10,11 +10,13 @@ import 'package:shared/widgets/ui_bottom_safearea.dart';
 class CommentInput extends StatefulWidget {
   final Function(String) onSend;
   final ValueChanged<bool> onFocusChange;
+  final bool? autoFocusInput;
 
   const CommentInput({
     Key? key,
     required this.onSend,
     required this.onFocusChange,
+    this.autoFocusInput,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,9 @@ class _CommentInputState extends State<CommentInput> {
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
+    if (widget.autoFocusInput == true) {
+      _focusNode.requestFocus();
+    }
   }
 
   void _onFocusChange() {
