@@ -136,7 +136,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                     totalChapter: postDetail.post.totalChapter ?? 0,
                   ),
                   RecommendWidget(recommendations: postDetail.recommend),
-                  buildCommentList(),
+                  // buildCommentList(),
                 ],
               ),
             ),
