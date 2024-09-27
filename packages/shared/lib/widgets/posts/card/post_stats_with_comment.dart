@@ -8,14 +8,14 @@ class AppColors {
   static const background = Colors.black;
 }
 
-class PostStatsWidget extends StatelessWidget {
+class PostStatsWithCommentsWidget extends StatelessWidget {
   final int viewCount;
   final int likeCount;
   final int replyCount;
   final int? postId;
   final bool? isInteractive;
 
-  const PostStatsWidget({
+  const PostStatsWithCommentsWidget({
     Key? key,
     required this.viewCount,
     required this.likeCount,
@@ -108,9 +108,7 @@ class PostStatsWidget extends StatelessWidget {
         backgroundColor: Colors.transparent,
         barrierColor: Colors.black.withOpacity(0.5),
         builder: (BuildContext context) {
-          return CommentBottomSheet(
-            postId: postId!,
-          );
+          return CommentBottomSheet(postId: postId!);
         },
       ),
       child: _buildStatItem(Icons.chat_bubble_outline_rounded, replyCount),

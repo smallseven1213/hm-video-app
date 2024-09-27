@@ -5,16 +5,15 @@ import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/show_confirm_dialog.dart';
 import 'package:shared/widgets/avatar.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 class CommentInput extends StatefulWidget {
   final Function(String) onSend;
-  final ValueChanged<bool>? onFocusChange;
+  final ValueChanged<bool> onFocusChange;
 
   const CommentInput({
     Key? key,
     required this.onSend,
-    this.onFocusChange,
+    required this.onFocusChange,
   }) : super(key: key);
 
   @override
@@ -25,28 +24,19 @@ class _CommentInputState extends State<CommentInput> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        setState(() {
-          _isKeyboardVisible = true;
-        });
-        widget.onFocusChange?.call(true);
-      } else {
-        setState(() {
-          _isKeyboardVisible = false;
-        });
-        widget.onFocusChange?.call(false);
-      }
-    });
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    widget.onFocusChange(_focusNode.hasFocus);
   }
 
   @override
   void dispose() {
+    _focusNode.removeListener(_onFocusChange);
     _focusNode.dispose();
     _controller.dispose();
     super.dispose();
@@ -150,7 +140,7 @@ class _CommentInputState extends State<CommentInput> {
                       return;
                     }
                     widget.onSend(_controller.text);
-                    _controller.clear(); // Clear the text field
+                    _controller.clear();
                     FocusScope.of(context).unfocus();
                     setState(() {});
                   }

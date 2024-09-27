@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/comment/comment_section_base.dart';
-import 'package:shared/widgets/comment/list.dart';
 
 class CommentSection extends StatefulWidget {
   final int topicId;

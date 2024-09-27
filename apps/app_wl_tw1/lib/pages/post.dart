@@ -6,6 +6,7 @@ import 'package:shared/models/post_detail.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/avatar.dart';
+import 'package:shared/widgets/posts/card/post_stats_with_comment.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
@@ -94,6 +95,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
             ],
           ),
           body: SingleChildScrollView(
+            controller: scrollController,
             child: Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
@@ -123,14 +125,12 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                     tags: postDetail.post.tags,
                   ),
                   const SizedBox(height: 8),
-                  // Photos or Videos
                   FileListWidget(
                     context: context,
                     postDetail: postDetail.post,
                     showConfirmDialog: showConfirmDialog,
                     buttonBuilder: buttonBuilder,
                   ),
-                  // Serial list component
                   SerialListWidget(
                     series: postDetail.series,
                     totalChapter: postDetail.post.totalChapter ?? 0,
@@ -141,7 +141,14 @@ class _PostPageState extends CommentSectionBase<PostPage> {
               ),
             ),
           ),
-          bottomNavigationBar: buildCommentInput(),
+          bottomNavigationBar: UIBottomSafeArea(
+            child: PostStatsWithCommentsWidget(
+              viewCount: postDetail.post.viewCount ?? 0,
+              likeCount: postDetail.post.likeCount ?? 0,
+              replyCount: postDetail.post.replyCount ?? 0,
+              postId: postDetail.post.id,
+            ),
+          ),
         );
       },
     );
