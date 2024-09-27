@@ -54,7 +54,6 @@ class _PostPageState extends CommentSectionBase<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return PostConsumer(
       id: widget.id,
       child: (PostDetail? postDetail, {bool? isError}) {
@@ -160,7 +159,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
               },
               child: Padding(
                 padding: const EdgeInsets.only(
-                    top: 16.0, bottom: 8, left: 8, right: 8),
+                    top: 16.0, bottom: 16, left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
