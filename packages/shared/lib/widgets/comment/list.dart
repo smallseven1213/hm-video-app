@@ -77,9 +77,10 @@ class _CommentItemState extends State<CommentItem> {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
     return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(widget.item.avatar),
-        radius: 18,
+      leading: AvatarWidget(
+        photoSid: widget.item.avatar,
+        width: 36,
+        height: 36,
         backgroundColor: Colors.transparent,
       ),
       title: Text(
