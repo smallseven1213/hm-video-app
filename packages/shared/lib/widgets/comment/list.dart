@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:readmore/readmore.dart';
 import 'package:shared/controllers/comment_controller.dart';
 import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/models/comment.dart';
@@ -15,7 +16,7 @@ class CommentList extends StatefulWidget {
     required this.topicId,
     required this.topicType,
     this.showNoMoreComments = false,
-    this.scrollController, 
+    this.scrollController,
   });
 
   @override
@@ -25,6 +26,7 @@ class CommentList extends StatefulWidget {
 class _CommentListState extends State<CommentList> {
   late ScrollController _scrollController;
   late CommentController _commentController;
+  final ValueNotifier<int?> _expandedCommentId = ValueNotifier<int?>(null);
 
   @override
   void initState() {
@@ -50,6 +52,7 @@ class _CommentListState extends State<CommentList> {
   void dispose() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
+    _expandedCommentId.dispose();
     super.dispose();
   }
 
@@ -90,11 +93,19 @@ class _CommentListState extends State<CommentList> {
           } else if (index > 0 && index <= _commentController.comments.length) {
             final comment =
                 _commentController.comments[index - 1]; // Adjust index
-            return CommentItem(item: comment);
+            return CommentItem(
+              item: comment,
+              expandedCommentId: _expandedCommentId, // 传递共享的 ValueNotifier
+            );
           } else {
             // This is the extra item at the end
             if (_commentController.isLoading.value) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(
+                  child: SizedBox(
+                width: 12,
+                height: 12,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ));
             } else if (!_commentController.hasMoreData &&
                 widget.showNoMoreComments) {
               return Padding(
@@ -118,16 +129,66 @@ class _CommentListState extends State<CommentList> {
 
 class CommentItem extends StatefulWidget {
   final Comment item;
+  final ValueNotifier<int?> expandedCommentId; // 添加这个参数
 
-  const CommentItem({Key? key, required this.item}) : super(key: key);
+  const CommentItem({
+    Key? key,
+    required this.item,
+    required this.expandedCommentId, // 添加这个参数
+  }) : super(key: key);
 
   @override
   _CommentItemState createState() => _CommentItemState();
 }
 
 class _CommentItemState extends State<CommentItem> {
-  bool isExpanded = false;
-  bool showExpandButton = false;
+  late ValueNotifier<bool> isCollapsed;
+
+  @override
+  void initState() {
+    super.initState();
+    isCollapsed = ValueNotifier<bool>(true);
+
+    // 监听 expandedCommentId 的变化
+    widget.expandedCommentId.addListener(_expandedCommentIdListener);
+
+    // 监听 isCollapsed 的变化
+    isCollapsed.addListener(_isCollapsedListener);
+  }
+
+  void _expandedCommentIdListener() {
+    if (widget.expandedCommentId.value == widget.item.id) {
+      if (isCollapsed.value) {
+        isCollapsed.value = false;
+      }
+    } else {
+      if (!isCollapsed.value) {
+        isCollapsed.value = true;
+      }
+    }
+  }
+
+  void _isCollapsedListener() {
+    if (!isCollapsed.value) {
+      // 展开状态
+      if (widget.expandedCommentId.value != widget.item.id) {
+        widget.expandedCommentId.value = widget.item.id;
+      }
+    } else {
+      // 收起状态
+      if (widget.expandedCommentId.value == widget.item.id) {
+        widget.expandedCommentId.value = null;
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.expandedCommentId.removeListener(_expandedCommentIdListener);
+    isCollapsed.removeListener(_isCollapsedListener);
+    isCollapsed.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,54 +212,15 @@ class _CommentItemState extends State<CommentItem> {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LayoutBuilder(
-            builder: (context, constraints) {
-              final span = TextSpan(
-                text: widget.item.content,
-                style: const TextStyle(color: Colors.white, fontSize: 11),
-              );
-              final tp = TextPainter(
-                text: span,
-                maxLines: 5,
-                textDirection: TextDirection.ltr,
-              );
-              tp.layout(maxWidth: constraints.maxWidth);
-
-              if (tp.didExceedMaxLines) {
-                showExpandButton = true;
-              }
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.item.content,
-                    maxLines: isExpanded ? null : 5,
-                    overflow: isExpanded
-                        ? TextOverflow.visible
-                        : TextOverflow.ellipsis,
-                    style: const TextStyle(color: Colors.white, fontSize: 11),
-                  ),
-                  if (showExpandButton)
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isExpanded = !isExpanded;
-                        });
-                      },
-                      child: Text(
-                        isExpanded
-                            ? localizations.translate('collapse')
-                            : localizations.translate('expand'),
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
+          ReadMoreText(
+            widget.item.content,
+            trimLines: 5,
+            colorClickableText: Colors.grey,
+            trimMode: TrimMode.Line,
+            trimCollapsedText: localizations.translate('expand'),
+            trimExpandedText: localizations.translate('collapse'),
+            style: const TextStyle(color: Colors.white, fontSize: 11),
+            isCollapsed: isCollapsed,
           ),
         ],
       ),

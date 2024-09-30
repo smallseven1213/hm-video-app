@@ -20,7 +20,6 @@ class CommentController extends GetxController {
     required this.topicId,
   }) {
     getComments(page: _page);
-    // 监听用户登录状态的变化，重新加载评论
     Get.find<AuthController>().token.listen((event) {
       _page = 1;
       _hasMoreData = true;

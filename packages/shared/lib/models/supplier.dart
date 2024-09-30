@@ -1,3 +1,5 @@
+import 'package:shared/helpers/get_field.dart';
+
 class Supplier {
   int? id;
   String? aliasName;
@@ -24,18 +26,17 @@ class Supplier {
   });
 
   Supplier.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    aliasName = json['aliasName'];
-    name = json['name'];
-    shortVideoTotal = json['shortVideoTotal'];
-    followTotal = json['followTotal'];
-    collectTotal = json['collectTotal'];
-    photoSid = json['photoSid'];
-    coverVertical = json['coverVertical'];
-    description = json['description'];
-    videoCount = json['videoCount'];
+    id = getField(json, 'id', defaultValue: 0);
+    aliasName = getField(json, 'aliasName', defaultValue: '');
+    name = getField(json, 'name', defaultValue: '');
+    shortVideoTotal = getField(json, 'shortVideoTotal', defaultValue: 0);
+    followTotal = getField(json, 'followTotal', defaultValue: 0);
+    collectTotal = getField(json, 'collectTotal', defaultValue: 0);
+    photoSid = getField(json, 'photoSid', defaultValue: '');
+    coverVertical = getField(json, 'coverVertical', defaultValue: '');
+    description = getField(json, 'description', defaultValue: '');
+    videoCount = getField(json, 'videoCount', defaultValue: 0);
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;

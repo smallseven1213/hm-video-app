@@ -1,5 +1,6 @@
 import 'package:shared/models/supplier.dart';
 import 'package:shared/models/tag.dart';
+import 'package:shared/helpers/get_field.dart';
 
 enum LinkType {
   none,
@@ -53,31 +54,56 @@ class Post {
         tags = tags ?? [];
 
   factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      json['id'] ?? 0,
-      json['title'] ?? '',
-      json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
-      json['chargeType'] ?? 0,
-      json['isUnlock'] ?? false,
-      json['previewMediaCount'] ?? 0,
-      json['totalMediaCount'] ?? 0,
-      json['content'],
-      (json['files'] as List<dynamic>?)
-          ?.map((file) => Files.fromJson(file))
-          .toList(),
-      (json['tags'] as List<dynamic>?)
-          ?.map((tag) => Tag.fromJson(tag))
-          .toList(),
-      json['cover'],
-      json['replyCount'],
-      json['linkType'],
-      json['link'],
-      json['viewCount'],
-      json['likeCount'],
-      json['isLike'],
-      json['totalChapter'] ?? 0,
-      json['points'] ?? '0',
-    );
+    try {
+      return Post(
+        getField(json, 'id', defaultValue: 0),
+        getField(json, 'title', defaultValue: ''),
+        Supplier.fromJson(getField(json, 'supplier', defaultValue: {})),
+        getField(json, 'chargeType', defaultValue: 0),
+        getField(json, 'isUnlock', defaultValue: false),
+        getField(json, 'previewMediaCount', defaultValue: 0),
+        getField(json, 'totalMediaCount', defaultValue: 0),
+        getField(json, 'content', defaultValue: ''),
+        getField(json, 'files', defaultValue: [])
+            .map<Files>((file) => Files.fromJson(file))
+            .toList(),
+        getField(json, 'tags', defaultValue: [])
+            .map<Tag>((tag) => Tag.fromJson(tag))
+            .toList(),
+        getField(json, 'cover', defaultValue: ''),
+        getField(json, 'replyCount', defaultValue: 0),
+        getField(json, 'linkType', defaultValue: 0),
+        getField(json, 'link', defaultValue: ''),
+        getField(json, 'viewCount', defaultValue: 0),
+        getField(json, 'likeCount', defaultValue: 0),
+        getField(json, 'isLike', defaultValue: false),
+        getField(json, 'totalChapter', defaultValue: 0),
+        getField(json, 'points', defaultValue: '0').toString(),
+      );
+    } catch (e) {
+      print('Error parsing Post from JSON: $e');
+      return Post(
+        0, // id
+        '', // title
+        null, // supplier
+        0, // chargeType
+        false, // isUnlock
+        0, // previewMediaCount
+        0, // totalMediaCount
+        null, // content
+        [], // files
+        [], // tags
+        null, // cover
+        0, // replyCount
+        null, // linkType
+        null, // link
+        0, // viewCount
+        0, // likeCount
+        false, // isLike
+        0, // totalChapter
+        '0', // points
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -118,11 +144,12 @@ class Files {
     this.type,
     this.cover,
   );
+
   factory Files.fromJson(Map<String, dynamic> json) {
     return Files(
-      json['video'] ?? '',
-      json['type'] ?? 0,
-      json['cover'] ?? '',
+      getField(json, 'video', defaultValue: ''),
+      getField(json, 'type', defaultValue: 0),
+      getField(json, 'cover', defaultValue: ''),
     );
   }
 
