@@ -5,7 +5,7 @@ import 'package:shared/widgets/posts/tags.dart';
 import '../../../models/post.dart';
 import '../../../navigator/delegate.dart';
 import 'media_grid.dart';
-import 'post_stats.dart';
+import 'post_stats_with_comment.dart';
 import 'supplier_info.dart';
 
 class AppColors {
@@ -71,7 +71,7 @@ class PostCard extends StatelessWidget {
                 isUnlock: detail.isUnlock,
                 darkMode: darkMode,
               ),
-              PostStatsWidget(
+              PostStatsWithCommentsWidget(
                 viewCount: detail.viewCount ?? 0,
                 likeCount: detail.likeCount ?? 0,
                 replyCount: detail.replyCount ?? 0,

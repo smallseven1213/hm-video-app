@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';

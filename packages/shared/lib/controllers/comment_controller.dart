@@ -12,13 +12,19 @@ class CommentController extends GetxController {
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
 
+  int _page = 1;
+  bool _hasMoreData = true;
+
   CommentController({
     required this.topicType,
     required this.topicId,
   }) {
-    getComments(topicType, topicId);
+    getComments(page: _page);
     Get.find<AuthController>().token.listen((event) {
-      getComments(topicType, topicId);
+      _page = 1;
+      _hasMoreData = true;
+      comments.clear();
+      getComments(page: _page);
     });
   }
 
@@ -38,13 +44,37 @@ class CommentController extends GetxController {
     }
   }
 
-  // get comment detail
-  Future<void> getComments(int topicType, int topicId) async {
+  // 获取评论列表，支持分页
+  Future<void> getComments({int page = 1}) async {
+    if (isLoading.value || !_hasMoreData) return;
+
     isLoading.value = true;
-    var comment =
-        await commentApi.getCommentList(topicType: topicType, topicId: topicId);
-    comments.value = comment;
-    update();
+    var commentList = await commentApi.getCommentList(
+      topicType: topicType,
+      topicId: topicId,
+      page: page,
+    );
+
+    if (commentList.isNotEmpty) {
+      if (page == 1) {
+        comments.value = commentList;
+      } else {
+        comments.addAll(commentList);
+      }
+      _page = page;
+    } else {
+      _hasMoreData = false;
+    }
+
     isLoading.value = false;
   }
+
+  // 加载更多评论
+  Future<void> loadMoreComments() async {
+    if (isLoading.value || !_hasMoreData) return;
+    await getComments(page: _page + 1);
+  }
+
+  // 检查是否有更多数据
+  bool get hasMoreData => _hasMoreData;
 }
