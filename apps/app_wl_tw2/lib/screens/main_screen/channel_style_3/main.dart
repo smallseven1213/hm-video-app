@@ -150,9 +150,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: channelSharedData?.blocks?.asMap().entries.map((e) {
-                    if (e.value.film == 4 && e.value.id == 212) {
+                    if (e.value.film == 4) {
                       return Posts(
-                        key: Key('post: ${e.key}'),
+                        key: Key('post: ${e.key}-${e.value.id}'),
                         postId: widget.channelId,
                         areaId: e.value.id ?? 0,
                         isActive: e.key == _tabController!.index,
