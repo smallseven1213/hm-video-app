@@ -70,7 +70,7 @@ class FileListWidget extends StatelessWidget {
         isPost: true,
         loadingWidget: AspectRatio(
           aspectRatio: 16 / 9,
-          child: VideoLoading(coverHorizontal: file.cover),
+          child: VideoLoading(coverHorizontal: file.cover,isPost: true,),
         ),
         child: (isReady, controller) {
           return VideoPlayerWidget(

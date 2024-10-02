@@ -11,7 +11,14 @@ class VideoLoading extends StatelessWidget {
   final String coverHorizontal;
   final Image? image;
   final Widget? loadingAnimation;
-  const VideoLoading({Key? key, required this.coverHorizontal, this.image, this.loadingAnimation}) : super(key: key);
+  final bool? isPost;
+  const VideoLoading(
+      {Key? key,
+      required this.coverHorizontal,
+      this.image,
+      this.loadingAnimation,
+      this.isPost = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +63,7 @@ class VideoLoading extends StatelessWidget {
             )),
           ],
         ),
-        const FloatPageBackButton(),
+        if (!isPost!) const FloatPageBackButton(),
       ],
     );
   }
