@@ -147,28 +147,27 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             ];
           },
           body: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _tabController,
-            children: channelSharedData?.blocks
-                    ?.asMap()
-                    .entries
-                    .map((e) => e.value.film == 4
-                        ? Posts(
-                            key: Key('post: ${widget.channelId}'),
-                            postId: widget.channelId,
-                            areaId: e.value.id ?? 0,
-                            isActive: e.key == _tabController!.index,
-                            isAreaAds: e.value.isAreaAds!,
-                          )
-                        : Vods(
-                            key: Key('${e.key}'),
-                            areaId: e.value.id ?? 0,
-                            templateId: e.value.template,
-                            isActive: e.key == _tabController!.index,
-                          ))
-                    .toList() ??
-                [],
-          ),
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children: channelSharedData?.blocks?.asMap().entries.map((e) {
+                    if (e.value.film == 4 && e.value.id == 212) {
+                      return Posts(
+                        key: Key('post: ${e.key}'),
+                        postId: widget.channelId,
+                        areaId: e.value.id ?? 0,
+                        isActive: e.key == _tabController!.index,
+                        isAreaAds: e.value.isAreaAds!,
+                      );
+                    } else {
+                      return Vods(
+                        key: Key('${e.key}'),
+                        areaId: e.value.id ?? 0,
+                        templateId: e.value.template,
+                        isActive: e.key == _tabController!.index,
+                      );
+                    }
+                  }).toList() ??
+                  []),
         );
       }),
     );
