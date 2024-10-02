@@ -10,6 +10,7 @@ class VideoPlayerProvider extends StatefulWidget {
   final Vod videoDetail;
   final bool? autoPlay;
   final bool? isShort;
+  final bool? isPost;
   final Widget Function(
       bool isReady, ObservableVideoPlayerController controller) child;
   final Widget? loadingWidget;
@@ -22,8 +23,9 @@ class VideoPlayerProvider extends StatefulWidget {
     required this.videoDetail,
     required this.child,
     this.loadingWidget,
-    this.autoPlay, 
-    this.isShort = false,
+    this.autoPlay,
+    this.isShort = false, 
+    this.isPost = false,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class VideoPlayerProviderState extends State<VideoPlayerProvider> {
         widget.videoUrl,
         widget.autoPlay ?? false,
         widget.isShort,
+        widget.isPost,
       ),
       tag: widget.tag,
     );

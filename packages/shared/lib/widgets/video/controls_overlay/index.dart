@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/controllers/video_player_controller.dart';
 
 import 'enums.dart';
 import 'screen_lock.dart';
@@ -25,6 +26,7 @@ class ControlsOverlay extends StatefulWidget {
   final bool? displayFullScreenIcon;
   final Color? themeColor;
   final bool? isVerticalDragEnabled;
+  final bool? isPost;
 
   const ControlsOverlay({
     Key? key,
@@ -38,6 +40,7 @@ class ControlsOverlay extends StatefulWidget {
     this.displayFullScreenIcon = true,
     this.themeColor = Colors.blue,
     this.isVerticalDragEnabled = false,
+    this.isPost = false,
   }) : super(key: key);
 
   @override
@@ -45,7 +48,7 @@ class ControlsOverlay extends StatefulWidget {
 }
 
 class ControlsOverlayState extends State<ControlsOverlay> {
-  bool hasH5FirstPlay = kIsWeb ? false : true;
+  bool hasFirstPlay = true;
   bool isForward = false;
 
   // vertical drag的東西
@@ -57,9 +60,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
   double verticalDragPosition = 0.0; // 初始值
+  bool initPost = false;
 
   @override
   void initState() {
+    if (widget.isPost! && mounted) {
+      initPost = true;
+    }
     super.initState();
   }
 
@@ -246,16 +253,17 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     ),
                   ),
                 ),
-              if (kIsWeb && !hasH5FirstPlay && !videoPlayerInfo.isPlaying)
+              if (hasFirstPlay && !videoPlayerInfo.isPlaying)
                 // 中間播放按鈕
                 GestureDetector(
                   onTap: () {
                     videoPlayerInfo.videoPlayerController?.play();
-                    if (kIsWeb && !hasH5FirstPlay) {
-                      setState(() {
-                        hasH5FirstPlay = true;
-                      });
-                    }
+                    setState(() {
+                      if (hasFirstPlay) {
+                        hasFirstPlay = false;
+                        initPost = false;
+                      }
+                    });
                   },
                   child: Center(
                     child: Container(
@@ -281,7 +289,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ScreenLock(
                     isScreenLocked: widget.isScreenLocked,
                     onScreenLock: widget.onScreenLock),
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+              if ((videoPlayerInfo.displayControls ||
+                      !videoPlayerInfo.isPlaying) &&
+                  !initPost)
                 // 下方控制區塊
                 Positioned(
                   bottom: widget.isFullscreen ? 30 : 0,

@@ -67,6 +67,7 @@ class FileListWidget extends StatelessWidget {
         autoPlay: false,
         videoUrl: videoUrl,
         videoDetail: Vod(0, ''),
+        isPost: true,
         loadingWidget: AspectRatio(
           aspectRatio: 16 / 9,
           child: VideoLoading(coverHorizontal: file.cover),
@@ -81,6 +82,7 @@ class FileListWidget extends StatelessWidget {
             displayHeader: false,
             hasPaymentProcess: false,
             isVerticalDragEnabled: true,
+            isPost: true,
           );
         },
       ),
