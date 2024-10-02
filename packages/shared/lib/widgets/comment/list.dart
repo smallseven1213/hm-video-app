@@ -71,57 +71,61 @@ class _CommentListState extends State<CommentList> {
             1; // Add extra item for loading indicator or "no more comments" message
       }
 
-      return ListView.builder(
-        controller: _scrollController,
-        itemCount: itemCount,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            // Return the header
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Center(
-                child: Text(
-                  localizations.translate('comment'),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Center(
+              child: Text(
+                localizations.translate('comment'),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
                 ),
               ),
-            );
-          } else if (index > 0 && index <= _commentController.comments.length) {
-            final comment =
-                _commentController.comments[index - 1]; // Adjust index
-            return CommentItem(
-              item: comment,
-              expandedCommentId: _expandedCommentId, // 传递共享的 ValueNotifier
-            );
-          } else {
-            // This is the extra item at the end
-            if (_commentController.isLoading.value) {
-              return const Center(
-                  child: SizedBox(
-                width: 12,
-                height: 12,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ));
-            } else if (!_commentController.hasMoreData &&
-                widget.showNoMoreComments) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Center(
-                  child: Text(
-                    localizations.translate('nothing_more'),
-                    style: const TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                ),
-              );
-            } else {
-              return SizedBox.shrink();
-            }
-          }
-        },
+            ),
+          ),
+          Expanded(
+              child: ListView.builder(
+            controller: _scrollController,
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              if (index > 0 && index <= _commentController.comments.length) {
+                final comment =
+                    _commentController.comments[index - 1]; // Adjust index
+                return CommentItem(
+                  item: comment,
+                  expandedCommentId: _expandedCommentId, // 传递共享的 ValueNotifier
+                );
+              } else {
+                // This is the extra item at the end
+                if (_commentController.isLoading.value) {
+                  return const Center(
+                      child: SizedBox(
+                    width: 12,
+                    height: 12,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ));
+                } else if (!_commentController.hasMoreData &&
+                    widget.showNoMoreComments) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Center(
+                      child: Text(
+                        localizations.translate('nothing_more'),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                    ),
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
+              }
+            },
+          )),
+        ],
       );
     });
   }
@@ -218,7 +222,7 @@ class _CommentItemState extends State<CommentItem> {
             colorClickableText: Colors.grey,
             trimMode: TrimMode.Line,
             trimCollapsedText: localizations.translate('expand'),
-            trimExpandedText: localizations.translate('collapse'),
+            trimExpandedText: ' ${localizations.translate('collapse')}',
             style: const TextStyle(color: Colors.white, fontSize: 11),
             isCollapsed: isCollapsed,
           ),

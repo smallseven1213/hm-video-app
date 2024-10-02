@@ -154,7 +154,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                     .entries
                     .map((e) => e.value.film == 4
                         ? Posts(
-                            key: Key('${widget.channelId}'),
+                            key: Key('post: ${widget.channelId}'),
                             postId: widget.channelId,
                             areaId: e.value.id ?? 0,
                             isActive: e.key == _tabController!.index,
