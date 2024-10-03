@@ -45,7 +45,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
     this.useGameDeposit = false,
-    this.isVerticalDragEnabled = false, 
+    this.isVerticalDragEnabled = false,
     this.isPost = false,
   }) : super(key: key);
 
@@ -121,13 +121,8 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
 
   @override
   Widget build(BuildContext context) {
-    double playerHeight = isFullscreen
-        ? MediaQuery.sizeOf(context).height
-        : MediaQuery.sizeOf(context).width / 16 * 9;
-
     return Container(
       color: Colors.black,
-      height: playerHeight,
       child: VideoPlayerConsumer(
         tag: widget.tag,
         child: (videoPlayerInfo) {
@@ -135,6 +130,12 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
           var aspectRatio = videoSize.width == 0 || videoSize.height == 0
               ? 16 / 9
               : videoSize.width / videoSize.height;
+
+          double playerWidth = MediaQuery.of(context).size.width;
+          double playerHeight = isFullscreen
+              ? MediaQuery.of(context).size.height
+              : playerWidth / aspectRatio;
+
           final coverHorizontal = widget.video.coverHorizontal ?? '';
 
           if (videoPlayerInfo.videoAction == 'error') {
@@ -149,7 +150,15 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
             return widget.buildLoadingWidget ??
-                VideoLoading(coverHorizontal: coverHorizontal);
+                VideoLoading(
+                  coverHorizontal: coverHorizontal,
+                  image: Image.network(
+                    coverHorizontal,
+                    width: playerWidth,
+                    height: playerHeight,
+                    fit: BoxFit.cover,
+                  ),
+                );
           }
 
           if (widget.hasPaymentProcess == true &&
@@ -188,38 +197,41 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             );
           }
 
-          return Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: aspectRatio,
-                child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
-              ),
-              ControlsOverlay(
-                tag: widget.tag,
-                name: widget.video.title,
-                isFullscreen: isFullscreen,
-                displayHeader: widget.displayHeader,
-                displayFullScreenIcon: widget.displayFullscreenIcon,
-                themeColor: widget.themeColor ?? Colors.blue,
-                onScreenLock: (bool isLocked) {
-                  setState(() {
-                    isScreenLocked = isLocked;
-                  });
-                  if (isLocked) {
-                    toggleFullscreen(fullScreen: true);
-                  } else {
-                    setScreenRotation();
-                  }
-                },
-                isScreenLocked: isScreenLocked,
-                toggleFullscreen: (status) {
-                  toggleFullscreen(fullScreen: status);
-                },
-                isVerticalDragEnabled: widget.isVerticalDragEnabled,
-                isPost: widget.isPost,
-              )
-            ],
+          return SizedBox(
+            height: playerHeight,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                ),
+                ControlsOverlay(
+                  tag: widget.tag,
+                  name: widget.video.title,
+                  isFullscreen: isFullscreen,
+                  displayHeader: widget.displayHeader,
+                  displayFullScreenIcon: widget.displayFullscreenIcon,
+                  themeColor: widget.themeColor ?? Colors.blue,
+                  onScreenLock: (bool isLocked) {
+                    setState(() {
+                      isScreenLocked = isLocked;
+                    });
+                    if (isLocked) {
+                      toggleFullscreen(fullScreen: true);
+                    } else {
+                      setScreenRotation();
+                    }
+                  },
+                  isScreenLocked: isScreenLocked,
+                  toggleFullscreen: (status) {
+                    toggleFullscreen(fullScreen: status);
+                  },
+                  isVerticalDragEnabled: widget.isVerticalDragEnabled,
+                  isPost: widget.isPost,
+                )
+              ],
+            ),
           );
         },
       ),

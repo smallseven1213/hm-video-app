@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/post_controller.dart';
@@ -14,7 +15,6 @@ import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video/index.dart';
 import '../../../localization/shared_localization_delegate.dart';
-import '../../widgets/video/loading.dart';
 
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
@@ -32,19 +32,6 @@ class FileListWidget extends StatelessWidget {
     this.useGameDeposit = false,
   }) : super(key: key);
 
-  String? _getVideoUrl(String videoUrl) {
-    final systemConfigController = Get.find<SystemConfigController>();
-    if (videoUrl.isNotEmpty) {
-      String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
-      if (uri.startsWith('http')) {
-        return uri;
-      }
-      String id = uri.substring(uri.indexOf('/') + 1);
-      return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
-    }
-    return null;
-  }
-
   Widget _buildImageWidget(Files file) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -53,38 +40,36 @@ class FileListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildVideoWidget(Files file) {
-    final videoUrl = _getVideoUrl(file.video);
-    if (videoUrl == null) {
-      return const SizedBox.shrink();
-    }
+  void _showFullScreenModal(BuildContext context, int initialIndex) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.black,
+      builder: (BuildContext context) {
+        return CarouselDisplay(
+          postDetail: postDetail,
+          initialIndex: initialIndex,
+          showConfirmDialog: showConfirmDialog,
+        );
+      },
+    );
+  }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: VideoPlayerProvider(
-        key: Key('post-$videoUrl'),
-        tag: 'post-$videoUrl',
-        autoPlay: false,
-        videoUrl: videoUrl,
-        videoDetail: Vod(0, ''),
-        isPost: true,
-        loadingWidget: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: VideoLoading(coverHorizontal: file.cover,isPost: true,),
-        ),
-        child: (isReady, controller) {
-          return VideoPlayerWidget(
-            videoUrl: videoUrl,
-            video: Vod(0, ''),
-            tag: 'post-$videoUrl',
-            showConfirmDialog: showConfirmDialog,
-            displayFullscreenIcon: false,
-            displayHeader: false,
-            hasPaymentProcess: false,
-            isVerticalDragEnabled: true,
-            isPost: true,
-          );
-        },
+  Widget _buildThumbnail(Files file, int index) {
+    return GestureDetector(
+      onTap: () => _showFullScreenModal(context, index),
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        child: file.type == FileType.image.index
+            ? _buildImageWidget(file)
+            : Stack(
+                alignment: Alignment.center,
+                children: [
+                  _buildImageWidget(file),
+                  Icon(Icons.play_circle_outline,
+                      size: 50, color: Colors.white),
+                ],
+              ),
       ),
     );
   }
@@ -156,13 +141,9 @@ class FileListWidget extends StatelessWidget {
         Get.find<PostController>(tag: 'postId-${postDetail.id}');
 
     for (int i = 0; i < postDetail.files.length; i++) {
-      final file = postDetail.files[i];
-      if (file.type == FileType.image.index) {
-        fileWidgets.add(_buildImageWidget(file));
-      } else if (file.type == FileType.video.index) {
-        fileWidgets.add(_buildVideoWidget(file));
-      }
+      fileWidgets.add(_buildThumbnail(postDetail.files[i], i));
     }
+
     if (postDetail.isUnlock == false) {
       fileWidgets.add(_buildPurchaseButton(context, postController));
     } else if (postDetail.isUnlock &&
@@ -174,6 +155,158 @@ class FileListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: fileWidgets,
+    );
+  }
+}
+
+class CarouselDisplay extends StatefulWidget {
+  final Post postDetail;
+  final int initialIndex;
+  final Function showConfirmDialog;
+
+  const CarouselDisplay({
+    Key? key,
+    required this.postDetail,
+    required this.showConfirmDialog,
+    this.initialIndex = 0,
+  }) : super(key: key);
+
+  @override
+  _CarouselDisplayState createState() => _CarouselDisplayState();
+}
+
+class _CarouselDisplayState extends State<CarouselDisplay> {
+  int currentIndex = 0;
+  bool showOverlay = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void toggleOverlay() {
+    setState(() {
+      showOverlay = !showOverlay;
+    });
+  }
+
+  String? _getVideoUrl(String videoUrl) {
+    final systemConfigController = Get.find<SystemConfigController>();
+    if (videoUrl.isNotEmpty) {
+      String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
+      if (uri.startsWith('http')) {
+        return uri;
+      }
+      String id = uri.substring(uri.indexOf('/') + 1);
+      return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
+    }
+    return null;
+  }
+
+  Widget _buildVideoWidget(Files file) {
+    final videoUrl = _getVideoUrl(file.video);
+    if (videoUrl == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: VideoPlayerProvider(
+        key: Key('post-$videoUrl'),
+        tag: 'post-$videoUrl',
+        autoPlay: false,
+        videoUrl: videoUrl,
+        videoDetail: Vod(0, ''),
+        isPost: true,
+        child: (isReady, controller) {
+          return VideoPlayerWidget(
+            videoUrl: videoUrl,
+            video: Vod(0, ''),
+            tag: 'post-$videoUrl',
+            showConfirmDialog: widget.showConfirmDialog,
+            displayFullscreenIcon: false,
+            displayHeader: false,
+            hasPaymentProcess: false,
+            isVerticalDragEnabled: true,
+            isPost: true,
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: toggleOverlay,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                height: MediaQuery.of(context).size.height,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+                initialPage: widget.initialIndex,
+                scrollDirection: Axis.vertical,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+              ),
+              items: widget.postDetail.files.map((file) {
+                if (file.type == FileType.image.index) {
+                  return SidImage(
+                    sid: file.cover,
+                    width: MediaQuery.of(context).size.width,
+                  );
+                } else if (file.type == FileType.video.index) {
+                  return _buildVideoWidget(file);
+                }
+                return Container(); // 不支持的文件类型的占位符
+              }).toList(),
+            ),
+            if (showOverlay) ...[
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 80,
+                  color: Colors.black.withOpacity(0.5),
+                ),
+              ),
+              Positioned(
+                top: 20,
+                left: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  color: Colors.white, // 圖標顏色設定為黑色
+                  iconSize: 16.0, // 圖標大小
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+              Positioned(
+                top: 16,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 16),
+                    child: Text(
+                      '${currentIndex + 1} / ${widget.postDetail.files.length}',
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ),
+              ),
+            ]
+          ],
+        ),
+      ),
     );
   }
 }

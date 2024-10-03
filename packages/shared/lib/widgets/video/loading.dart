@@ -12,13 +12,18 @@ class VideoLoading extends StatelessWidget {
   final Image? image;
   final Widget? loadingAnimation;
   final bool? isPost;
-  const VideoLoading(
-      {Key? key,
-      required this.coverHorizontal,
-      this.image,
-      this.loadingAnimation,
-      this.isPost = false})
-      : super(key: key);
+  final double? width; 
+  final double? height; 
+
+  const VideoLoading({
+    Key? key,
+    required this.coverHorizontal,
+    this.image,
+    this.loadingAnimation,
+    this.isPost = false,
+    this.width, 
+    this.height, 
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class VideoLoading extends StatelessWidget {
       children: [
         Container(
           foregroundDecoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.8),
+            color: Colors.red.withOpacity(0.8),
             gradient: kIsWeb
                 ? null
                 : LinearGradient(
@@ -43,8 +48,8 @@ class VideoLoading extends StatelessWidget {
           child: SidImage(
             key: ValueKey(coverHorizontal),
             sid: coverHorizontal,
-            width: double.infinity,
-            height: double.infinity,
+            width: width ?? double.infinity, // 設置寬度
+            height: height ?? double.infinity, // 設置高度
             fit: BoxFit.cover,
           ),
         ),
@@ -52,15 +57,15 @@ class VideoLoading extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Center(child: FlashLoading()),
             if (image != null) Center(child: image!),
             if (loadingAnimation != null) Center(child: loadingAnimation!),
             const SizedBox(height: 15),
             Center(
-                child: Text(
-              localizations.translate('coming_soon'),
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-            )),
+              child: Text(
+                localizations.translate('coming_soon'),
+                style: const TextStyle(fontSize: 12, color: Colors.white),
+              ),
+            ),
           ],
         ),
         if (!isPost!) const FloatPageBackButton(),
