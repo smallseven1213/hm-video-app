@@ -182,6 +182,7 @@ class _CarouselDisplayState extends State<CarouselDisplay> {
   @override
   void initState() {
     super.initState();
+    currentIndex = widget.initialIndex;
   }
 
   void toggleOverlay() {
