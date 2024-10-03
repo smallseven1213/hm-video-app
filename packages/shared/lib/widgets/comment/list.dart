@@ -67,7 +67,7 @@ class _CommentListState extends State<CommentList> {
 
     return Obx(() {
       int itemCount =
-          _commentController.comments.length + 1; // +1 for the header
+          _commentController.comments.length;
       bool showExtraItem = _commentController.isLoading.value ||
           (!_commentController.hasMoreData && widget.showNoMoreComments);
 
@@ -95,13 +95,13 @@ class _CommentListState extends State<CommentList> {
             child: RefreshList(
                 onRefresh: pullToRefreshComments,
                 child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: _scrollController,
                   itemCount: itemCount,
                   itemBuilder: (context, index) {
-                    if (index > 0 &&
-                        index <= _commentController.comments.length) {
-                      final comment = _commentController
-                          .comments[index - 1]; // Adjust index
+                    if (index < _commentController.comments.length) {
+                      final comment =
+                          _commentController.comments[index]; // Adjust index
                       return CommentItem(
                         item: comment,
                         expandedCommentId:
