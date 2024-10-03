@@ -5,6 +5,7 @@ import 'package:shared/controllers/comment_controller.dart';
 import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/avatar.dart';
+import 'package:shared/widgets/refresh_list.dart';
 
 class CommentList extends StatefulWidget {
   final int topicId;
@@ -48,6 +49,10 @@ class _CommentListState extends State<CommentList> {
     }
   }
 
+  Future<void> pullToRefreshComments() async {
+    await _commentController.pullToRefreshComments();
+  }
+
   @override
   void dispose() {
     _scrollController.removeListener(_scrollListener);
@@ -87,44 +92,49 @@ class _CommentListState extends State<CommentList> {
             ),
           ),
           Expanded(
-              child: ListView.builder(
-            controller: _scrollController,
-            itemCount: itemCount,
-            itemBuilder: (context, index) {
-              if (index > 0 && index <= _commentController.comments.length) {
-                final comment =
-                    _commentController.comments[index - 1]; // Adjust index
-                return CommentItem(
-                  item: comment,
-                  expandedCommentId: _expandedCommentId, // 传递共享的 ValueNotifier
-                );
-              } else {
-                // This is the extra item at the end
-                if (_commentController.isLoading.value) {
-                  return const Center(
-                      child: SizedBox(
-                    width: 12,
-                    height: 12,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ));
-                } else if (!_commentController.hasMoreData &&
-                    widget.showNoMoreComments) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Center(
-                      child: Text(
-                        localizations.translate('nothing_more'),
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                    ),
-                  );
-                } else {
-                  return SizedBox.shrink();
-                }
-              }
-            },
-          )),
+            child: RefreshList(
+                onRefresh: pullToRefreshComments,
+                child: ListView.builder(
+                  controller: _scrollController,
+                  itemCount: itemCount,
+                  itemBuilder: (context, index) {
+                    if (index > 0 &&
+                        index <= _commentController.comments.length) {
+                      final comment = _commentController
+                          .comments[index - 1]; // Adjust index
+                      return CommentItem(
+                        item: comment,
+                        expandedCommentId:
+                            _expandedCommentId, // 传递共享的 ValueNotifier
+                      );
+                    } else {
+                      // This is the extra item at the end
+                      if (_commentController.isLoading.value) {
+                        return const Center(
+                            child: SizedBox(
+                          width: 12,
+                          height: 12,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ));
+                      } else if (!_commentController.hasMoreData &&
+                          widget.showNoMoreComments) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: Center(
+                            child: Text(
+                              localizations.translate('nothing_more'),
+                              style: const TextStyle(
+                                  color: Colors.grey, fontSize: 12),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox.shrink();
+                      }
+                    }
+                  },
+                )),
+          ),
         ],
       );
     });
