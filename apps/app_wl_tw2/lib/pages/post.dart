@@ -17,6 +17,7 @@ import 'package:shared/widgets/posts/file_list.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 import 'package:shared/widgets/comment/comment_section_base.dart';
 
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
 import '../screens/nodata/index.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/button.dart';
@@ -55,6 +56,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
   @override
   Widget build(BuildContext context) {
     return PostConsumer(
+      loadingAnimation: const FlashLoading(),
       id: widget.id,
       child: (PostDetail? postDetail, {bool? isError}) {
         if (postDetail == null || isError == true) {
