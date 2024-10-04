@@ -7,10 +7,12 @@ import '../../models/post_detail.dart';
 class PostConsumer extends StatefulWidget {
   final Widget Function(PostDetail?, {bool? isError}) child;
   final int id;
+  final Widget loadingAnimation;
   const PostConsumer({
     Key? key,
     required this.child,
     required this.id,
+    required this.loadingAnimation,
   }) : super(key: key);
 
   @override
@@ -33,7 +35,9 @@ class PostConsumerState extends State<PostConsumer> {
     return Obx(() {
       PostDetail? post = postController.postDetail.value;
       if (postController.isLoading.value) {
-        return const SizedBox.shrink();
+        return Center(
+          child: widget.loadingAnimation,
+        );
       }
       return widget.child(post, isError: postController.isError.value);
     });
