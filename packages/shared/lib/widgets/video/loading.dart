@@ -12,8 +12,8 @@ class VideoLoading extends StatelessWidget {
   final Image? image;
   final Widget? loadingAnimation;
   final bool? isPost;
-  final double? width; 
-  final double? height; 
+  final double? width;
+  final double? height;
 
   const VideoLoading({
     Key? key,
@@ -21,8 +21,8 @@ class VideoLoading extends StatelessWidget {
     this.image,
     this.loadingAnimation,
     this.isPost = false,
-    this.width, 
-    this.height, 
+    this.width,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -32,7 +32,7 @@ class VideoLoading extends StatelessWidget {
       children: [
         Container(
           foregroundDecoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.8),
+            color: Colors.black.withOpacity(0.8),
             gradient: kIsWeb
                 ? null
                 : LinearGradient(
