@@ -79,7 +79,7 @@ class _FileListWidgetState extends State<FileListWidget> {
         autoPlay: false,
         videoUrl: videoUrl,
         videoDetail: Vod(0, ''),
-        isPost: true,
+        shouldMuteByDefault: false,
         child: (isReady, controller) {
           return VideoPlayerWidget(
             videoUrl: videoUrl,

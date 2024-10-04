@@ -23,16 +23,18 @@ class ObservableVideoPlayerController extends GetxController {
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   final String tag;
-  final bool? isShort;
-  final bool? isPost;
   final RxBool isFullscreen = false.obs;
   var isMuted = kIsWeb ? true.obs : false.obs;
-  // var isMuted = false.obs;
+  bool shouldMuteByDefault = true;
 
   var errorMessage = ''.obs;
 
   ObservableVideoPlayerController(
-      this.tag, this.videoUrl, this.autoPlay, this.isShort, this.isPost);
+    this.tag,
+    this.videoUrl,
+    this.autoPlay,
+    this.shouldMuteByDefault,
+  );
 
   @override
   void onInit() {
@@ -64,31 +66,46 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   Future<void> _initializePlayer() async {
+    try {
+      await _setupVideoPlayerController();
+      await _initializeController();
+      await _configureMuteStatus();
+      _handleAutoPlay();
+    } catch (error) {
+      _handleInitializationError();
+    }
+  }
+
+  Future<void> _setupVideoPlayerController() async {
     videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(videoUrl));
     videoPlayerController?.addListener(_onControllerValueChanged);
-    videoPlayerController?.initialize().then((value) async {
-      isReady.value = true;
-      final muteValue = kIsWeb
-          ? (kIsWeb && (isPost! || isShort!) ? !isMuted.value : isMuted.value)
-          : await FlutterVolumeController.getMute();
-      if (kIsWeb && (isPost! || isShort!)) {
-        isMuted.value = !isMuted.value;
-      }
+  }
 
-      final volume = muteValue == true ? 0.0 : 1.0;
+  Future<void> _initializeController() async {
+    await videoPlayerController?.initialize();
+    isReady.value = true;
+  }
 
-      videoPlayerController?.setVolume(volume);
+  Future<void> _configureMuteStatus() async {
+    bool muteValue = kIsWeb
+        ? shouldMuteByDefault || (isMuted.value && shouldMuteByDefault)
+        : await FlutterVolumeController.getMute() ?? false;
+    isMuted.value = muteValue;
+    await videoPlayerController?.setVolume(muteValue ? 0.0 : 1.0);
+  }
 
-      if (autoPlay) {
-        play();
-      }
-    }).catchError((error) {
-      if (videoPlayerController?.value.hasError == true) {
-        videoAction.value = 'error';
-        errorMessage.value = videoPlayerController!.value.errorDescription!;
-      }
-    });
+  void _handleAutoPlay() {
+    if (autoPlay) {
+      play();
+    }
+  }
+
+  void _handleInitializationError() {
+    if (videoPlayerController?.value.hasError == true) {
+      videoAction.value = 'error';
+      errorMessage.value = videoPlayerController!.value.errorDescription!;
+    }
   }
 
   void _disposePlayer() {

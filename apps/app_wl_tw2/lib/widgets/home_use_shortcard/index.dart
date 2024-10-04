@@ -72,7 +72,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
-            isShort: true,
+            shouldMuteByDefault: false,
             videoDetail: Vod(
               widget.shortData.id,
               widget.shortData.title,
