@@ -6,19 +6,18 @@ import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/enums/charge_type.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/enums/file_type.dart';
+import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/models/post.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/navigate_to_vip.dart';
 import 'package:shared/utils/purchase.dart';
+import 'package:shared/widgets/posts/video/index.dart';
 import 'package:shared/widgets/sid_image.dart';
-import 'package:shared/widgets/video/index.dart';
-import '../../../localization/shared_localization_delegate.dart';
 
-class FileListWidget extends StatelessWidget {
+class FileListWidget extends StatefulWidget {
   final Post postDetail;
-  final BuildContext context;
   final Function showConfirmDialog;
   final dynamic buttonBuilder;
   final bool? useGameDeposit;
@@ -26,11 +25,31 @@ class FileListWidget extends StatelessWidget {
   const FileListWidget({
     Key? key,
     required this.postDetail,
-    required this.context,
     required this.showConfirmDialog,
     required this.buttonBuilder,
     this.useGameDeposit = false,
   }) : super(key: key);
+
+  @override
+  _FileListWidgetState createState() => _FileListWidgetState();
+}
+
+class _FileListWidgetState extends State<FileListWidget> {
+  int currentIndex = 0;
+  bool showOverlay = true;
+
+  String? _getVideoUrl(String videoUrl) {
+    final systemConfigController = Get.find<SystemConfigController>();
+    if (videoUrl.isNotEmpty) {
+      String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
+      if (uri.startsWith('http')) {
+        return uri;
+      }
+      String id = uri.substring(uri.indexOf('/') + 1);
+      return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
+    }
+    return null;
+  }
 
   Widget _buildImageWidget(Files file) {
     return Container(
@@ -40,16 +59,134 @@ class FileListWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildVideoWidget({
+    required int index,
+    required Files file,
+    String keyName = 'post',
+    VoidCallback? togglePopup,
+    bool? displayFullscreenIcon = true,
+  }) {
+    final videoUrl = _getVideoUrl(file.video);
+    if (videoUrl == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: VideoPlayerProvider(
+        key: Key('$keyName-$videoUrl'),
+        tag: '$keyName-$videoUrl',
+        autoPlay: false,
+        videoUrl: videoUrl,
+        videoDetail: Vod(0, ''),
+        isPost: true,
+        child: (isReady, controller) {
+          return VideoPlayerWidget(
+            videoUrl: videoUrl,
+            video: Vod(0, ''),
+            tag: '$keyName-$videoUrl',
+            showConfirmDialog: widget.showConfirmDialog,
+            displayHeader: false,
+            togglePopup: togglePopup,
+            displayFullscreenIcon: displayFullscreenIcon,
+          );
+        },
+      ),
+    );
+  }
+
   void _showFullScreenModal(BuildContext context, int initialIndex) {
+    int currentIndex = initialIndex;
+    bool showOverlay = true;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.black,
       builder: (BuildContext context) {
-        return CarouselDisplay(
-          postDetail: postDetail,
-          initialIndex: initialIndex,
-          showConfirmDialog: showConfirmDialog,
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return GestureDetector(
+              onTap: () {
+                setModalState(() {
+                  showOverlay = !showOverlay;
+                });
+              },
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                  children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: MediaQuery.of(context).size.height,
+                        viewportFraction: 1.0,
+                        enlargeCenterPage: false,
+                        initialPage: initialIndex,
+                        scrollDirection: Axis.vertical,
+                        onPageChanged: (index, reason) {
+                          setModalState(() {
+                            currentIndex = index;
+                          });
+                        },
+                      ),
+                      items: widget.postDetail.files.map<Widget>((file) {
+                        if (file.type == FileType.image.index) {
+                          return SidImage(
+                            sid: file.cover,
+                            width: MediaQuery.of(context).size.width,
+                          );
+                        } else if (file.type == FileType.video.index) {
+                          return _buildVideoWidget(
+                            file: file,
+                            index: currentIndex - 1,
+                            displayFullscreenIcon: false,
+                          );
+                        }
+                        return Container(); // Placeholder for unsupported file types
+                      }).toList(),
+                    ),
+                    if (showOverlay) ...[
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          height: 80,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 20,
+                        child: IconButton(
+                          icon: const Icon(Icons.close),
+                          color: Colors.white,
+                          iconSize: 16.0,
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ),
+                      Positioned(
+                        top: 16,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 16),
+                            child: Text(
+                              '${currentIndex + 1} / ${widget.postDetail.files.length}',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                  ],
+                ),
+              ),
+            );
+          },
         );
       },
     );
@@ -62,13 +199,13 @@ class FileListWidget extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: file.type == FileType.image.index
             ? _buildImageWidget(file)
-            : Stack(
-                alignment: Alignment.center,
-                children: [
-                  _buildImageWidget(file),
-                  Icon(Icons.play_circle_outline,
-                      size: 50, color: Colors.white),
-                ],
+            : _buildVideoWidget(
+                keyName: 'popup',
+                file: file,
+                index: index,
+                togglePopup: () {
+                  _showFullScreenModal(context, index);
+                },
               ),
       ),
     );
@@ -79,16 +216,14 @@ class FileListWidget extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: buttonBuilder(
+      child: widget.buttonBuilder(
         text: localizations.translate('view_more'),
         onPressed: () {
-          if (postDetail.linkType == LinkType.video.index) {
-            handlePathWithId(context, postDetail.link ?? '',
+          if (widget.postDetail.linkType == LinkType.video.index) {
+            handlePathWithId(context, widget.postDetail.link ?? '',
                 removeSamePath: true);
-          } else if (postDetail.linkType == LinkType.link.index) {
-            handleHttpUrl(postDetail.link ?? '');
-          } else {
-            return;
+          } else if (widget.postDetail.linkType == LinkType.link.index) {
+            handleHttpUrl(widget.postDetail.link ?? '');
           }
         },
       ),
@@ -101,15 +236,15 @@ class FileListWidget extends StatelessWidget {
     bool isButtonEnabled = true;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      child: buttonBuilder(
-        text: postDetail.chargeType == ChargeType.vip.index
-            ? localizations.translate('become_a _vip_to_unlock')
-            : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
+      child: widget.buttonBuilder(
+        text: widget.postDetail.chargeType == ChargeType.vip.index
+            ? localizations.translate('become_a_vip_to_unlock')
+            : '${widget.postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
-          if (postDetail.chargeType == ChargeType.vip.index) {
+          if (widget.postDetail.chargeType == ChargeType.vip.index) {
             VipNavigationHandler.navigateToPage(
               context,
-              useGameDeposit,
+              widget.useGameDeposit,
             );
           } else {
             if (!isButtonEnabled) return;
@@ -117,12 +252,12 @@ class FileListWidget extends StatelessWidget {
             purchase(
               context,
               type: PurchaseType.post,
-              id: postDetail.id,
+              id: widget.postDetail.id,
               onSuccess: () {
-                postController.getPostDetail(postDetail.id);
+                postController.getPostDetail(widget.postDetail.id);
                 isButtonEnabled = true;
               },
-              showConfirmDialog: showConfirmDialog,
+              showConfirmDialog: widget.showConfirmDialog,
             ).then((_) {
               isButtonEnabled = !isButtonEnabled;
             }).catchError((_) {
@@ -138,176 +273,23 @@ class FileListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> fileWidgets = [];
     final postController =
-        Get.find<PostController>(tag: 'postId-${postDetail.id}');
+        Get.find<PostController>(tag: 'postId-${widget.postDetail.id}');
 
-    for (int i = 0; i < postDetail.files.length; i++) {
-      fileWidgets.add(_buildThumbnail(postDetail.files[i], i));
+    for (int i = 0; i < widget.postDetail.files.length; i++) {
+      fileWidgets.add(_buildThumbnail(widget.postDetail.files[i], i));
     }
 
-    if (postDetail.isUnlock == false) {
+    if (widget.postDetail.isUnlock == false) {
       fileWidgets.add(_buildPurchaseButton(context, postController));
-    } else if (postDetail.isUnlock &&
-        postDetail.link != null &&
-        postDetail.linkType != LinkType.none.index) {
+    } else if (widget.postDetail.isUnlock &&
+        widget.postDetail.link != null &&
+        widget.postDetail.linkType != LinkType.none.index) {
       fileWidgets.add(_buildUnlockButton(context, postController));
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: fileWidgets,
-    );
-  }
-}
-
-class CarouselDisplay extends StatefulWidget {
-  final Post postDetail;
-  final int initialIndex;
-  final Function showConfirmDialog;
-
-  const CarouselDisplay({
-    Key? key,
-    required this.postDetail,
-    required this.showConfirmDialog,
-    this.initialIndex = 0,
-  }) : super(key: key);
-
-  @override
-  _CarouselDisplayState createState() => _CarouselDisplayState();
-}
-
-class _CarouselDisplayState extends State<CarouselDisplay> {
-  int currentIndex = 0;
-  bool showOverlay = true;
-
-  @override
-  void initState() {
-    super.initState();
-    currentIndex = widget.initialIndex;
-  }
-
-  void toggleOverlay() {
-    setState(() {
-      showOverlay = !showOverlay;
-    });
-  }
-
-  String? _getVideoUrl(String videoUrl) {
-    final systemConfigController = Get.find<SystemConfigController>();
-    if (videoUrl.isNotEmpty) {
-      String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
-      if (uri.startsWith('http')) {
-        return uri;
-      }
-      String id = uri.substring(uri.indexOf('/') + 1);
-      return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
-    }
-    return null;
-  }
-
-  Widget _buildVideoWidget(Files file) {
-    final videoUrl = _getVideoUrl(file.video);
-    if (videoUrl == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: VideoPlayerProvider(
-        key: Key('post-$videoUrl'),
-        tag: 'post-$videoUrl',
-        autoPlay: false,
-        videoUrl: videoUrl,
-        videoDetail: Vod(0, ''),
-        isPost: true,
-        child: (isReady, controller) {
-          return VideoPlayerWidget(
-            videoUrl: videoUrl,
-            video: Vod(0, ''),
-            tag: 'post-$videoUrl',
-            showConfirmDialog: widget.showConfirmDialog,
-            displayFullscreenIcon: false,
-            displayHeader: false,
-            hasPaymentProcess: false,
-            isVerticalDragEnabled: true,
-            isPost: true,
-          );
-        },
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: toggleOverlay,
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
-                initialPage: widget.initialIndex,
-                scrollDirection: Axis.vertical,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-              ),
-              items: widget.postDetail.files.map((file) {
-                if (file.type == FileType.image.index) {
-                  return SidImage(
-                    sid: file.cover,
-                    width: MediaQuery.of(context).size.width,
-                  );
-                } else if (file.type == FileType.video.index) {
-                  return _buildVideoWidget(file);
-                }
-                return Container(); // 不支持的文件类型的占位符
-              }).toList(),
-            ),
-            if (showOverlay) ...[
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: 80,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ),
-              Positioned(
-                top: 20,
-                left: 20,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  color: Colors.white, // 圖標顏色設定為黑色
-                  iconSize: 16.0, // 圖標大小
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-              Positioned(
-                top: 16,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 16),
-                    child: Text(
-                      '${currentIndex + 1} / ${widget.postDetail.files.length}',
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                ),
-              ),
-            ]
-          ],
-        ),
-      ),
     );
   }
 }
