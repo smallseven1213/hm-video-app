@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/post_controller.dart';
 import 'package:shared/controllers/system_config_controller.dart';
+import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/charge_type.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/enums/file_type.dart';
@@ -37,6 +38,7 @@ class FileListWidget extends StatefulWidget {
 class _FileListWidgetState extends State<FileListWidget> {
   int currentIndex = 0;
   bool showOverlay = true;
+  Map<String, ObservableVideoPlayerController> videoControllers = {};
 
   String? _getVideoUrl(String videoUrl) {
     final systemConfigController = Get.find<SystemConfigController>();
@@ -71,6 +73,16 @@ class _FileListWidgetState extends State<FileListWidget> {
       return const SizedBox.shrink();
     }
 
+    videoControllers['$keyName-$videoUrl'] = Get.put(
+      ObservableVideoPlayerController(
+        '$keyName-$videoUrl',
+        videoUrl,
+        false,
+        false,
+      ),
+      tag: '$keyName-$videoUrl',
+    );
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: VideoPlayerProvider(
@@ -81,6 +93,9 @@ class _FileListWidgetState extends State<FileListWidget> {
         videoDetail: Vod(0, ''),
         shouldMuteByDefault: false,
         child: (isReady, controller) {
+          if (isReady && keyName == 'popup') {
+            _syncVideoPlayer('post-$videoUrl');
+          }
           return VideoPlayerWidget(
             videoUrl: videoUrl,
             video: Vod(0, ''),
@@ -95,11 +110,11 @@ class _FileListWidgetState extends State<FileListWidget> {
     );
   }
 
-  void _showFullScreenModal(BuildContext context, int initialIndex) {
+  void _showFullScreenModal(BuildContext context, int initialIndex) async {
     int currentIndex = initialIndex;
     bool showOverlay = true;
 
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.black,
@@ -137,6 +152,7 @@ class _FileListWidgetState extends State<FileListWidget> {
                           );
                         } else if (file.type == FileType.video.index) {
                           return _buildVideoWidget(
+                            keyName: 'popup',
                             file: file,
                             index: currentIndex - 1,
                             displayFullscreenIcon: false,
@@ -190,6 +206,39 @@ class _FileListWidgetState extends State<FileListWidget> {
         );
       },
     );
+    // Reload the video player for the current thumbnail after the modal is closed
+    final currentFile = widget.postDetail.files[currentIndex];
+    if (currentFile.type == FileType.video.index) {
+      final videoUrl = _getVideoUrl(currentFile.video);
+      if (videoUrl != null) {
+        _syncVideoPlayer('popup-$videoUrl');
+      }
+    }
+  }
+
+  void _syncVideoPlayer(String sourceControllerKey) {
+    String targetControllerKey;
+    if (sourceControllerKey.contains('post')) {
+      // Syncing from postController to popupController
+      targetControllerKey = sourceControllerKey.replaceFirst('post', 'popup');
+    } else if (sourceControllerKey.contains('popup')) {
+      // Syncing from popupController to postController
+      targetControllerKey = sourceControllerKey.replaceFirst('popup', 'post');
+    } else {
+      // Invalid controller key
+      return;
+    }
+
+    if (videoControllers.containsKey(sourceControllerKey) &&
+        videoControllers.containsKey(targetControllerKey)) {
+      final sourceController = videoControllers[sourceControllerKey]!;
+      final targetController = videoControllers[targetControllerKey]!;
+
+      final position = sourceController.videoPlayerController?.value.position;
+      if (position != null && targetController.videoPlayerController != null) {
+        targetController.videoPlayerController!.seekTo(position);
+      }
+    }
   }
 
   Widget _buildThumbnail(Files file, int index) {
@@ -200,7 +249,6 @@ class _FileListWidgetState extends State<FileListWidget> {
         child: file.type == FileType.image.index
             ? _buildImageWidget(file)
             : _buildVideoWidget(
-                keyName: 'popup',
                 file: file,
                 index: index,
                 togglePopup: () {

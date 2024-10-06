@@ -68,7 +68,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
-    print('widget.togglePopup: ${widget.togglePopup}');
     if (widget.togglePopup != null) {
       widget.togglePopup!();
     } else {

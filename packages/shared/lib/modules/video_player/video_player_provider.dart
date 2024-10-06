@@ -13,6 +13,7 @@ class VideoPlayerProvider extends StatefulWidget {
   final Widget Function(
       bool isReady, ObservableVideoPlayerController controller) child;
   final Widget? loadingWidget;
+  final ObservableVideoPlayerController? controller;
 
   const VideoPlayerProvider({
     Key? key,
@@ -24,6 +25,7 @@ class VideoPlayerProvider extends StatefulWidget {
     this.loadingWidget,
     this.autoPlay,
     this.shouldMuteByDefault = true,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -37,30 +39,32 @@ class VideoPlayerProviderState extends State<VideoPlayerProvider> {
   void initState() {
     super.initState();
 
-    observableVideoPlayerController = Get.put(
-      ObservableVideoPlayerController(
-        widget.tag,
-        widget.videoUrl,
-        widget.autoPlay ?? false,
-        widget.shouldMuteByDefault ?? true,
-      ),
-      tag: widget.tag,
-    );
+    if (widget.controller != null) {
+      observableVideoPlayerController = widget.controller!;
+    } else {
+      observableVideoPlayerController = Get.put(
+        ObservableVideoPlayerController(
+          widget.tag,
+          widget.videoUrl,
+          widget.autoPlay ?? false,
+          widget.shouldMuteByDefault ?? true,
+        ),
+        tag: widget.tag,
+      );
+    }
   }
 
   @override
   void dispose() {
-    // observableVideoPlayerController.videoPlayerController?.pause();
-    // observableVideoPlayerController.videoPlayerController?.dispose();
-    observableVideoPlayerController.dispose();
-    Get.delete<ObservableVideoPlayerController>(tag: widget.tag);
-
+    if (widget.controller == null) {
+      observableVideoPlayerController.dispose();
+      Get.delete<ObservableVideoPlayerController>(tag: widget.tag);
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // var isReady = observableVideoPlayerController.isReady.value;
     return Obx(
       () => observableVideoPlayerController.isReady.value
           ? widget.child(observableVideoPlayerController.isReady.value,
