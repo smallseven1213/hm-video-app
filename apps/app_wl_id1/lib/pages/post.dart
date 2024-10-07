@@ -17,6 +17,7 @@ import 'package:shared/widgets/posts/file_list.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 import 'package:shared/widgets/comment/comment_section_base.dart';
 
+import 'package:app_wl_id1/widgets/wave_loading.dart';
 import '../screens/nodata/index.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/button.dart';
@@ -55,6 +56,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
   @override
   Widget build(BuildContext context) {
     return PostConsumer(
+      loadingAnimation: const WaveLoading(),
       id: widget.id,
       child: (PostDetail? postDetail, {bool? isError}) {
         if (postDetail == null || isError == true) {
@@ -127,7 +129,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                   ),
                   const SizedBox(height: 8),
                   FileListWidget(
-                    context: context,
+                    // context: context,
                     postDetail: postDetail.post,
                     showConfirmDialog: showConfirmDialog,
                     buttonBuilder: buttonBuilder,

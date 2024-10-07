@@ -9,10 +9,12 @@ final CommentApi commentApi = CommentApi();
 class CommentController extends GetxController {
   final int topicType;
   final int topicId;
+  final offset = 1.obs;
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
 
   int _page = 1;
+
   bool _hasMoreData = true;
 
   CommentController({
@@ -45,18 +47,25 @@ class CommentController extends GetxController {
   }
 
   // 获取评论列表，支持分页
-  Future<void> getComments({int page = 1}) async {
+  Future<void> getComments({int page = 1, bool refresh = false}) async {
     if (isLoading.value || !_hasMoreData) return;
 
     isLoading.value = true;
+    int nextPage;
+    if (refresh) {
+      offset.value = offset.value <= 5 ? offset.value + 1 : 1;
+      nextPage = offset.value;
+    } else {
+      nextPage = page;
+    }
     var commentList = await commentApi.getCommentList(
       topicType: topicType,
       topicId: topicId,
-      page: page,
+      page: nextPage,
     );
 
     if (commentList.isNotEmpty) {
-      if (page == 1) {
+      if (refresh) {
         comments.value = commentList;
       } else {
         comments.addAll(commentList);
@@ -73,6 +82,11 @@ class CommentController extends GetxController {
   Future<void> loadMoreComments() async {
     if (isLoading.value || !_hasMoreData) return;
     await getComments(page: _page + 1);
+  }
+
+  // 下拉更新
+  Future<void> pullToRefreshComments() async {
+    await getComments(refresh: true);
   }
 
   // 检查是否有更多数据

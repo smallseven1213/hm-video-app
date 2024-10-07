@@ -6,7 +6,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
-import 'package:shared/widgets/video/controls_overlay/index.dart';
+import 'package:shared/widgets/posts/video/controls_overlay/index.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/widgets/purchase/coin_part.dart';
 import 'package:shared/widgets/purchase/vip_part.dart';
@@ -23,13 +23,14 @@ class VideoPlayerWidget extends StatefulWidget {
   final Vod video;
   final String tag;
   final Function showConfirmDialog;
+  final Function? togglePopup;
+
   final bool? displayHeader;
   final bool? displayFullscreenIcon;
   final bool? hasPaymentProcess;
   final Color? themeColor;
   final Widget? buildLoadingWidget;
   final bool? useGameDeposit;
-  final bool? isVerticalDragEnabled;
 
   const VideoPlayerWidget({
     Key? key,
@@ -37,6 +38,7 @@ class VideoPlayerWidget extends StatefulWidget {
     required this.video,
     required this.tag,
     required this.showConfirmDialog,
+    this.togglePopup,
     this.displayHeader = true,
     this.displayFullscreenIcon = true,
     this.hasPaymentProcess = true,
@@ -44,7 +46,6 @@ class VideoPlayerWidget extends StatefulWidget {
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
     this.useGameDeposit = false,
-    this.isVerticalDragEnabled = false,
   }) : super(key: key);
 
   @override
@@ -59,30 +60,32 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
   bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
     setScreenRotation();
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
-    if (fullScreen) {
-      setScreenLandScape();
+    if (widget.togglePopup != null) {
+      widget.togglePopup!();
     } else {
-      setScreenPortrait();
-      // 五秒後偵測螢幕方向
-      Future.delayed(const Duration(seconds: 2), () {
-        setScreenRotation();
+      // if (fullScreen) {
+      //   setScreenLandScape();
+      // } else {
+      //   setScreenPortrait();
+      //   // 五秒後偵測螢幕方向
+      //   Future.delayed(const Duration(seconds: 2), () {
+      //     setScreenRotation();
+      //   });
+      // }
+
+      setState(() {
+        isFullscreen = fullScreen;
+        isScreenLocked = isFullscreen;
       });
     }
-
-    setState(() {
-      isFullscreen = fullScreen;
-      isScreenLocked = isFullscreen;
-    });
   }
 
   @override
@@ -225,7 +228,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                   toggleFullscreen: (status) {
                     toggleFullscreen(fullScreen: status);
                   },
-                  isVerticalDragEnabled: widget.isVerticalDragEnabled,
                 )
               ],
             ),

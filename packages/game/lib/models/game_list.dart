@@ -1,6 +1,5 @@
 class GameItem {
   final int id;
-  final String? tagId;
   final String gameId;
   final String? name;
   final int gameType;
@@ -9,10 +8,10 @@ class GameItem {
   final String tpCode;
   final int direction;
   final int hotOrderIndex;
+  final bool isHot;
 
   GameItem({
     required this.id,
-    this.tagId,
     required this.gameId,
     this.name,
     required this.gameType,
@@ -21,6 +20,7 @@ class GameItem {
     required this.tpCode,
     required this.direction,
     required this.hotOrderIndex,
+    required this.isHot,
   });
 
   factory GameItem.fromJson(Map<String, dynamic> json) {
@@ -36,17 +36,12 @@ class GameItem {
         gameId: _parseField(json, 'gameId', (value) => value as String),
         imgUrl: _parseField(json, 'imgUrl', (value) => value as String),
         orderIndex: _parseField(json, 'orderIndex', (value) => value as int),
-        tagId: _parseField(
-          json,
-          'tagId',
-          (value) => value as String,
-          orElse: () => '',
-        ),
         gameType: _parseField(json, 'gameType', (value) => value as int),
         tpCode: _parseField(json, 'tpCode', (value) => value as String),
         direction: _parseField(json, 'direction', (value) => value as int),
         hotOrderIndex:
             _parseField(json, 'hotOrderIndex', (value) => value as int),
+        isHot: _parseField(json, 'isHot', (value) => value as bool),
       );
     } catch (e) {
       throw FormatException('Error parsing GameItem: $e');

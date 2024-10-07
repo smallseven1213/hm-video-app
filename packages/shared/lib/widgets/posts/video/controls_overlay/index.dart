@@ -1,15 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:screen_brightness/screen_brightness.dart';
-import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/widgets/video/controls_overlay/enums.dart';
 
-import 'enums.dart';
 import 'screen_lock.dart';
-import 'volume_brightness.dart';
 import 'player_header.dart';
 import 'mute_volume_button.dart';
 
@@ -50,14 +45,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   bool isForward = false;
 
   // vertical drag的東西
-  double? initialVolume;
-  double? initialBrightness;
   double? lastDragPosition; // 添加这一行
   bool isMuted = kIsWeb ? true : false; // 音量静音状态跟踪
   double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
   double verticalDragPosition = 0.0; // 初始值
+  bool initPost = true;
 
   @override
   void initState() {
@@ -85,65 +79,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               videoPlayerInfo.videoPlayerController?.play();
             }
           },
-          onVerticalDragStart: (kIsWeb ||
-                  !mounted ||
-                  widget.isVerticalDragEnabled!)
-              ? null
-              : (DragStartDetails details) {
-                  setState(() {
-                    // 根據滑動的開始位置來決定我們將要修改哪一個值
-                    if (details.localPosition.dx < constraints.maxWidth / 2) {
-                      // 如果用戶在畫面的左半邊開始滑動，那麼我們將會更新亮度的值
-                      sideControlsType = SideControlsType.brightness;
-                    } else {
-                      // 如果用戶在畫面的右半邊開始滑動，那麼我們將會更新音量的值
-                      sideControlsType = SideControlsType.sound;
-                    }
-                  });
-                },
-          onVerticalDragUpdate: (kIsWeb ||
-                  !mounted ||
-                  widget.isVerticalDragEnabled!)
-              ? null
-              : (DragUpdateDetails details) {
-                  lastDragPosition ??= details.globalPosition.dy;
-                  // 計算滑動距離並將其正規化到0到1之間
-                  double deltaY = details.globalPosition.dy - lastDragPosition!;
-                  verticalDragPosition -=
-                      deltaY / (constraints.maxHeight * 0.3);
-                  verticalDragPosition = verticalDragPosition.clamp(0.0, 1.0);
-
-                  // 檢查滑動是發生在畫面的左半邊還是右半邊
-                  bool isVolume = details.globalPosition.dx >
-                      MediaQuery.of(context).size.width / 2;
-                  if (isVolume) {
-                    volume = verticalDragPosition;
-                    volume = volume.clamp(0.0, 1.0);
-
-                    FlutterVolumeController.setVolume(volume);
-                    videoPlayerInfo.videoPlayerController?.setVolume(volume);
-                    logger.i('volume: $volume');
-                  } else {
-                    brightness = verticalDragPosition;
-                    brightness = brightness.clamp(0.15, 1.0);
-                    ScreenBrightness().setScreenBrightness(brightness);
-                    logger.i('brightness: $brightness');
-                  }
-
-                  // 更新lastDragPosition以便于下次計算
-                  lastDragPosition = details.globalPosition.dy;
-                  setState(() {});
-                },
-          onVerticalDragEnd:
-              (kIsWeb || !mounted || widget.isVerticalDragEnabled!)
-                  ? null
-                  : (DragEndDetails details) {
-                      lastDragPosition = null;
-                      setState(() {
-                        // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
-                        sideControlsType = SideControlsType.none;
-                      });
-                    },
           onHorizontalDragStart: (details) {
             if (details.localPosition.dy > constraints.maxHeight - 30) {
               return;
@@ -193,7 +128,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
-
               if (widget.displayHeader == true &&
                   (videoPlayerInfo.displayControls ||
                       !videoPlayerInfo.isPlaying))
@@ -255,6 +189,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     setState(() {
                       if (hasFirstPlay) {
                         hasFirstPlay = false;
+                        initPost = false;
                       }
                     });
                   },
@@ -282,7 +217,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ScreenLock(
                     isScreenLocked: widget.isScreenLocked,
                     onScreenLock: widget.onScreenLock),
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+              if ((videoPlayerInfo.displayControls ||
+                      !videoPlayerInfo.isPlaying) &&
+                  !initPost)
                 // 下方控制區塊
                 Positioned(
                   bottom: widget.isFullscreen ? 30 : 0,
@@ -373,18 +310,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     ),
                   ),
                 ),
-
-              //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-              if (!GetPlatform.isWeb &&
-                  (sideControlsType == SideControlsType.brightness ||
-                      sideControlsType == SideControlsType.sound) &&
-                  !widget.isVerticalDragEnabled!)
-                VolumeBrightness(
-                  controller: videoPlayerInfo.videoPlayerController!,
-                  verticalDragPosition: verticalDragPosition,
-                  sideControlsType: sideControlsType,
-                  height: constraints.maxHeight,
-                )
             ],
           ),
         );
