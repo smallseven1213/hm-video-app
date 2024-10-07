@@ -256,7 +256,7 @@ class GameListViewState extends State<GameListView>
       case 0: // 假設 0 代表"全部"
         return filteredTpCodeGames;
       case -2: // 熱門遊戲
-        return filteredTpCodeGames.where((game) => game.tagId == '2').toList()
+        return filteredTpCodeGames.where((game) => game.isHot).toList()
           ..sort((a, b) => b.hotOrderIndex.compareTo(a.hotOrderIndex));
       case -1: // 最近玩過的遊戲
         return gameHistoryList.isNotEmpty ? gameHistoryList : [];
