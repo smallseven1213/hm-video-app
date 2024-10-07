@@ -30,7 +30,6 @@ class VideoPlayerWidget extends StatefulWidget {
   final Widget? buildLoadingWidget;
   final bool? useGameDeposit;
   final bool? isVerticalDragEnabled;
-  final bool? isPost;
 
   const VideoPlayerWidget({
     Key? key,
@@ -46,7 +45,6 @@ class VideoPlayerWidget extends StatefulWidget {
     this.buildLoadingWidget,
     this.useGameDeposit = false,
     this.isVerticalDragEnabled = false,
-    this.isPost = false,
   }) : super(key: key);
 
   @override
@@ -228,7 +226,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                     toggleFullscreen(fullScreen: status);
                   },
                   isVerticalDragEnabled: widget.isVerticalDragEnabled,
-                  isPost: widget.isPost,
                 )
               ],
             ),

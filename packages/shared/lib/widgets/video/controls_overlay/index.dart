@@ -26,7 +26,6 @@ class ControlsOverlay extends StatefulWidget {
   final bool? displayFullScreenIcon;
   final Color? themeColor;
   final bool? isVerticalDragEnabled;
-  final bool? isPost;
 
   const ControlsOverlay({
     Key? key,
@@ -40,7 +39,6 @@ class ControlsOverlay extends StatefulWidget {
     this.displayFullScreenIcon = true,
     this.themeColor = Colors.blue,
     this.isVerticalDragEnabled = false,
-    this.isPost = false,
   }) : super(key: key);
 
   @override
@@ -60,13 +58,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
   double verticalDragPosition = 0.0; // 初始值
-  bool initPost = false;
 
   @override
   void initState() {
-    if (widget.isPost! && mounted) {
-      initPost = true;
-    }
     super.initState();
   }
 
@@ -261,7 +255,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     setState(() {
                       if (hasFirstPlay) {
                         hasFirstPlay = false;
-                        initPost = false;
                       }
                     });
                   },
@@ -289,9 +282,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ScreenLock(
                     isScreenLocked: widget.isScreenLocked,
                     onScreenLock: widget.onScreenLock),
-              if ((videoPlayerInfo.displayControls ||
-                      !videoPlayerInfo.isPlaying) &&
-                  !initPost)
+              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
                 // 下方控制區塊
                 Positioned(
                   bottom: widget.isFullscreen ? 30 : 0,

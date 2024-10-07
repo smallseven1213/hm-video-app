@@ -6,7 +6,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
-import 'package:shared/widgets/video/controls_overlay/index.dart';
+import 'package:shared/widgets/posts/video/controls_overlay/index.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/widgets/purchase/coin_part.dart';
 import 'package:shared/widgets/purchase/vip_part.dart';
