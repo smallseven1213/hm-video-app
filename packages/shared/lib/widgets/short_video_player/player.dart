@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 import '../../controllers/video_player_controller.dart';
 import '../../localization/shared_localization_delegate.dart';
@@ -53,12 +54,29 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
             ] else if (controller.videoPlayerController?.value.isInitialized ==
                 true) ...[
               if (kIsWeb) ...[
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(
-                    controller.videoPlayerController!,
+                if (!controller.autoPlay &&
+                    controller.videoAction.value != 'play' &&
+                    controller.initCover.value) ...[
+                  Center(
+                    child: AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: SidImage(
+                        key: ValueKey(video.coverVertical!),
+                        sid: video.coverVertical!,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
+                ] else ...[
+                  AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: VideoPlayer(
+                      controller.videoPlayerController!,
+                    ),
+                  ),
+                ],
               ] else ...[
                 videoSize.height / videoSize.width >= 1.4
                     ? SizedBox(
