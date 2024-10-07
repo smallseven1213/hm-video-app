@@ -17,10 +17,7 @@ GameWithdrawController gameWithdrawController =
     Get.find<GameWithdrawController>();
 GameBannerController gameBannerController = Get.find<GameBannerController>();
 
-checkKycData({
-  required BuildContext context,
-  required Function handleUserWithdrawalData,
-}) async {
+checkKycData({required BuildContext context}) async {
   final GameLocalizations localizations = GameLocalizations.of(context)!;
 
   try {
@@ -106,12 +103,12 @@ checkKycData({
             launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value)),
       );
     }
-    // 身份证審核通過
-    else if (gameWithdrawController.userKyc.isNotEmpty &&
-        gameWithdrawController.cellPhoneIsBound.value &&
-        gameWithdrawController.idCardIsBound.value) {
-      handleUserWithdrawalData();
-    }
+    // // 身份证審核通過
+    // else if (gameWithdrawController.userKyc.isNotEmpty &&
+    //     gameWithdrawController.cellPhoneIsBound.value &&
+    //     gameWithdrawController.idCardIsBound.value) {
+    //   handleUserWithdrawalData();
+    // }
   } catch (error) {
     logger.i('checkKycData error $error');
 

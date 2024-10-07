@@ -66,10 +66,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkKycData(
-        context: context,
-        handleUserWithdrawalData: _getUserWithdrawalData,
-      );
+      checkKycData(context: context);
     });
     _fetchDataInit();
 
@@ -81,6 +78,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   _fetchDataInit() {
     _getStackLimit();
     _getParamConfig();
+    _transferInit(context);
   }
 
   @override
@@ -89,30 +87,30 @@ class _GameWithdrawState extends State<GameWithdraw> {
     super.dispose();
   }
 
-  void _getUserWithdrawalData() async {
-    try {
-      // gameWithdrawController.getWithDrawalData();
+  // void _getUserWithdrawalData() async {
+  //   try {
+  //     // gameWithdrawController.getWithDrawalData();
 
-      if (gameWithdrawController.paymentPin.value &&
-          gameWithdrawController.hasBankPaymentData.value) {
-        _transferInit(context);
-      }
-    } catch (error) {
-      logger.i('_getUserWithdrawalData error $error');
+  //     if (gameWithdrawController.paymentPin.value &&
+  //         gameWithdrawController.hasBankPaymentData.value) {
+  //       _transferInit(context);
+  //     }
+  //   } catch (error) {
+  //     logger.i('_getUserWithdrawalData error $error');
 
-      if (mounted) {
-        showConfirmDialog(
-          context: context,
-          title: '',
-          content: error.toString(),
-          onConfirm: () {
-            Navigator.pop(context);
-          },
-        );
-      }
-    }
-    gameWithdrawController.setLoadingStatus(false);
-  }
+  //     if (mounted) {
+  //       showConfirmDialog(
+  //         context: context,
+  //         title: '',
+  //         content: error.toString(),
+  //         onConfirm: () {
+  //           Navigator.pop(context);
+  //         },
+  //       );
+  //     }
+  //   }
+  //   gameWithdrawController.setLoadingStatus(false);
+  // }
 
   void _transferInit(context) async {
     try {
