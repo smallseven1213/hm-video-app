@@ -209,6 +209,24 @@ class GameLobbyApi {
     }
   }
 
+  // 已更換api host from login
+  // 會員點數轉回GP / 轉回餘額
+  Future transfer() => fetcher(
+          url: '${systemConfig.apiHost}/public/users/user/points/collect',
+          method: 'POST',
+          body: {}).then(
+        (value) {
+          var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
+          if (res['code'] != '00') {
+            return res;
+          }
+
+          return res;
+        },
+      );
+
   // =================================== 以下 API HOST FROM VIDEO =================================== //
 
   Future<void> register() => shared_fetcher.fetcher(
@@ -268,24 +286,6 @@ class GameLobbyApi {
           }
 
           return res['data'];
-        },
-      );
-
-  // 金幣轉帳, post to /tp-game-platform/transfer, data會有tpCode, type, applyAmount 三個值
-  Future transfer() => shared_fetcher.fetcher(
-          url:
-              '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/collect',
-          method: 'POST',
-          body: {}).then(
-        (value) {
-          var res = (value.data as Map<String, dynamic>);
-          _checkMaintenance(res['code']);
-
-          if (res['code'] != '00') {
-            return res;
-          }
-
-          return res;
         },
       );
 
