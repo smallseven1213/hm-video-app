@@ -99,7 +99,7 @@ class GameLobbyApi {
                 gameId: '',
                 imgUrl: '',
                 orderIndex: 0,
-                tagId: '',
+                isHot: false,
                 gameType: 0,
                 tpCode: '',
                 direction: 0,
