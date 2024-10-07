@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
@@ -207,57 +208,62 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             );
           }
 
-          return SizedBox(
-            height: playerHeight,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                if (widget.controller != null &&
-                    !widget.controller!.autoPlay &&
-                    widget.controller!.videoAction.value != 'play' &&
-                    widget.controller!.initCover.value &&
-                    !isFullscreen) ...[
-                  AspectRatio(
-                    aspectRatio: aspectRatio,
-                    child: SidImage(
-                      key: ValueKey(coverHorizontal),
-                      sid: coverHorizontal,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
+          return Obx(() {
+            return SizedBox(
+              height: playerHeight,
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  if (widget.controller != null &&
+                      !widget.controller!.autoPlay &&
+                      widget.controller!.videoAction.value != 'play' &&
+                      widget.controller!.initCover.value &&
+                      widget.controller!.videoPlayerController?.value.position
+                              .inSeconds ==
+                          0) ...[
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: SidImage(
+                        key: ValueKey(coverHorizontal),
+                        sid: coverHorizontal,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                ] else ...[
-                  AspectRatio(
-                    aspectRatio: aspectRatio,
-                    child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
-                  ),
+                  ] else ...[
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child:
+                          VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                    ),
+                  ],
+                  ControlsOverlay(
+                    tag: widget.tag,
+                    name: widget.video.title,
+                    isFullscreen: isFullscreen,
+                    displayHeader: widget.displayHeader,
+                    displayFullScreenIcon: widget.displayFullscreenIcon,
+                    themeColor: widget.themeColor ?? Colors.blue,
+                    onScreenLock: (bool isLocked) {
+                      setState(() {
+                        isScreenLocked = isLocked;
+                      });
+                      if (isLocked) {
+                        toggleFullscreen(fullScreen: true);
+                      } else {
+                        setScreenRotation();
+                      }
+                    },
+                    isScreenLocked: isScreenLocked,
+                    toggleFullscreen: (status) {
+                      toggleFullscreen(fullScreen: status);
+                    },
+                  )
                 ],
-                ControlsOverlay(
-                  tag: widget.tag,
-                  name: widget.video.title,
-                  isFullscreen: isFullscreen,
-                  displayHeader: widget.displayHeader,
-                  displayFullScreenIcon: widget.displayFullscreenIcon,
-                  themeColor: widget.themeColor ?? Colors.blue,
-                  onScreenLock: (bool isLocked) {
-                    setState(() {
-                      isScreenLocked = isLocked;
-                    });
-                    if (isLocked) {
-                      toggleFullscreen(fullScreen: true);
-                    } else {
-                      setScreenRotation();
-                    }
-                  },
-                  isScreenLocked: isScreenLocked,
-                  toggleFullscreen: (status) {
-                    toggleFullscreen(fullScreen: status);
-                  },
-                )
-              ],
-            ),
-          );
+              ),
+            );
+          });
         },
       ),
     );

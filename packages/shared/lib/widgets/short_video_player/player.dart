@@ -55,8 +55,10 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                 true) ...[
               if (kIsWeb) ...[
                 if (!controller.autoPlay &&
-                    controller.videoAction.value != 'play' &&
-                    controller.initCover.value) ...[
+                    controller.initCover.value &&
+                    controller
+                            .videoPlayerController?.value.position.inSeconds ==
+                        0) ...[
                   Center(
                     child: AspectRatio(
                       aspectRatio: aspectRatio,

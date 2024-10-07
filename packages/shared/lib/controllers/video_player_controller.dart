@@ -144,6 +144,7 @@ class ObservableVideoPlayerController extends GetxController {
     videoAction.value = 'play';
     videoPlayerController?.seekTo(Duration.zero);
     videoPlayerController?.play();
+    initCover.value = false;
   }
 
   void pause() {
