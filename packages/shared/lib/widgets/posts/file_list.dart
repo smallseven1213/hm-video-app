@@ -239,6 +239,8 @@ class _FileListWidgetState extends State<FileListWidget> {
       final position = sourceController.videoPlayerController?.value.position;
       if (position != null && targetController.videoPlayerController != null) {
         targetController.videoPlayerController!.seekTo(position);
+        sourceController.videoPlayerController!.pause();
+        targetController.videoPlayerController!.play();
       }
     }
   }
