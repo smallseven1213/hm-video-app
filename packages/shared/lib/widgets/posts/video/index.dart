@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -11,6 +14,9 @@ import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/widgets/purchase/coin_part.dart';
 import 'package:shared/widgets/purchase/vip_part.dart';
 import 'package:shared/widgets/video/purchase_promotion.dart';
+import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/models/post.dart';
 
 import 'error.dart';
 import 'loading.dart';
@@ -31,6 +37,8 @@ class VideoPlayerWidget extends StatefulWidget {
   final Color? themeColor;
   final Widget? buildLoadingWidget;
   final bool? useGameDeposit;
+  final ObservableVideoPlayerController? controller;
+  final Files? file;
 
   const VideoPlayerWidget({
     Key? key,
@@ -46,6 +54,8 @@ class VideoPlayerWidget extends StatefulWidget {
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
     this.useGameDeposit = false,
+    this.controller,
+    this.file,
   }) : super(key: key);
 
   @override
@@ -60,6 +70,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
   bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
+
   @override
   void initState() {
     super.initState();
@@ -137,8 +148,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
               ? MediaQuery.of(context).size.height
               : playerWidth / aspectRatio;
 
-          final coverHorizontal = widget.video.coverHorizontal ?? '';
-
+          final coverHorizontal = widget.file?.cover ?? '';
           if (videoPlayerInfo.videoAction == 'error') {
             return VideoError(
               coverHorizontal: coverHorizontal,
@@ -198,40 +208,62 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             );
           }
 
-          return SizedBox(
-            height: playerHeight,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
-                ),
-                ControlsOverlay(
-                  tag: widget.tag,
-                  name: widget.video.title,
-                  isFullscreen: isFullscreen,
-                  displayHeader: widget.displayHeader,
-                  displayFullScreenIcon: widget.displayFullscreenIcon,
-                  themeColor: widget.themeColor ?? Colors.blue,
-                  onScreenLock: (bool isLocked) {
-                    setState(() {
-                      isScreenLocked = isLocked;
-                    });
-                    if (isLocked) {
-                      toggleFullscreen(fullScreen: true);
-                    } else {
-                      setScreenRotation();
-                    }
-                  },
-                  isScreenLocked: isScreenLocked,
-                  toggleFullscreen: (status) {
-                    toggleFullscreen(fullScreen: status);
-                  },
-                )
-              ],
-            ),
-          );
+          return Obx(() {
+            return SizedBox(
+              height: playerHeight,
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  if (widget.controller != null &&
+                      !widget.controller!.autoPlay &&
+                      widget.controller!.videoAction.value != 'play' &&
+                      widget.controller!.initCover.value &&
+                      widget.controller!.videoPlayerController?.value.position
+                              .inSeconds ==
+                          0) ...[
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: SidImage(
+                        key: ValueKey(coverHorizontal),
+                        sid: coverHorizontal,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ] else ...[
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child:
+                          VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                    ),
+                  ],
+                  ControlsOverlay(
+                    tag: widget.tag,
+                    name: widget.video.title,
+                    isFullscreen: isFullscreen,
+                    displayHeader: widget.displayHeader,
+                    displayFullScreenIcon: widget.displayFullscreenIcon,
+                    themeColor: widget.themeColor ?? Colors.blue,
+                    onScreenLock: (bool isLocked) {
+                      setState(() {
+                        isScreenLocked = isLocked;
+                      });
+                      if (isLocked) {
+                        toggleFullscreen(fullScreen: true);
+                      } else {
+                        setScreenRotation();
+                      }
+                    },
+                    isScreenLocked: isScreenLocked,
+                    toggleFullscreen: (status) {
+                      toggleFullscreen(fullScreen: status);
+                    },
+                  )
+                ],
+              ),
+            );
+          });
         },
       ),
     );

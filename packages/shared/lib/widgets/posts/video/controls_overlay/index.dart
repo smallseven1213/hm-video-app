@@ -77,6 +77,8 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               videoPlayerInfo.videoPlayerController?.pause();
             } else {
               videoPlayerInfo.videoPlayerController?.play();
+              hasFirstPlay = false;
+              initPost = false;
             }
           },
           onHorizontalDragStart: (details) {

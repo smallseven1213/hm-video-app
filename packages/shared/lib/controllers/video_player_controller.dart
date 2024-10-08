@@ -26,7 +26,7 @@ class ObservableVideoPlayerController extends GetxController {
   final RxBool isFullscreen = false.obs;
   var isMuted = kIsWeb ? true.obs : false.obs;
   bool shouldMuteByDefault = true;
-
+  final RxBool initCover = true.obs;
   var errorMessage = ''.obs;
 
   ObservableVideoPlayerController(
@@ -137,12 +137,14 @@ class ObservableVideoPlayerController extends GetxController {
   void play() {
     videoAction.value = 'play';
     videoPlayerController?.play();
+    initCover.value = false;
   }
 
   void replay() {
     videoAction.value = 'play';
     videoPlayerController?.seekTo(Duration.zero);
     videoPlayerController?.play();
+    initCover.value = false;
   }
 
   void pause() {

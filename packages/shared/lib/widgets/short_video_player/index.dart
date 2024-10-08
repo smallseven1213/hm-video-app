@@ -13,7 +13,6 @@ import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import 'purchase_promotion.dart';
 import '../purchase/vip_part.dart';
-import 'short_video_mute_button.dart';
 import 'side_info.dart';
 
 class ShortCard extends StatefulWidget {

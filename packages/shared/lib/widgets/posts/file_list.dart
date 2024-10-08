@@ -104,6 +104,8 @@ class _FileListWidgetState extends State<FileListWidget> {
             displayHeader: false,
             togglePopup: togglePopup,
             displayFullscreenIcon: displayFullscreenIcon,
+            controller: controller,
+            file: file,
           );
         },
       ),
