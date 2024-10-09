@@ -112,6 +112,15 @@ class _FileListWidgetState extends State<FileListWidget> {
     );
   }
 
+  void _pauseVideo(String keyName) {
+    if (videoControllers.containsKey(keyName)) {
+      final controller = videoControllers[keyName]!.videoPlayerController;
+      if (controller != null && controller.value.isPlaying) {
+        controller.pause();
+      }
+    }
+  }
+
   void _showFullScreenModal(BuildContext context, int initialIndex) async {
     int currentIndex = initialIndex;
     bool showOverlay = true;
@@ -146,6 +155,18 @@ class _FileListWidgetState extends State<FileListWidget> {
                           setModalState(() {
                             currentIndex = index;
                           });
+                          // 当滚动到新页面时，暂停上一个页面的视频
+                          if (currentIndex > 0 &&
+                              widget.postDetail.files[currentIndex - 1].type ==
+                                  FileType.video.index) {
+                            final previousFile =
+                                widget.postDetail.files[currentIndex - 1];
+                            final previousVideoUrl =
+                                _getVideoUrl(previousFile.video);
+                            if (previousVideoUrl != null) {
+                              _pauseVideo('popup-$previousVideoUrl');
+                            }
+                          }
                         },
                       ),
                       items: widget.postDetail.files.map<Widget>((file) {
