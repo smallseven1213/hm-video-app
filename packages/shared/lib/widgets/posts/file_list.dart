@@ -155,16 +155,17 @@ class _FileListWidgetState extends State<FileListWidget> {
                           setModalState(() {
                             currentIndex = index;
                           });
-                          // 当滚动到新页面时，暂停上一个页面的视频
-                          if (currentIndex > 0 &&
-                              widget.postDetail.files[currentIndex - 1].type ==
-                                  FileType.video.index) {
+
+                          // 暂停前一个页面的视频
+                          if (index > 0) {
                             final previousFile =
-                                widget.postDetail.files[currentIndex - 1];
-                            final previousVideoUrl =
-                                _getVideoUrl(previousFile.video);
-                            if (previousVideoUrl != null) {
-                              _pauseVideo('popup-$previousVideoUrl');
+                                widget.postDetail.files[index - 1];
+                            if (previousFile.type == FileType.video.index) {
+                              final previousVideoUrl =
+                                  _getVideoUrl(previousFile.video);
+                              if (previousVideoUrl != null) {
+                                _pauseVideo('popup-$previousVideoUrl');
+                              }
                             }
                           }
                         },
@@ -183,7 +184,7 @@ class _FileListWidgetState extends State<FileListWidget> {
                             displayFullscreenIcon: false,
                           );
                         }
-                        return Container(); // Placeholder for unsupported file types
+                        return Container(); // 处理不支持的文件类型
                       }).toList(),
                     ),
                     if (showOverlay) ...[
