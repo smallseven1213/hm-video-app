@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -10,10 +8,6 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/posts/video/controls_overlay/index.dart';
-import 'package:shared/enums/purchase_type.dart';
-import 'package:shared/widgets/purchase/coin_part.dart';
-import 'package:shared/widgets/purchase/vip_part.dart';
-import 'package:shared/widgets/video/purchase_promotion.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/models/post.dart';
@@ -82,16 +76,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
     if (widget.togglePopup != null) {
       widget.togglePopup!();
     } else {
-      // if (fullScreen) {
-      //   setScreenLandScape();
-      // } else {
-      //   setScreenPortrait();
-      //   // 五秒後偵測螢幕方向
-      //   Future.delayed(const Duration(seconds: 2), () {
-      //     setScreenRotation();
-      //   });
-      // }
-
       setState(() {
         isFullscreen = fullScreen;
         isScreenLocked = isFullscreen;
@@ -172,42 +156,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                 );
           }
 
-          if (widget.hasPaymentProcess == true &&
-              widget.video.isAvailable == false &&
-              videoPlayerInfo.videoAction == 'end') {
-            return PurchasePromotion(
-              coverHorizontal: coverHorizontal,
-              buyPoints: widget.video.buyPoint.toString(),
-              timeLength: widget.video.timeLength ?? 0,
-              chargeType: widget.video.chargeType ?? 0,
-              videoId: widget.video.id,
-              videoPlayerInfo: videoPlayerInfo,
-              title: widget.video.title,
-              tag: widget.tag,
-              vipPartBuilder: (timeLength) => VipPart(
-                  timeLength: timeLength,
-                  useGameDeposit: widget.useGameDeposit),
-              coinPartBuilder: ({
-                required String buyPoints,
-                required int videoId,
-                required VideoPlayerInfo videoPlayerInfo,
-                required int timeLength,
-                required Function() onSuccess,
-                userPoints,
-              }) =>
-                  CoinPart(
-                tag: widget.tag,
-                buyPoints: buyPoints,
-                videoId: videoId,
-                videoPlayerInfo: videoPlayerInfo,
-                timeLength: timeLength,
-                onSuccess: onSuccess,
-                purchaseType: PurchaseType.video,
-                showConfirmDialog: widget.showConfirmDialog,
-              ),
-            );
-          }
-
           return Obx(() {
             return SizedBox(
               height: playerHeight,
@@ -232,11 +180,11 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                       ),
                     ),
                   ] else ...[
-                    AspectRatio(
-                      aspectRatio: aspectRatio,
-                      child:
-                          VideoPlayer(videoPlayerInfo.videoPlayerController!),
-                    ),
+                    // AspectRatio(
+                    //   aspectRatio: aspectRatio,
+                    //   child:
+                    // ),
+                    VideoPlayer(videoPlayerInfo.videoPlayerController!),
                   ],
                   ControlsOverlay(
                     tag: widget.tag,
