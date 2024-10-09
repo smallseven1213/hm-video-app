@@ -140,6 +140,8 @@ class _FileListWidgetState extends State<FileListWidget> {
                         enlargeCenterPage: false,
                         initialPage: initialIndex,
                         scrollDirection: Axis.vertical,
+                        enableInfiniteScroll:
+                            widget.postDetail.files.length > 1,
                         onPageChanged: (index, reason) {
                           setModalState(() {
                             currentIndex = index;
