@@ -241,8 +241,13 @@ class _FileListWidgetState extends State<FileListWidget> {
       final position = sourceController.videoPlayerController?.value.position;
       if (position != null && targetController.videoPlayerController != null) {
         targetController.videoPlayerController!.seekTo(position);
-        sourceController.videoPlayerController!.pause();
-        targetController.videoPlayerController!.play();
+        // Schedule the state changes after the current frame
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          sourceController.videoPlayerController!.pause();
+          if (position.inMilliseconds != 0) {
+            targetController.videoPlayerController!.play();
+          }
+        });
       }
     }
   }
