@@ -244,9 +244,10 @@ class _FileListWidgetState extends State<FileListWidget> {
         // Schedule the state changes after the current frame
         WidgetsBinding.instance.addPostFrameCallback((_) {
           sourceController.videoPlayerController!.pause();
-          // if (position.inMilliseconds != 0 && targetControllerKey == 'popup') {
-          //   targetController.videoPlayerController!.play();
-          // }
+          if (position.inMilliseconds != 0 &&
+              targetControllerKey.contains('popup')) {
+            targetController.videoPlayerController!.play();
+          }
         });
       }
     }

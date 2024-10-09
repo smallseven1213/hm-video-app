@@ -180,11 +180,11 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                       ),
                     ),
                   ] else ...[
-                    // AspectRatio(
-                    //   aspectRatio: aspectRatio,
-                    //   child:
-                    // ),
-                    VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child:
+                          VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                    ),
                   ],
                   ControlsOverlay(
                     tag: widget.tag,
