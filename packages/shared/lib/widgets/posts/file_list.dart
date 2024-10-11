@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/post_controller.dart';
@@ -67,6 +68,7 @@ class _FileListWidgetState extends State<FileListWidget> {
     String keyName = 'post',
     VoidCallback? togglePopup,
     bool? displayFullscreenIcon = true,
+    bool? autoPlay = false,
   }) {
     final videoUrl = _getVideoUrl(file.video);
     if (videoUrl == null) {
@@ -77,7 +79,7 @@ class _FileListWidgetState extends State<FileListWidget> {
       ObservableVideoPlayerController(
         '$keyName-$videoUrl',
         videoUrl,
-        false,
+        autoPlay ?? false,
         false,
       ),
       tag: '$keyName-$videoUrl',
@@ -88,7 +90,7 @@ class _FileListWidgetState extends State<FileListWidget> {
       child: VideoPlayerProvider(
         key: Key('$keyName-$videoUrl'),
         tag: '$keyName-$videoUrl',
-        autoPlay: false,
+        autoPlay: autoPlay ?? false,
         videoUrl: videoUrl,
         videoDetail: Vod(0, ''),
         shouldMuteByDefault: false,
@@ -125,6 +127,9 @@ class _FileListWidgetState extends State<FileListWidget> {
     int currentIndex = initialIndex;
     bool showOverlay = true;
 
+    // pause all videos before modal open
+    _pauseAllVideos();
+
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -156,15 +161,34 @@ class _FileListWidgetState extends State<FileListWidget> {
                             currentIndex = index;
                           });
 
-                          // 暂停前一个页面的视频
-                          if (index > 0) {
-                            final previousFile =
-                                widget.postDetail.files[index - 1];
-                            if (previousFile.type == FileType.video.index) {
-                              final previousVideoUrl =
-                                  _getVideoUrl(previousFile.video);
-                              if (previousVideoUrl != null) {
-                                _pauseVideo('popup-$previousVideoUrl');
+                          // 暂停所有视频
+                          _pauseAllVideos();
+
+                          // 播放当前视频
+                          final currentFile = widget.postDetail.files[index];
+                          if (currentFile.type == FileType.video.index) {
+                            final videoUrl = _getVideoUrl(currentFile.video);
+                            if (videoUrl != null) {
+                              final controllerKey = 'popup-$videoUrl';
+                              final controller =
+                                  videoControllers[controllerKey];
+                              if (controller != null) {
+                                // 检查视频是否已经初始化完成
+                                if (controller.videoPlayerController?.value
+                                        .isInitialized ??
+                                    false) {
+                                  controller.videoPlayerController?.play();
+                                } else {
+                                  // 如果还没有初始化完成，等待初始化后再播放
+                                  controller.videoPlayerController
+                                      ?.addListener(() {
+                                    if (controller.videoPlayerController?.value
+                                            .isInitialized ??
+                                        false) {
+                                      controller.videoPlayerController?.play();
+                                    }
+                                  });
+                                }
                               }
                             }
                           }
@@ -182,6 +206,7 @@ class _FileListWidgetState extends State<FileListWidget> {
                             file: file,
                             index: currentIndex - 1,
                             displayFullscreenIcon: false,
+                            // autoPlay: kIsWeb ? false : true,
                           );
                         }
                         return Container(); // 处理不支持的文件类型
@@ -242,6 +267,16 @@ class _FileListWidgetState extends State<FileListWidget> {
     }
   }
 
+  void _pauseAllVideos() {
+    videoControllers.forEach((key, controller) {
+      final videoPlayerController = controller.videoPlayerController;
+      if (videoPlayerController != null &&
+          videoPlayerController.value.isPlaying) {
+        videoPlayerController.pause();
+      }
+    });
+  }
+
   void _syncVideoPlayer(String sourceControllerKey) {
     String targetControllerKey;
     if (sourceControllerKey.contains('post')) {
@@ -262,7 +297,6 @@ class _FileListWidgetState extends State<FileListWidget> {
 
       final position = sourceController.videoPlayerController?.value.position;
       if (position != null && targetController.videoPlayerController != null) {
-        targetController.videoPlayerController!.seekTo(position);
         // Schedule the state changes after the current frame
         WidgetsBinding.instance.addPostFrameCallback((_) {
           sourceController.videoPlayerController!.pause();

@@ -71,7 +71,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           onTap: () {
             videoPlayerInfo.showControls();
             videoPlayerInfo.startToggleControlsTimer();
-            initPost = false;
+            setState(() {
+              initPost = false;
+            });
           },
           onDoubleTap: () {
             if (videoPlayerInfo.isPlaying) {
@@ -79,7 +81,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             } else {
               videoPlayerInfo.videoPlayerController?.play();
             }
-            hasFirstPlay = false;
+            setState(() {
+              hasFirstPlay = false;
+            });
           },
           onHorizontalDragStart: (details) {
             if (details.localPosition.dy > constraints.maxHeight - 30) {
