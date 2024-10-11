@@ -135,19 +135,25 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
 
           final coverHorizontal = widget.file?.cover ?? '';
           if (videoPlayerInfo.videoAction == 'error') {
-            return VideoError(
-              coverHorizontal: coverHorizontal,
-              onTap: () {
-                videoPlayerInfo.videoPlayerController?.play();
-              },
+            return SizedBox(
+              height: playerHeight,
+              child: VideoError(
+                coverHorizontal: coverHorizontal,
+                onTap: () {
+                  videoPlayerInfo.videoPlayerController?.play();
+                },
+              ),
             );
           }
 
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
             return widget.buildLoadingWidget ??
-                VideoLoading(
-                  coverHorizontal: coverHorizontal,
+                SizedBox(
+                  height: playerHeight,
+                  child: VideoLoading(
+                    coverHorizontal: coverHorizontal,
+                  ),
                 );
           }
 
