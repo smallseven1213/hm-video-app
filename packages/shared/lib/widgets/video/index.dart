@@ -137,52 +137,61 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
           final coverHorizontal = widget.video.coverHorizontal ?? '';
 
           if (videoPlayerInfo.videoAction == 'error') {
-            return VideoError(
-              coverHorizontal: coverHorizontal,
-              onTap: () {
-                videoPlayerInfo.videoPlayerController?.play();
-              },
+            return SizedBox(
+              height: playerHeight,
+              child: VideoError(
+                coverHorizontal: coverHorizontal,
+                onTap: () {
+                  videoPlayerInfo.videoPlayerController?.play();
+                },
+              ),
             );
           }
 
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
             return widget.buildLoadingWidget ??
-                VideoLoading(coverHorizontal: coverHorizontal);
+                SizedBox(
+                  height: playerHeight,
+                  child: VideoLoading(coverHorizontal: coverHorizontal),
+                );
           }
 
           if (widget.hasPaymentProcess == true &&
               widget.video.isAvailable == false &&
               videoPlayerInfo.videoAction == 'end') {
-            return PurchasePromotion(
-              coverHorizontal: coverHorizontal,
-              buyPoints: widget.video.buyPoint.toString(),
-              timeLength: widget.video.timeLength ?? 0,
-              chargeType: widget.video.chargeType ?? 0,
-              videoId: widget.video.id,
-              videoPlayerInfo: videoPlayerInfo,
-              title: widget.video.title,
-              tag: widget.tag,
-              vipPartBuilder: (timeLength) => VipPart(
-                  timeLength: timeLength,
-                  useGameDeposit: widget.useGameDeposit),
-              coinPartBuilder: ({
-                required String buyPoints,
-                required int videoId,
-                required VideoPlayerInfo videoPlayerInfo,
-                required int timeLength,
-                required Function() onSuccess,
-                userPoints,
-              }) =>
-                  CoinPart(
-                tag: widget.tag,
-                buyPoints: buyPoints,
-                videoId: videoId,
+            return SizedBox(
+              height: playerHeight,
+              child: PurchasePromotion(
+                coverHorizontal: coverHorizontal,
+                buyPoints: widget.video.buyPoint.toString(),
+                timeLength: widget.video.timeLength ?? 0,
+                chargeType: widget.video.chargeType ?? 0,
+                videoId: widget.video.id,
                 videoPlayerInfo: videoPlayerInfo,
-                timeLength: timeLength,
-                onSuccess: onSuccess,
-                purchaseType: PurchaseType.video,
-                showConfirmDialog: widget.showConfirmDialog,
+                title: widget.video.title,
+                tag: widget.tag,
+                vipPartBuilder: (timeLength) => VipPart(
+                    timeLength: timeLength,
+                    useGameDeposit: widget.useGameDeposit),
+                coinPartBuilder: ({
+                  required String buyPoints,
+                  required int videoId,
+                  required VideoPlayerInfo videoPlayerInfo,
+                  required int timeLength,
+                  required Function() onSuccess,
+                  userPoints,
+                }) =>
+                    CoinPart(
+                  tag: widget.tag,
+                  buyPoints: buyPoints,
+                  videoId: videoId,
+                  videoPlayerInfo: videoPlayerInfo,
+                  timeLength: timeLength,
+                  onSuccess: onSuccess,
+                  purchaseType: PurchaseType.video,
+                  showConfirmDialog: widget.showConfirmDialog,
+                ),
               ),
             );
           }
