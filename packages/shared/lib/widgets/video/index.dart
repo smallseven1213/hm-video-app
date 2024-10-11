@@ -148,15 +148,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
             return widget.buildLoadingWidget ??
-                VideoLoading(
-                  coverHorizontal: coverHorizontal,
-                  image: Image.network(
-                    coverHorizontal,
-                    width: playerWidth,
-                    height: playerHeight,
-                    fit: BoxFit.cover,
-                  ),
-                );
+                VideoLoading(coverHorizontal: coverHorizontal);
           }
 
           if (widget.hasPaymentProcess == true &&

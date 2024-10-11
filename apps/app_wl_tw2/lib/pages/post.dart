@@ -129,10 +129,10 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                   ),
                   const SizedBox(height: 8),
                   FileListWidget(
-                    // context: context,
                     postDetail: postDetail.post,
                     showConfirmDialog: showConfirmDialog,
                     buttonBuilder: buttonBuilder,
+                    loadingAnimation: const FlashLoading(),
                   ),
                   SerialListWidget(
                     series: postDetail.series,

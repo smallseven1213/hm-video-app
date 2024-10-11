@@ -32,6 +32,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool? useGameDeposit;
   final ObservableVideoPlayerController? controller;
   final Files? file;
+  final Widget? loadingAnimation;
 
   const VideoPlayerWidget({
     Key? key,
@@ -49,6 +50,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.useGameDeposit = false,
     this.controller,
     this.file,
+    this.loadingAnimation,
   }) : super(key: key);
 
   @override
@@ -146,13 +148,16 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             return widget.buildLoadingWidget ??
                 VideoLoading(
                   coverHorizontal: coverHorizontal,
-                  image: Image.network(
-                    coverHorizontal,
-                    width: playerWidth,
-                    height: playerHeight,
-                    fit: BoxFit.cover,
-                  ),
                 );
+          }
+
+          if (videoPlayerInfo.inBuffering) {
+            return SizedBox(
+                height: playerHeight,
+                child: Center(
+                  child: widget.loadingAnimation ??
+                      const CircularProgressIndicator(),
+                ));
           }
 
           return SizedBox(

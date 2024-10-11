@@ -133,6 +133,7 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                     postDetail: postDetail.post,
                     showConfirmDialog: showConfirmDialog,
                     buttonBuilder: buttonBuilder,
+                    loadingAnimation: const WaveLoading(),
                   ),
                   SerialListWidget(
                     series: postDetail.series,

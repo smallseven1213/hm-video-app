@@ -16,6 +16,7 @@ import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/navigate_to_vip.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/posts/video/index.dart';
+import 'package:shared/widgets/posts/video/loading.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class FileListWidget extends StatefulWidget {
@@ -23,6 +24,7 @@ class FileListWidget extends StatefulWidget {
   final Function showConfirmDialog;
   final dynamic buttonBuilder;
   final bool? useGameDeposit;
+  final Widget? loadingAnimation;
 
   const FileListWidget({
     Key? key,
@@ -30,6 +32,7 @@ class FileListWidget extends StatefulWidget {
     required this.showConfirmDialog,
     required this.buttonBuilder,
     this.useGameDeposit = false,
+    this.loadingAnimation,
   }) : super(key: key);
 
   @override
@@ -108,6 +111,7 @@ class _FileListWidgetState extends State<FileListWidget> {
             displayFullscreenIcon: displayFullscreenIcon,
             controller: controller,
             file: file,
+            loadingAnimation: widget.loadingAnimation,
           );
         },
       ),
@@ -289,7 +293,6 @@ class _FileListWidgetState extends State<FileListWidget> {
       // Syncing from popupController to postController
       targetControllerKey = sourceControllerKey.replaceFirst('popup', 'post');
     } else {
-      // Invalid controller key
       return;
     }
 
@@ -304,7 +307,8 @@ class _FileListWidgetState extends State<FileListWidget> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           sourceController.videoPlayerController!.pause();
           if (position.inMilliseconds != 0 &&
-              targetControllerKey.contains('popup')) {
+              targetControllerKey.contains('popup') &&
+              kIsWeb == false) {
             targetController.videoPlayerController!.play();
           }
         });
