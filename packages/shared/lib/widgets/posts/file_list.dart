@@ -164,30 +164,33 @@ class _FileListWidgetState extends State<FileListWidget> {
                           // 暂停所有视频
                           _pauseAllVideos();
 
-                          // 播放当前视频
-                          final currentFile = widget.postDetail.files[index];
-                          if (currentFile.type == FileType.video.index) {
-                            final videoUrl = _getVideoUrl(currentFile.video);
-                            if (videoUrl != null) {
-                              final controllerKey = 'popup-$videoUrl';
-                              final controller =
-                                  videoControllers[controllerKey];
-                              if (controller != null) {
-                                // 检查视频是否已经初始化完成
-                                if (controller.videoPlayerController?.value
-                                        .isInitialized ??
-                                    false) {
-                                  controller.videoPlayerController?.play();
-                                } else {
-                                  // 如果还没有初始化完成，等待初始化后再播放
-                                  controller.videoPlayerController
-                                      ?.addListener(() {
-                                    if (controller.videoPlayerController?.value
-                                            .isInitialized ??
-                                        false) {
-                                      controller.videoPlayerController?.play();
-                                    }
-                                  });
+                          // if app 播放当前视频
+                          if (kIsWeb == false) {
+                            final currentFile = widget.postDetail.files[index];
+                            if (currentFile.type == FileType.video.index) {
+                              final videoUrl = _getVideoUrl(currentFile.video);
+                              if (videoUrl != null) {
+                                final controllerKey = 'popup-$videoUrl';
+                                final controller =
+                                    videoControllers[controllerKey];
+                                if (controller != null) {
+                                  // 检查视频是否已经初始化完成
+                                  if (controller.videoPlayerController?.value
+                                          .isInitialized ??
+                                      false) {
+                                    controller.videoPlayerController?.play();
+                                  } else {
+                                    // 如果还没有初始化完成，等待初始化后再播放
+                                    controller.videoPlayerController
+                                        ?.addListener(() {
+                                      if (controller.videoPlayerController
+                                              ?.value.isInitialized ??
+                                          false) {
+                                        controller.videoPlayerController
+                                            ?.play();
+                                      }
+                                    });
+                                  }
                                 }
                               }
                             }
