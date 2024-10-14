@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -125,12 +126,23 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
         tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
-          var aspectRatio = 16 / 9;
+
+          double aspectRatio;
+          if (!isFullscreen && kIsWeb) {
+            aspectRatio = 16 / 9;
+          } else {
+            aspectRatio = (widget.video.aspectRatio != null &&
+                    widget.video.aspectRatio != 0)
+                ? (1 / widget.video.aspectRatio!) // 取倒数以符合AspectRatio的要求
+                : (videoSize.height != 0
+                    ? videoSize.width / videoSize.height
+                    : 1);
+          }
 
           double playerWidth = MediaQuery.of(context).size.width;
           double playerHeight = isFullscreen
               ? MediaQuery.of(context).size.height
-              : playerWidth / aspectRatio;
+              : playerWidth / (16 / 9);
 
           final coverHorizontal = widget.video.coverHorizontal ?? '';
 
