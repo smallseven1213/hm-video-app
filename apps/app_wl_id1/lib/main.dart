@@ -32,7 +32,7 @@ void main() async {
   };
 
   runningMain(
-      'https://1faee0b12b854234b5bfb9546a7d5927@sentry.hmtech.club/2',
+      'https://f7756bd03b4595f0c4416415a3f857db@sentry.hmtech.club/6',
       allRoutes.keys.first,
       [
         'https://dl.dlwlid1.com/$env/dl.json',

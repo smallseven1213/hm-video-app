@@ -7,10 +7,9 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/posts/video/controls_overlay/index.dart';
-import 'package:shared/enums/purchase_type.dart';
-import 'package:shared/widgets/purchase/coin_part.dart';
-import 'package:shared/widgets/purchase/vip_part.dart';
-import 'package:shared/widgets/video/purchase_promotion.dart';
+import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/models/post.dart';
 
 import 'error.dart';
 import 'loading.dart';
@@ -31,6 +30,9 @@ class VideoPlayerWidget extends StatefulWidget {
   final Color? themeColor;
   final Widget? buildLoadingWidget;
   final bool? useGameDeposit;
+  final ObservableVideoPlayerController? controller;
+  final Files? file;
+  final Widget? loadingAnimation;
 
   const VideoPlayerWidget({
     Key? key,
@@ -46,6 +48,9 @@ class VideoPlayerWidget extends StatefulWidget {
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
     this.useGameDeposit = false,
+    this.controller,
+    this.file,
+    this.loadingAnimation,
   }) : super(key: key);
 
   @override
@@ -60,6 +65,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
   bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
+
   @override
   void initState() {
     super.initState();
@@ -71,16 +77,6 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
     if (widget.togglePopup != null) {
       widget.togglePopup!();
     } else {
-      // if (fullScreen) {
-      //   setScreenLandScape();
-      // } else {
-      //   setScreenPortrait();
-      //   // 五秒後偵測螢幕方向
-      //   Future.delayed(const Duration(seconds: 2), () {
-      //     setScreenRotation();
-      //   });
-      // }
-
       setState(() {
         isFullscreen = fullScreen;
         isScreenLocked = isFullscreen;
@@ -137,65 +133,37 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
               ? MediaQuery.of(context).size.height
               : playerWidth / aspectRatio;
 
-          final coverHorizontal = widget.video.coverHorizontal ?? '';
-
+          final coverHorizontal = widget.file?.cover ?? '';
           if (videoPlayerInfo.videoAction == 'error') {
-            return VideoError(
-              coverHorizontal: coverHorizontal,
-              onTap: () {
-                videoPlayerInfo.videoPlayerController?.play();
-              },
+            return SizedBox(
+              height: playerHeight,
+              child: VideoError(
+                coverHorizontal: coverHorizontal,
+                onTap: () {
+                  videoPlayerInfo.videoPlayerController?.play();
+                },
+              ),
             );
           }
 
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
             return widget.buildLoadingWidget ??
-                VideoLoading(
-                  coverHorizontal: coverHorizontal,
-                  image: Image.network(
-                    coverHorizontal,
-                    width: playerWidth,
-                    height: playerHeight,
-                    fit: BoxFit.cover,
+                SizedBox(
+                  height: playerHeight,
+                  child: VideoLoading(
+                    coverHorizontal: coverHorizontal,
                   ),
                 );
           }
 
-          if (widget.hasPaymentProcess == true &&
-              widget.video.isAvailable == false &&
-              videoPlayerInfo.videoAction == 'end') {
-            return PurchasePromotion(
-              coverHorizontal: coverHorizontal,
-              buyPoints: widget.video.buyPoint.toString(),
-              timeLength: widget.video.timeLength ?? 0,
-              chargeType: widget.video.chargeType ?? 0,
-              videoId: widget.video.id,
-              videoPlayerInfo: videoPlayerInfo,
-              title: widget.video.title,
-              tag: widget.tag,
-              vipPartBuilder: (timeLength) => VipPart(
-                  timeLength: timeLength,
-                  useGameDeposit: widget.useGameDeposit),
-              coinPartBuilder: ({
-                required String buyPoints,
-                required int videoId,
-                required VideoPlayerInfo videoPlayerInfo,
-                required int timeLength,
-                required Function() onSuccess,
-                userPoints,
-              }) =>
-                  CoinPart(
-                tag: widget.tag,
-                buyPoints: buyPoints,
-                videoId: videoId,
-                videoPlayerInfo: videoPlayerInfo,
-                timeLength: timeLength,
-                onSuccess: onSuccess,
-                purchaseType: PurchaseType.video,
-                showConfirmDialog: widget.showConfirmDialog,
-              ),
-            );
+          if (videoPlayerInfo.inBuffering) {
+            return SizedBox(
+                height: playerHeight,
+                child: Center(
+                  child: widget.loadingAnimation ??
+                      const CircularProgressIndicator(),
+                ));
           }
 
           return SizedBox(
@@ -203,10 +171,29 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
-                ),
+                if (widget.controller != null &&
+                    !widget.controller!.autoPlay &&
+                    widget.controller!.videoAction.value != 'play' &&
+                    widget.controller!.initCover.value &&
+                    widget.controller!.videoPlayerController?.value.position
+                            .inSeconds ==
+                        0) ...[
+                  AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: SidImage(
+                      key: ValueKey(coverHorizontal),
+                      sid: coverHorizontal,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ] else ...[
+                  AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                  ),
+                ],
                 ControlsOverlay(
                   tag: widget.tag,
                   name: widget.video.title,
