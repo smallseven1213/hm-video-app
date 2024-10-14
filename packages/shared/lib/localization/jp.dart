@@ -74,7 +74,7 @@ const Map<String, String> sharedJaJpStrings = {
   "number": "話数",
   "other_recommended_posts": "おすすめ",
   "view_more": "もっと見る",
-  "become_a _vip_to_unlock": "VIPでアンロック",
+  "become_a_vip_to_unlock": "VIPでアンロック",
   "gold_coins_unlock": "コインでアンロック",
   "coming_soon": "近日公開",
   "activate_vip_for_free": "VIPを無料でアクティブにする",

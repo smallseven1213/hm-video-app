@@ -81,7 +81,7 @@ const Map<String, String> sharedEnUsStrings = {
   "number": "No.",
   "other_recommended_posts": "Recommended",
   "view_more": "View more",
-  "become_a _vip_to_unlock": "VIP to unlock",
+  "become_a_vip_to_unlock": "VIP to unlock",
   "gold_coins_unlock": "coins to unlock",
   "coming_soon": "Coming soon",
   "activate_vip_for_free": "Activate VIP for free",

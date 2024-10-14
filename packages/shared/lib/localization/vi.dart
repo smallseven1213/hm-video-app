@@ -80,7 +80,7 @@ const Map<String, String> sharedViVnStrings = {
   "number": "Số",
   "other_recommended_posts": "Đề xuất",
   "view_more": "Xem thêm",
-  "become_a _vip_to_unlock": "VIP để mở khóa",
+  "become_a_vip_to_unlock": "VIP để mở khóa",
   "gold_coins_unlock": "Mở khóa bằng xu",
   "coming_soon": "Sắp tới sẽ có những điều thú vị",
   "activate_vip_for_free": "Kích hoạt VIP miễn phí",
