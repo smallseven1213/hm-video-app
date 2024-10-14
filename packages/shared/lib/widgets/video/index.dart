@@ -125,9 +125,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
         tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
-          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
-              ? 16 / 9
-              : videoSize.width / videoSize.height;
+          var aspectRatio = 16 / 9;
 
           double playerWidth = MediaQuery.of(context).size.width;
           double playerHeight = isFullscreen
