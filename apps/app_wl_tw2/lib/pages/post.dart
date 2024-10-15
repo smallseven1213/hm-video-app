@@ -173,14 +173,9 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                         backgroundColor: Colors.transparent,
                         barrierColor: Colors.black.withOpacity(0.5),
                         builder: (BuildContext context) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom,
-                            ),
-                            child: CommentBottomSheet(
-                              postId: postDetail.post.id,
-                              autoFocusInput: true,
-                            ),
+                          return CommentBottomSheet(
+                            postId: postDetail.post.id,
+                            autoFocusInput: true,
                           );
                         },
                       );
