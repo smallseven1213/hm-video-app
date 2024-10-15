@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/widgets/h5webview.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/bottom_navigator_controller.dart';
@@ -37,18 +38,36 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
       child: (String activeKey) {
         Widget currentScreen;
 
-        if (widget.screens.containsKey(activeKey)) {
-          currentScreen = widget.screens[activeKey]!();
+        // Parse activeKey into path and query parameters
+        String path = activeKey;
+        Map<String, String> queryParameters = {};
+
+        if (activeKey.contains('?')) {
+          int idx = activeKey.indexOf('?');
+          path = activeKey.substring(0, idx);
+          String query = activeKey.substring(idx + 1);
+          queryParameters = Uri.splitQueryString(query);
+        }
+
+        if (path == '/iframe') {
+          String iframeUrl = queryParameters['url'] ?? '';
+          currentScreen = H5Webview(
+            initialUrl: iframeUrl,
+            direction: 0,
+          );
+        } else if (widget.screens.containsKey(path)) {
+          currentScreen = widget.screens[path]!();
         } else if (widget.screenNotFoundWidget != null) {
           currentScreen = widget.screenNotFoundWidget!;
         } else {
           currentScreen = const SizedBox.shrink();
         }
+
         return Scaffold(
           appBar: widget.appBar,
           body: currentScreen,
           bottomNavigationBar: widget.bottomNavigationBarWidget(
-              activeKey: activeKey,
+              activeKey: path,
               navigatorItems: bottomNavigatorController.navigatorItems,
               changeTabKey: (String tabKey) {
                 bottomNavigatorController.changeKey(tabKey);
