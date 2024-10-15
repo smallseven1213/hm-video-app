@@ -8,7 +8,6 @@ import 'package:shared/widgets/comment/list.dart';
 abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   late CommentController _commentController;
   late ScrollController _scrollController;
-  bool _isKeyboardVisible = false;
 
   // 子類別需實現這些抽象方法
   int get topicId;
@@ -74,9 +73,6 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
         }
       },
       onFocusChange: (bool hasFocus) {
-        setState(() {
-          _isKeyboardVisible = hasFocus;
-        });
         if (hasFocus && autoScrollToBottom == true) {
           _scrollToBottom();
         }
