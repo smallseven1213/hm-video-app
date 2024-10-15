@@ -31,8 +31,8 @@ class _CommentSectionState extends CommentSectionBase<CommentSection> {
   @override
   bool get showNoMoreComments => true;
 
-  // @override
-  // bool get autoFocusInput => widget.autoFocusInput; // Return the value here
+  @override
+  bool get autoFocusInput => widget.autoFocusInput; // Return the value here
 
   @override
   Widget build(BuildContext context) {

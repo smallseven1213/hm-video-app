@@ -32,7 +32,9 @@ class _CommentInputState extends State<CommentInput> {
     super.initState();
     _focusNode.addListener(_onFocusChange);
     if (widget.autoFocusInput == true) {
-      _focusNode.requestFocus();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _focusNode.requestFocus();
+      });
     }
   }
 
