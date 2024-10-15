@@ -69,7 +69,7 @@ class _CommentInputState extends State<CommentInput> {
             Expanded(
               child: TextField(
                 focusNode: _focusNode,
-                autofocus: widget.autoFocusInput ?? false,
+                autofocus: false,
                 controller: _controller,
                 minLines: 1,
                 maxLines: 3,
