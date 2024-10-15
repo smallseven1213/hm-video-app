@@ -25,27 +25,27 @@ class CommentInput extends StatefulWidget {
 
 class _CommentInputState extends State<CommentInput> {
   final TextEditingController _controller = TextEditingController();
-  // final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _focusNode.addListener(_onFocusChange);
-  //   if (widget.autoFocusInput == true) {
-  //     WidgetsBinding.instance.addPostFrameCallback((_) {
-  //       _focusNode.requestFocus();
-  //     });
-  //   }
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+    // if (widget.autoFocusInput == true) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     _focusNode.requestFocus();
+    //   });
+    // }
+  }
 
-  // void _onFocusChange() {
-  //   widget.onFocusChange(_focusNode.hasFocus);
-  // }
+  void _onFocusChange() {
+    widget.onFocusChange(_focusNode.hasFocus);
+  }
 
   @override
   void dispose() {
-    // _focusNode.removeListener(_onFocusChange);
-    // _focusNode.dispose();
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -53,7 +53,7 @@ class _CommentInputState extends State<CommentInput> {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
-    print('widget.autoFocusInput@: ${widget.autoFocusInput}');
+
     return Container(
       color: const Color(0xff1c202f),
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
@@ -72,63 +72,57 @@ class _CommentInputState extends State<CommentInput> {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: Focus(
+              child: TextField(
+                focusNode: _focusNode,
                 autofocus: widget.autoFocusInput ?? false,
-                onFocusChange: (hasFocus) {
-                  print('@@@hasFocus: $hasFocus');
-                  widget.onFocusChange(hasFocus);
-                },
-                child: TextField(
-                  // focusNode: _focusNode,
-                  controller: _controller,
-                  minLines: 1,
-                  maxLines: 3,
-                  scrollPadding: EdgeInsets.zero,
-                  style: const TextStyle(color: Colors.white),
-                  cursorColor: Colors.white,
-                  decoration: InputDecoration(
-                    hintText: localizations.translate('say_something'),
-                    hintStyle: const TextStyle(color: Color(0xff5f6279)),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xff5f6279)),
-                    ),
-                    filled: true,
-                    fillColor: const Color(0xff3f4253),
-                    focusColor: const Color(0xff5f6279),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    suffixIcon: _controller.text.isNotEmpty
-                        ? IconButton(
-                            icon: Container(
-                              width: 14,
-                              height: 14,
-                              decoration: const BoxDecoration(
-                                color: Color(0xff5f6279),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.close,
-                                  color: Color.fromARGB(255, 50, 52, 64),
-                                  size: 12,
-                                ),
+                controller: _controller,
+                minLines: 1,
+                maxLines: 3,
+                scrollPadding: EdgeInsets.zero,
+                style: const TextStyle(color: Colors.white),
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  hintText: localizations.translate('say_something'),
+                  hintStyle: const TextStyle(color: Color(0xff5f6279)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xff5f6279)),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xff3f4253),
+                  focusColor: const Color(0xff5f6279),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  suffixIcon: _controller.text.isNotEmpty
+                      ? IconButton(
+                          icon: Container(
+                            width: 14,
+                            height: 14,
+                            decoration: const BoxDecoration(
+                              color: Color(0xff5f6279),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.close,
+                                color: Color.fromARGB(255, 50, 52, 64),
+                                size: 12,
                               ),
                             ),
-                            onPressed: () {
-                              _controller.clear();
-                              setState(() {});
-                            },
-                          )
-                        : null,
-                  ),
-                  onChanged: (text) {
-                    setState(() {});
-                  },
+                          ),
+                          onPressed: () {
+                            _controller.clear();
+                            setState(() {});
+                          },
+                        )
+                      : null,
                 ),
+                onChanged: (text) {
+                  setState(() {});
+                },
               ),
             ),
             UserInfoConsumer(
