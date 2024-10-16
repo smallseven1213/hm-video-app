@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../apps_screen/index.dart';
@@ -8,13 +10,21 @@ class HomeAppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const PopScope(
+    final bottomNavigatorController = Get.find<BottomNavigatorController>();
+    return PopScope(
       canPop: false, // HC: 煩死，勿動!!
       child: Scaffold(
         appBar: CustomAppBar(
-          title: '應用中心',
-        ),
-        body: AppsScreen(),
+            titleWidget: Obx(
+          () => Text(
+            bottomNavigatorController.activeTitle.value,
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 15,
+            ),
+          ),
+        )),
+        body: const AppsScreen(),
       ),
     );
   }

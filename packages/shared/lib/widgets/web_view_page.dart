@@ -31,7 +31,7 @@ class WebViewPageState extends State<WebViewPage> {
         title: Text(
           widget.title,
           style: const TextStyle(
-            color: Colors.white70,
+            color: Colors.white,
             fontSize: 15,
           ),
         ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/bottom_navigator_controller.dart';
 import '../../models/navigation.dart';
-import '../../widgets/iframe.dart';
+import '../../widgets/web_view_page.dart';
 import 'main_navigation_provider.dart';
 
 class MainNavigationScaffold extends StatefulWidget {
