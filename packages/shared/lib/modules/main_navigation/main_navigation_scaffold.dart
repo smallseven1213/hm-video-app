@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/bottom_navigator_controller.dart';
 import '../../models/navigation.dart';
+import '../../widgets/iframe.dart';
 import 'main_navigation_provider.dart';
 
 class MainNavigationScaffold extends StatefulWidget {
@@ -35,7 +36,10 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
   @override
   Widget build(BuildContext context) {
     return MainNavigationProvider(
-      child: (String activeKey) {
+      child: (
+        String activeKey,
+        String navTitle,
+      ) {
         Widget currentScreen;
 
         // Parse activeKey into path and query parameters
@@ -51,9 +55,9 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
 
         if (path == '/iframe') {
           String iframeUrl = queryParameters['url'] ?? '';
-          currentScreen = H5Webview(
-            initialUrl: iframeUrl,
-            direction: 0,
+          currentScreen = WebViewPage(
+            url: iframeUrl,
+            title: navTitle,
           );
         } else if (widget.screens.containsKey(path)) {
           currentScreen = widget.screens[path]!();

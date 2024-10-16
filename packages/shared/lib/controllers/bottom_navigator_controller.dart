@@ -16,6 +16,7 @@ class BottomNavigatorController extends GetxController {
   final displayItems = true.obs;
   final fabLink = <Navigation>[].obs;
   final displayFab = true.obs;
+  final activeTitle = ''.obs;
 
   @override
   void onInit() {
@@ -55,6 +56,12 @@ class BottomNavigatorController extends GetxController {
 
   void changeKey(String key) {
     activeKey.value = key;
+    var navItem = navigatorItems.firstWhereOrNull((item) => item.path == key);
+    if (navItem != null) {
+      activeTitle.value = navItem.name ?? '';
+    } else {
+      activeTitle.value = '';
+    }
   }
 
   void setNavigatorItems(List<Navigation> items) {

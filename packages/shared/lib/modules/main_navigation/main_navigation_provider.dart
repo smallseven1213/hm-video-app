@@ -5,7 +5,10 @@ import '../../controllers/bottom_navigator_controller.dart';
 
 class MainNavigationProvider extends StatefulWidget {
   final String? defaultScreenKey;
-  final Widget Function(String activeKey) child;
+  final Widget Function(
+    String activeKey,
+    String navTitle,
+  ) child;
 
   const MainNavigationProvider({
     Key? key,
@@ -33,8 +36,9 @@ class MainNavigationProviderState extends State<MainNavigationProvider> {
   Widget build(BuildContext context) {
     return Obx(() {
       var activeKey = bottomNavigatorController.activeKey.value;
+      var navTitle = bottomNavigatorController.activeTitle.value;
 
-      return widget.child(activeKey);
+      return widget.child(activeKey, navTitle);
     });
   }
 }
