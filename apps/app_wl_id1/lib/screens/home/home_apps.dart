@@ -19,7 +19,7 @@ class HomeAppsScreen extends StatelessWidget {
           () => Text(
             bottomNavigatorController.activeTitle.value,
             style: const TextStyle(
-              color: Colors.white70,
+              color: Colors.white,
               fontSize: 15,
             ),
           ),
