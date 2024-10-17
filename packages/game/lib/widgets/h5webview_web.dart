@@ -8,7 +8,7 @@ import 'package:game/utils/loading.dart';
 class H5WebviewShared extends StatefulWidget {
   final String initialUrl;
   final int direction;
-  final bool openInNewWindow;
+  final bool? openInNewWindow;
 
   const H5WebviewShared({
     Key? key,
