@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../actor_avatar.dart';
 
 class SupplierNameWidget extends StatelessWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final bool showAvatar;
   final VideoPlayerInfo videoPlayerInfo;
 

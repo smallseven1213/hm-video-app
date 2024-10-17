@@ -31,7 +31,7 @@ class ShortVideoDetailController extends GetxController {
 
   var _testCount = 0;
 
-  var videoDetail = Rx<ShortVideoDetail?>(null);
+  var videoDetail = Rx<Vod?>(null);
   var video = Rx<Vod?>(null);
 
   ShortVideoDetailController(this.videoId);
@@ -42,7 +42,7 @@ class ShortVideoDetailController extends GetxController {
     ever(videoDetail, (_) {
       if (videoDetail.value != null) {
         videoCollects.value = videoDetail.value!.collects!;
-        videoFavorites.value = videoDetail.value!.favorites;
+        videoFavorites.value = videoDetail.value!.favorites!;
       }
     });
     await mutateAll();
@@ -51,7 +51,7 @@ class ShortVideoDetailController extends GetxController {
   Future<void> mutateAll() async {
     await Future.wait([
       fetchVideoUrl(videoId),
-      fetchVideoDetail(videoId),
+      //fetchVideoDetail(videoId),
     ]);
 
     isLoading.value = false;
@@ -60,7 +60,7 @@ class ShortVideoDetailController extends GetxController {
   Future<void> fetchVideoUrl(int videoId) async {
     _testCount++;
     try {
-      Vod videoFromApi = await vodApi.getVodUrl(videoId);
+      Vod videoFromApi = await vodApi.getById(videoId);
 
       if (videoFromApi.videoUrl == null || videoFromApi.videoUrl!.isEmpty) {
         logger.i('Video URL from API is null or empty');
@@ -78,6 +78,7 @@ class ShortVideoDetailController extends GetxController {
         if (videoUrlFormatted != null) {
           videoUrl.value = videoUrlFormatted;
           video.value = videoFromApi;
+          videoDetail.value = videoFromApi;
         } else {
           logger.i('Formatted Video URL is null');
         }
@@ -87,15 +88,15 @@ class ShortVideoDetailController extends GetxController {
     }
   }
 
-  Future<void> fetchVideoDetail(int videoId) async {
-    try {
-      ShortVideoDetail videoDetailFromApi =
-          await vodApi.getShortVideoDetailById(videoId);
-      videoDetail.value = videoDetailFromApi;
-    } catch (error) {
-      logger.i(error);
-    }
-  }
+  // Future<void> fetchVideoDetail(int videoId) async {
+  //   try {
+  //     ShortVideoDetail videoDetailFromApi =
+  //         await vodApi.getShortVideoDetailById(videoId);
+  //     videoDetail.value = videoDetailFromApi;
+  //   } catch (error) {
+  //     logger.i(error);
+  //   }
+  // }
 
   void updateCollects(int change) {
     if (isClosed) return;

@@ -4,8 +4,14 @@ class Tags {
   String? title;
   bool? outerFrame;
   List<Tag>? details;
+  int? shortVideoTotal;
 
-  Tags({title, outerFrame, details});
+  Tags({
+    title,
+    outerFrame,
+    details,
+    this.shortVideoTotal,
+  });
 
   Tags.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -16,6 +22,7 @@ class Tags {
         details!.add(Tag.fromJson(v));
       });
     }
+    shortVideoTotal = json['shortVideoTotal'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,15 +41,18 @@ class Tag {
   final int? orderIndex;
   final String? photoSid;
   final int? film;
+  final String? coverVertical;
+  final String? title;
+  final bool? isFollow;
 
-  Tag(
-    this.id,
-    this.name, {
-    this.parent,
-    this.orderIndex,
-    this.photoSid,
-    this.film,
-  });
+  Tag(this.id, this.name,
+      {this.parent,
+      this.orderIndex,
+      this.photoSid,
+      this.film,
+      this.coverVertical,
+      this.title,
+      this.isFollow});
 
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
@@ -52,6 +62,9 @@ class Tag {
       orderIndex: json['orderIndex'],
       photoSid: json['photoSid'],
       film: json['film'],
+      coverVertical: json['coverVertical'],
+      title: json['title'],
+      isFollow: json['isFollow'],
     );
   }
 
@@ -63,6 +76,9 @@ class Tag {
     data['orderIndex'] = orderIndex;
     data['photoSid'] = photoSid;
     data['film'] = film;
+    data['coverVertical'] = coverVertical;
+    data['title'] = title;
+    data['isFollow'] = isFollow;
     return data;
   }
 }
