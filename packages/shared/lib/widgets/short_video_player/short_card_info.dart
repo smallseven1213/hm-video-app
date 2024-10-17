@@ -5,6 +5,8 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/charge_type.dart';
+import 'package:shared/models/tag.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
@@ -32,7 +34,7 @@ enum PurchaseResult {
 }
 
 class ShortCardInfo extends StatelessWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final String title;
   final String tag;
   final bool showAvatar;
@@ -107,7 +109,7 @@ class ShortCardInfo extends StatelessWidget {
   Widget _buildTags(
     BuildContext context,
     VideoPlayerInfo videoPlayerInfo,
-    List<VideoTag> tags,
+    List<Tag> tags,
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -234,8 +236,8 @@ class ShortCardInfo extends StatelessWidget {
                         ),
                       ),
                       // 標籤
-                      if (data.tag.isNotEmpty)
-                        _buildTags(context, videoPlayerInfo, data.tag),
+                      if (data.tags!.isNotEmpty)
+                        _buildTags(context, videoPlayerInfo, data.tags!),
                       ShortVideoConsumer(
                         vodId: data.id,
                         tag: tag,

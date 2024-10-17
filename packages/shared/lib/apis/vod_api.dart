@@ -287,7 +287,7 @@ class VodApi {
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
     var res = await fetcher(
-        url: '$apiHost/public/videos/video/shortVideoDetail?id=$id');
+        url: '$apiHost/api/v1/video/short-detail?id=$id');
     if (res.data['code'] != '00') {
       return ShortVideoDetail.fromJson({});
     }
@@ -296,7 +296,7 @@ class VodApi {
 
   Future<Vod> getById(int videoId) async {
     var res = await fetcher(
-        url: '$apiHost/public/videos/video/shortVideoDetail?id=$videoId');
+        url: '$apiHost/api/v1/video/short-detail?id=$videoId');
 
     try {
       return Vod.fromJson(res.data['data']);

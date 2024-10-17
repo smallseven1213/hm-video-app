@@ -52,6 +52,8 @@ class Vod {
   String? point;
   double? buyPoint = 0;
   List<Vod>? belongVods;
+  final int? collects;
+  final int? favorites;
   // 影片頁面用的廣告
   bool? isAd;
   String? videoAdUrl;
@@ -120,6 +122,8 @@ class Vod {
     this.jackpot = '', // 默认值
     this.multiple = 0, // 默认值
     this.name = '', // 默认值
+    this.collects = 0,
+    this.favorites = 0,
   });
 
   Map<String, dynamic> toJson() {
@@ -173,6 +177,8 @@ class Vod {
       'jackpot': jackpot, // 默认值
       'multiple': multiple, // 默认值
       'name': name,
+      'collects': collects,
+      'favorites': favorites,
     };
   }
 
@@ -245,6 +251,8 @@ class Vod {
         jackpot: json['jackpot']?.toString() ?? '',
         multiple: json['multiple'] ?? 0,
         name: json['name']?.toString() ?? '',
+        collects: json['collects'] as int?,
+        favorites: json['favorites'] ?? 0,
       );
     } catch (e) {
       logger.i('json: $e');

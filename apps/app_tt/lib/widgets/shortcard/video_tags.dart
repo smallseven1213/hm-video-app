@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../short/short_card_info_tag.dart';
 
 class VideoTagsWidget extends StatelessWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final VideoPlayerInfo videoPlayerInfo;
 
   const VideoTagsWidget({
@@ -18,7 +19,7 @@ class VideoTagsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (data.tag.isEmpty) {
+    if (data.tags!.isEmpty) {
       return Container();
     }
     return Padding(
@@ -27,7 +28,7 @@ class VideoTagsWidget extends StatelessWidget {
         direction: Axis.horizontal,
         spacing: 4,
         runSpacing: 4,
-        children: data.tag
+        children: data.tags!
             .map((e) => GestureDetector(
                   onTap: () async {
                     videoPlayerInfo

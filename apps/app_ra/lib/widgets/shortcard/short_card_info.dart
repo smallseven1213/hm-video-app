@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -14,7 +15,7 @@ import 'short_card_info_tag.dart';
 import 'video_progress.dart';
 
 class ShortCardInfo extends StatelessWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final String title;
   final String tag;
   final bool showAvatar;
@@ -98,12 +99,12 @@ class ShortCardInfo extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
-                if (data.tag.isNotEmpty) ...[
+                if (data.tags!.isNotEmpty) ...[
                   Wrap(
                     direction: Axis.horizontal,
                     spacing: 4,
                     runSpacing: 4,
-                    children: data.tag
+                    children: data.tags!
                         .map((e) => GestureDetector(
                             onTap: () async {
                               videoPlayerInfo.observableVideoPlayerController
