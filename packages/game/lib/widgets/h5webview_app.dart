@@ -8,10 +8,14 @@ final logger = Logger();
 class H5WebviewShared extends StatefulWidget {
   final String initialUrl;
   final int direction;
+  final bool? openInNewWindow;
 
-  const H5WebviewShared(
-      {Key? key, required this.initialUrl, required this.direction})
-      : super(key: key);
+  const H5WebviewShared({
+    Key? key,
+    required this.initialUrl,
+    required this.direction,
+    this.openInNewWindow = false,
+  }) : super(key: key);
 
   @override
   H5WebviewSharedState createState() => H5WebviewSharedState();
@@ -36,10 +40,15 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
           if (request.url == widget.initialUrl) {
             return NavigationDecision.navigate;
           } else {
-            // 在新窗口打开链接
-            Uri url = Uri.parse(request.url);
-            launchUrl(url);
-            return NavigationDecision.prevent;
+            if (widget.openInNewWindow == true) {
+              // 在新窗口打开链接
+              Uri url = Uri.parse(request.url);
+              launchUrl(url);
+              return NavigationDecision.prevent;
+            } else {
+              // 在当前 WebView 中打开链接
+              return NavigationDecision.navigate;
+            }
           }
         },
       ),

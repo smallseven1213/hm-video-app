@@ -26,6 +26,7 @@ class WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: Container(),
         title: Text(
@@ -39,6 +40,7 @@ class WebViewPageState extends State<WebViewPage> {
       body: H5Webview(
         initialUrl: widget.url,
         direction: 0,
+        openInNewWindow: true,
       ),
     );
   }
