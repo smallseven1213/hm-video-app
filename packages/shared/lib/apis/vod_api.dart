@@ -324,7 +324,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/v2/videoBlocks?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+            '$apiHost/api/v1/video/channel-videos?channelId=$channelId&offset=$offset&deviceId=$deviceId');
     try {
       return ChannelInfo.fromJson(res.data['data']);
     } catch (e) {
