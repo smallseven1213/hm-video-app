@@ -52,6 +52,7 @@ class UserScreenState extends State<UserScreen> {
           );
         },
         child: Scaffold(
+          backgroundColor: const Color(0xff1c202f),
           body: CustomScrollView(
             physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
@@ -63,21 +64,6 @@ class UserScreenState extends State<UserScreen> {
               ),
               const SliverToBoxAdapter(
                 child: UserInfo(),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: AppColors.colors[ColorKeys.primary] as Color,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                    child: Container(
-                      height: 10,
-                      color: AppColors.colors[ColorKeys.background],
-                    ),
-                  ),
-                ),
               ),
               const GridMenu(),
               const SliverToBoxAdapter(

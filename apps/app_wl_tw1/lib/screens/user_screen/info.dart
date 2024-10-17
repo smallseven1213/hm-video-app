@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_data_getting_status_consumer.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -31,157 +31,179 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 145,
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      color: AppColors.colors[ColorKeys.primary],
-      child: Stack(
-        children: [
-          Row(
+    return Column(
+      children: [
+        Container(
+          height: 145,
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          color: AppColors.colors[ColorKeys.primary],
+          child: Stack(
             children: [
-              Avatar(),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    UserInfoConsumer(
-                      child: (info, isVIP, isGuest, isLoading) {
-                        if (isVIP) {
-                          return const Image(
-                            image: AssetImage(
-                                'assets/images/user_screen_info_vip.png'),
-                            width: 20,
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
-                    ),
-                    Row(
+              Row(
+                children: [
+                  Avatar(),
+                  const SizedBox(width: 13),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        UserDataGettingStatusConsumer(
-                          child: (isLoading) {
-                            if (isLoading) {
-                              return _buildShimmer(width: 80, height: 14);
+                        UserInfoV2Consumer(
+                          child:
+                              (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+                            if (isVIP) {
+                              return const Image(
+                                image: AssetImage(
+                                    'assets/images/user_screen_info_vip.webp'),
+                                width: 20,
+                              );
                             } else {
-                              return UserInfoConsumer(
-                                child: (info, isVIP, isGuest, isLoading) {
-                                  return Text(
-                                    info.nickname ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
+                              return const SizedBox();
+                            }
+                          },
+                        ),
+                        Row(
+                          children: [
+                            UserDataGettingStatusConsumer(
+                              child: (isLoading) {
+                                if (isLoading) {
+                                  return _buildShimmer(width: 80, height: 14);
+                                } else {
+                                  return UserInfoV2Consumer(
+                                    child: (info, isVIP, isGuest, isLoading,
+                                        isInfoV2Init) {
+                                      return Text(
+                                        info.nickname ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                            ),
+                            UserInfoV2Consumer(
+                              child: (info, isVIP, isGuest, isLoading,
+                                  isInfoV2Init) {
+                                if (!isGuest) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      MyRouteDelegate.of(context)
+                                          .push('/user/nickname');
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      child: const Icon(
+                                        Icons.border_color_rounded,
+                                        size: 15,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   );
-                                },
-                              );
-                            }
-                          },
+                                }
+                                return const SizedBox();
+                              },
+                            ),
+                          ],
                         ),
-                        UserInfoConsumer(
-                          child: (info, isVIP, isGuest, isLoading) {
-                            if (!isGuest) {
-                              return GestureDetector(
-                                onTap: () {
-                                  MyRouteDelegate.of(context)
-                                      .push('/user/nickname');
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(5),
-                                  child: const Icon(
-                                    Icons.border_color_rounded,
-                                    size: 15,
+                        const SizedBox(height: 5),
+                        UserDataGettingStatusConsumer(child: (isLoading) {
+                          if (isLoading && !kIsWeb) {
+                            return _buildShimmer(width: 50, height: 12);
+                          } else {
+                            return UserInfoV2Consumer(
+                              child: (info, isVIP, isGuest, isLoading,
+                                  isInfoV2Init) {
+                                return Text(
+                                  'ID: ${info.uid}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
                                     color: Colors.white,
+                                    fontWeight: FontWeight.w700,
                                   ),
-                                ),
-                              );
-                            }
-                            return const SizedBox();
-                          },
-                        ),
+                                );
+                              },
+                            );
+                          }
+                        }),
                       ],
                     ),
-                    const SizedBox(height: 5),
-                    UserDataGettingStatusConsumer(child: (isLoading) {
-                      if (isLoading && !kIsWeb) {
-                        return _buildShimmer(width: 50, height: 12);
-                      } else {
-                        return UserInfoConsumer(
-                          child: (info, isVIP, isGuest, isLoading) {
-                            return Text(
-                              'ID: ${info.uid}',
-                              style: const TextStyle(
-                                fontSize: 12,
+                  ),
+                ],
+              ),
+              UserInfoV2Consumer(
+                child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+                  return Positioned(
+                    top: 0,
+                    right: 0,
+                    child: !isGuest
+                        ? GestureDetector(
+                            onTap: () {
+                              MyRouteDelegate.of(context)
+                                  .push(AppRoutes.configs);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: const Icon(
+                                Icons.settings_outlined,
+                                size: 18,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
                               ),
-                            );
-                          },
-                        );
-                      }
-                    }),
-                  ],
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              MyRouteDelegate.of(context).push(AppRoutes.login);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(5),
+                              child: const Icon(
+                                Icons.login,
+                                size: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                  );
+                },
+              ),
+              Positioned(
+                top: 0,
+                right: 30,
+                child: GestureDetector(
+                  onTap: () {
+                    MyRouteDelegate.of(context).push(AppRoutes.notifications);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Icon(
+                      Icons.mail_outlined,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-          UserInfoConsumer(
-            child: (info, isVIP, isGuest, isLoading) {
-              return Positioned(
-                top: 0,
-                right: 0,
-                child: !isGuest
-                    ? GestureDetector(
-                        onTap: () {
-                          MyRouteDelegate.of(context).push(AppRoutes.configs);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          child: const Icon(
-                            Icons.settings_outlined,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          MyRouteDelegate.of(context).push(AppRoutes.login);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          child: const Icon(
-                            Icons.login,
-                            size: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-              );
-            },
-          ),
-          Positioned(
-            top: 0,
-            right: 30,
-            child: GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.notifications);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: const Icon(
-                  Icons.mail_outlined,
-                  size: 18,
-                  color: Colors.white,
-                ),
-              ),
+        ),
+        Container(
+          color: AppColors.colors[ColorKeys.primary] as Color,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Container(
+              height: 10,
+              color: const Color(0xff1c202f),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
