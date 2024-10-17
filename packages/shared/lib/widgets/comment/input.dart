@@ -31,9 +31,6 @@ class _CommentInputState extends State<CommentInput> {
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
-    if (widget.autoFocusInput == true) {
-      _focusNode.requestFocus();
-    }
   }
 
   void _onFocusChange() {
@@ -72,6 +69,7 @@ class _CommentInputState extends State<CommentInput> {
             Expanded(
               child: TextField(
                 focusNode: _focusNode,
+                autofocus: false,
                 controller: _controller,
                 minLines: 1,
                 maxLines: 3,

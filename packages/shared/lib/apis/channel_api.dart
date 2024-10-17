@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../controllers/system_config_controller.dart';
 import '../models/banner_photo.dart';
 import '../models/channel_info.dart';
@@ -36,8 +37,22 @@ class ChannelApi {
 
   // Get channel/v2/channelInfo?channelId=54
   Future<ChannelSharedData> getOneById(int channelId) async {
+    const device = {
+      'web': 1,
+      'ios': 2,
+      'android': 3,
+    };
+    int? deviceId = device['web'];
+
+    if (!kIsWeb) {
+      if (Platform.isIOS) {
+        deviceId = device['ios'];
+      } else {
+        deviceId = device['android'];
+      }
+    }
     var res = await fetcher(
-        url: '$apiPrefix/channel/v2/channelInfo?channelId=$channelId');
+        url: '$apiHost/api/v1/channel/info?channelId=$channelId&device=$deviceId');
     if (res.data['code'] != '00') {
       return ChannelSharedData();
     }

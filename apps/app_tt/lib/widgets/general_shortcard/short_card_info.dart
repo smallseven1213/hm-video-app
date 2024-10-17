@@ -14,7 +14,7 @@ import 'next_video.dart';
 import '../shortcard/purchase.dart';
 
 class ShortCardInfo extends StatefulWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final String title;
   final String tag;
   final bool showAvatar;

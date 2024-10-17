@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 import '../shortcard/purchase.dart';
@@ -9,7 +10,7 @@ import '../shortcard/video_tags.dart';
 import '../shortcard/video_title.dart';
 
 class ShortCardInfo extends StatelessWidget {
-  final ShortVideoDetail data;
+  final Vod data;
   final String title;
   final String tag;
   final bool showAvatar;

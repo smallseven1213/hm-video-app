@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:game/widgets/h5webview.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/bottom_navigator_controller.dart';
 import '../../models/navigation.dart';
+import '../../widgets/webview_page.dart';
 import 'main_navigation_provider.dart';
 
 class MainNavigationScaffold extends StatefulWidget {
@@ -34,21 +36,42 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
   @override
   Widget build(BuildContext context) {
     return MainNavigationProvider(
-      child: (String activeKey) {
+      child: (
+        String activeKey,
+        String navTitle,
+      ) {
         Widget currentScreen;
 
-        if (widget.screens.containsKey(activeKey)) {
-          currentScreen = widget.screens[activeKey]!();
+        // Parse activeKey into path and query parameters
+        String path = activeKey;
+        Map<String, String> queryParameters = {};
+
+        if (activeKey.contains('?')) {
+          int idx = activeKey.indexOf('?');
+          path = activeKey.substring(0, idx);
+          String query = activeKey.substring(idx + 1);
+          queryParameters = Uri.splitQueryString(query);
+        }
+
+        if (path == '/iframe') {
+          String iframeUrl = queryParameters['url'] ?? '';
+          currentScreen = WebViewPage(
+            url: iframeUrl,
+            title: navTitle,
+          );
+        } else if (widget.screens.containsKey(path)) {
+          currentScreen = widget.screens[path]!();
         } else if (widget.screenNotFoundWidget != null) {
           currentScreen = widget.screenNotFoundWidget!;
         } else {
           currentScreen = const SizedBox.shrink();
         }
+
         return Scaffold(
           appBar: widget.appBar,
           body: currentScreen,
           bottomNavigationBar: widget.bottomNavigationBarWidget(
-              activeKey: activeKey,
+              activeKey: path,
               navigatorItems: bottomNavigatorController.navigatorItems,
               changeTabKey: (String tabKey) {
                 bottomNavigatorController.changeKey(tabKey);

@@ -15,7 +15,7 @@ class ShortVideoConsumer extends StatefulWidget {
     required bool isLoading,
     required String? videoUrl,
     required Vod? video,
-    required ShortVideoDetail? videoDetail,
+    required Vod? videoDetail,
   }) child;
   final Widget? loading;
 

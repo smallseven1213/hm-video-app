@@ -73,7 +73,7 @@ const Map<String, String> sharedZhTwStrings = {
   "number": "第",
   "other_recommended_posts": "其他推薦貼文",
   "view_more": "觀看更多",
-  "become_a _vip_to_unlock": "成為VIP解鎖",
+  "become_a_vip_to_unlock": "成為VIP解鎖",
   "gold_coins_unlock": "金幣解鎖",
   "coming_soon": "精彩即將呈現",
   "activate_vip_for_free": "開通 VIP 無限看片",

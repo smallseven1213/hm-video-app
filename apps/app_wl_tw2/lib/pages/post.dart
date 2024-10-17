@@ -166,10 +166,10 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Expanded(child: CommentHint(onTap: () {
+                      // 在显示 ModalBottomSheet 的地方
                       showModalBottomSheet(
                         context: context,
                         isScrollControlled: true,
-                        isDismissible: true,
                         backgroundColor: Colors.transparent,
                         barrierColor: Colors.black.withOpacity(0.5),
                         builder: (BuildContext context) {
