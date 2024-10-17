@@ -10,6 +10,7 @@ class CommentController extends GetxController {
   final int topicType;
   final int topicId;
   final offset = 1.obs;
+  RxString title = '我要舉報'.obs;
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
 
@@ -91,4 +92,14 @@ class CommentController extends GetxController {
 
   // 检查是否有更多数据
   bool get hasMoreData => _hasMoreData;
+
+  //替換按鈕標題為刪除
+  void changeTitleToDelete() {
+    title.value = 'delete_comment';
+  }
+
+  //替換按鈕標題為舉報
+  void changeTitleToReport() {
+    title.value = 'i_want_to_report';
+  }
 }
