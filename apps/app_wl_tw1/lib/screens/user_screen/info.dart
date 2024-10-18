@@ -11,6 +11,7 @@ import 'package:shimmer/shimmer.dart';
 
 import 'package:app_wl_tw1/config/colors.dart';
 import '../../widgets/avatar.dart';
+import 'balance.dart';
 
 final logger = Logger();
 const Color baseColor = Color(0xFF003068);
@@ -34,104 +35,111 @@ class UserInfo extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 145,
+          height: 180,
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           color: AppColors.colors[ColorKeys.primary],
           child: Stack(
             children: [
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Avatar(),
-                  const SizedBox(width: 13),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        UserInfoV2Consumer(
-                          child:
-                              (info, isVIP, isGuest, isLoading, isInfoV2Init) {
-                            if (isVIP) {
-                              return const Image(
-                                image: AssetImage(
-                                    'assets/images/user_screen_info_vip.webp'),
-                                width: 20,
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          },
-                        ),
-                        Row(
+                  Row(
+                    children: [
+                      Avatar(),
+                      const SizedBox(width: 13),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            UserDataGettingStatusConsumer(
-                              child: (isLoading) {
-                                if (isLoading) {
-                                  return _buildShimmer(width: 80, height: 14);
-                                } else {
-                                  return UserInfoV2Consumer(
-                                    child: (info, isVIP, isGuest, isLoading,
-                                        isInfoV2Init) {
-                                      return Text(
-                                        info.nickname ?? '',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                            ),
                             UserInfoV2Consumer(
                               child: (info, isVIP, isGuest, isLoading,
                                   isInfoV2Init) {
-                                if (!isGuest) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      MyRouteDelegate.of(context)
-                                          .push('/user/nickname');
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      child: const Icon(
-                                        Icons.border_color_rounded,
-                                        size: 15,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                if (isVIP) {
+                                  return const Image(
+                                    image: AssetImage(
+                                        'assets/images/user_screen_info_vip.webp'),
+                                    width: 20,
                                   );
+                                } else {
+                                  return const SizedBox();
                                 }
-                                return const SizedBox();
                               },
                             ),
+                            Row(
+                              children: [
+                                UserDataGettingStatusConsumer(
+                                  child: (isLoading) {
+                                    if (isLoading) {
+                                      return _buildShimmer(
+                                          width: 80, height: 14);
+                                    } else {
+                                      return UserInfoV2Consumer(
+                                        child: (info, isVIP, isGuest, isLoading,
+                                            isInfoV2Init) {
+                                          return Text(
+                                            info.nickname ?? '',
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
+                                  },
+                                ),
+                                UserInfoV2Consumer(
+                                  child: (info, isVIP, isGuest, isLoading,
+                                      isInfoV2Init) {
+                                    if (!isGuest) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          MyRouteDelegate.of(context)
+                                              .push('/user/nickname');
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(5),
+                                          child: const Icon(
+                                            Icons.border_color_rounded,
+                                            size: 15,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return const SizedBox();
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            UserDataGettingStatusConsumer(child: (isLoading) {
+                              if (isLoading && !kIsWeb) {
+                                return _buildShimmer(width: 50, height: 12);
+                              } else {
+                                return UserInfoV2Consumer(
+                                  child: (info, isVIP, isGuest, isLoading,
+                                      isInfoV2Init) {
+                                    return Text(
+                                      'ID: ${info.uid}',
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            }),
                           ],
                         ),
-                        const SizedBox(height: 5),
-                        UserDataGettingStatusConsumer(child: (isLoading) {
-                          if (isLoading && !kIsWeb) {
-                            return _buildShimmer(width: 50, height: 12);
-                          } else {
-                            return UserInfoV2Consumer(
-                              child: (info, isVIP, isGuest, isLoading,
-                                  isInfoV2Init) {
-                                return Text(
-                                  'ID: ${info.uid}',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                        }),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  const UserBalance(),
                 ],
               ),
               UserInfoV2Consumer(
@@ -198,7 +206,7 @@ class UserInfo extends StatelessWidget {
               topRight: Radius.circular(16),
             ),
             child: Container(
-              height: 10,
+              height: 32,
               color: const Color(0xff1c202f),
             ),
           ),
