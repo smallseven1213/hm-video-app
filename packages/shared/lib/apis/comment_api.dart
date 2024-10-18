@@ -80,4 +80,25 @@ class CommentApi {
       return null;
     }
   }
+
+  //刪除評論
+  Future<Comment?> commentDelete({required int id}) async {
+    try {
+      var res = await fetcher(
+        url: '$apiPrefix/comment/delete',
+        method: 'POST',
+        body: {
+          'id': id,
+        },
+      );
+
+      if (res.data['code'] != '00') {
+        return null;
+      }
+      return Comment.fromJson(res.data['data']);
+
+    } catch (e) {
+      return null;
+    }
+  }
 }

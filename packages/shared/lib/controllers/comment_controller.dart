@@ -102,4 +102,18 @@ class CommentController extends GetxController {
   void changeTitleToReport() {
     title.value = 'i_want_to_report';
   }
+
+  //刪除評論
+  Future<void> commentDelete(int id,int index) async {
+    var comment = await commentApi.commentDelete(
+      id: id,
+    );
+    if (comment != null) {
+      comments.removeAt(index);
+      update();
+    } else {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment delete');
+    }
+  }
 }

@@ -110,6 +110,7 @@ class _CommentListState extends State<CommentList> {
                         item: comment,
                         expandedCommentId:
                             _expandedCommentId, // 传递共享的 ValueNotifier
+                            index: index,
                       );
                     } else {
                       // This is the extra item at the end
@@ -148,11 +149,13 @@ class _CommentListState extends State<CommentList> {
 class CommentItem extends StatefulWidget {
   final Comment item;
   final ValueNotifier<int?> expandedCommentId; // 添加这个参数
+  final int index;
 
   const CommentItem({
     Key? key,
     required this.item,
     required this.expandedCommentId, // 添加这个参数
+    required this.index, 
   }) : super(key: key);
 
   @override
@@ -241,6 +244,7 @@ class _CommentItemState extends State<CommentItem> {
                     id: widget.item.id,
                     uid: widget.item.uid,
                     topicId: widget.item.topicId,
+                    index: widget.index,
                   );
                 });
           }

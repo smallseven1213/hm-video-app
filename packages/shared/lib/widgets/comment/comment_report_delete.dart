@@ -8,11 +8,13 @@ class CommentReportDelete extends StatelessWidget {
   final int id;
   final int uid;
   final int topicId;
+  final int index;
   CommentReportDelete({
     Key? key,
     required this.id,
     required this.uid,
-    required this.topicId,
+    required this.topicId, 
+    required this.index,
   }) : super(key: key);
 
   final userController = Get.find<UserController>();
@@ -22,13 +24,15 @@ class CommentReportDelete extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     final commentReportDeleteController =
         Get.find<CommentController>(tag: 'comment-$topicId');
-
+    bool isReport = true;
     return Obx(
       () {
         if (uid == userController.infoV2.value.uid) {
           commentReportDeleteController.changeTitleToDelete();
+          isReport = false;
         } else {
           commentReportDeleteController.changeTitleToReport();
+          isReport = true;
         }
         return Container(
           height: 200,
@@ -49,8 +53,14 @@ class CommentReportDelete extends StatelessWidget {
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  // 處理檢舉邏輯
-                  Navigator.pop(context);
+                  if (isReport) {
+                    // 處理檢舉邏輯
+                    Navigator.pop(context);
+                  } else {
+                    //刪除功能
+                    commentReportDeleteController.commentDelete(id,index);
+                    Navigator.of(context).pop();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6166DC), // 按鈕顏色
@@ -82,9 +92,10 @@ class CommentReportDelete extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  '取消',
-                  style: TextStyle(
+                child: Text(
+                 localizations
+                      .translate('cancel'),
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white70,
                   ),
