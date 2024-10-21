@@ -10,13 +10,18 @@ class CommentController extends GetxController {
   final int topicType;
   final int topicId;
   final offset = 1.obs;
-  RxString title = '我要舉報'.obs;
+  RxString title = ''.obs;
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
-
+  RxList<Report> reportList = RxList<Report>();
+  RxInt selectedIndex = 0.obs;
+  RxBool isTypeSelection = true.obs;
+  RxBool isReport = true.obs;
   int _page = 1;
-
   bool _hasMoreData = true;
+  RxString reportTitle = ''.obs;
+  RxInt reportType = 0.obs;
+  RxInt reportLength = 0.obs;
 
   CommentController({
     required this.topicType,
@@ -96,15 +101,39 @@ class CommentController extends GetxController {
   //替換按鈕標題為刪除
   void changeTitleToDelete() {
     title.value = 'delete_comment';
+    isReport.value = false;
   }
 
   //替換按鈕標題為舉報
   void changeTitleToReport() {
     title.value = 'i_want_to_report';
+    isReport.value = true;
+  }
+
+  //選擇舉報內容
+  void selectedReportIndex(int index) {
+    selectedIndex.value = index;
+  }
+
+  //舉報初始化
+  void initReport() {
+    reportType.value = 0;
+    isTypeSelection.value = true;
+    reportTitle.value = '請選擇類型';
+    reportLength.value = reportList.length;
+  }
+
+  //完成舉報類型選擇後
+  void completeTypeSelection(int index) {
+    selectedIndex.value = 0;
+    reportType.value = index;
+    isTypeSelection.value = false;
+    reportTitle.value = '請選擇理由';
+    reportLength.value = reportList[index].options.length;
   }
 
   //刪除評論
-  Future<void> commentDelete(int id,int index) async {
+  Future<void> commentDelete(int id, int index) async {
     var comment = await commentApi.commentDelete(
       id: id,
     );
@@ -114,6 +143,30 @@ class CommentController extends GetxController {
     } else {
       // Handle error (e.g., show a snackbar)
       Get.snackbar('Error', 'Failed to comment delete');
+    }
+  }
+
+  //舉報類型
+  Future<void> commentReportType() async {
+    var commentReportType = await commentApi.commentReportType();
+    if (commentReportType.isNotEmpty) {
+      reportList.value = commentReportType;
+      update();
+    } else {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment report type');
+    }
+  }
+
+  //舉報評論
+  Future<void> commentReport(int id) async {
+    var commentRepor = await commentApi.commentReport(
+        id: id,
+        type: reportType.value,
+        reason: reportList[reportType.value].options[selectedIndex.value]);
+    if (commentRepor == null) {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment report type');
     }
   }
 }
