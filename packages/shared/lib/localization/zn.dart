@@ -91,4 +91,6 @@ const Map<String, String> sharedZhCnStrings = {
   "expand": "展開",
   "i_want_to_report": "我要举报",
   "delete_comment": "删除评论",
+  "please_select_a_reason":"选择理由",
+  "please_select_type":"选择类型",
 };

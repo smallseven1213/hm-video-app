@@ -119,7 +119,7 @@ class CommentController extends GetxController {
   void initReport() {
     reportType.value = 0;
     isTypeSelection.value = true;
-    reportTitle.value = '請選擇類型';
+    reportTitle.value = 'please_select_type';
     reportLength.value = reportList.length;
   }
 
@@ -128,7 +128,7 @@ class CommentController extends GetxController {
     selectedIndex.value = 0;
     reportType.value = index;
     isTypeSelection.value = false;
-    reportTitle.value = '請選擇理由';
+    reportTitle.value = 'please_select_a_reason';
     reportLength.value = reportList[index].options.length;
   }
 
@@ -166,7 +166,7 @@ class CommentController extends GetxController {
         reason: reportList[reportType.value].options[selectedIndex.value]);
     if (commentRepor == null) {
       // Handle error (e.g., show a snackbar)
-      Get.snackbar('Error', 'Failed to comment report type');
+      Get.snackbar('Error', 'Failed to comment report');
     }
   }
 }
