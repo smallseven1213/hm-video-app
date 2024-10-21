@@ -89,4 +89,6 @@ const Map<String, String> sharedZhCnStrings = {
   "comment": "评论",
   "collapse": "收起",
   "expand": "展開",
+  "i_want_to_report": "我要举报",
+  "delete_comment": "删除评论",
 };

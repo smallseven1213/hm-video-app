@@ -96,7 +96,53 @@ class CommentApi {
         return null;
       }
       return Comment.fromJson(res.data['data']);
+    } catch (e) {
+      return null;
+    }
+  }
 
+  //取得舉報類型
+  Future<List<Report>> commentReportType() async {
+    try {
+      var res = await fetcher(
+        url: '$apiPrefix/comment/report/options',
+        method: 'GET',
+        body: {},
+      );
+
+      if (res.data['code'] != '00') {
+        return [];
+      }
+      List<Report> reports =
+          (res.data['data'] as Map<String, dynamic>).entries.map((entry) {
+        return Report.fromJson(entry.value);
+      }).toList();
+
+      return reports;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  //舉報評論
+  Future<Comment?> commentReport(
+      {required int id, required int type, required String reason}) async {
+    try {
+      var res = await fetcher(
+        url: '$apiPrefix/comment/report',
+        method: 'POST',
+        body: {
+          "comment_id": id, // 評論ID
+          "type": type + 1, // 舉報類型，選擇的類型
+          "reason": reason, // 選擇的舉報理由
+        },
+      );
+
+      if (res.data['code'] != '00') {
+        return null;
+      }
+
+      return Comment.fromJson(res.data['data']);
     } catch (e) {
       return null;
     }

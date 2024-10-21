@@ -90,4 +90,6 @@ const Map<String, String> sharedJaJpStrings = {
   "comment": "コメント",
   "collapse": "閉じる",
   "expand": "展開する",
+  "i_want_to_report": "報告",
+  "delete_comment": "消去",
 };

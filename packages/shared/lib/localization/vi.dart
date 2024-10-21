@@ -96,4 +96,6 @@ const Map<String, String> sharedViVnStrings = {
   "comment": "Bình luận",
   "collapse": "Thu gọn",
   "expand": "Mở rộng",
+  "i_want_to_report": "Báo cáo",
+  "delete_comment": "Xóa bỏ",
 };
