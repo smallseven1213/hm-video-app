@@ -92,4 +92,6 @@ const Map<String, String> sharedJaJpStrings = {
   "expand": "展開する",
   "i_want_to_report": "報告",
   "delete_comment": "消去",
+  "please_select_a_reason": "理由を選択する",
+  "please_select_type": "種類を選択する",
 };

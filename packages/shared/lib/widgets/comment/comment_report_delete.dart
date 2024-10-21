@@ -24,8 +24,7 @@ class CommentReportDelete extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     final commentReportDeleteController =
         Get.find<CommentController>(tag: 'comment-$topicId');
-    commentReportDeleteController.commentReportType();
-    
+
     return Obx(
       () {
         if (uid == userController.infoV2.value.uid) {
@@ -104,8 +103,9 @@ class CommentReportDelete extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.center,
                                         child: Text(
-                                          commentReportDeleteController
-                                              .reportTitle.value,
+                                          localizations.translate(
+                                              commentReportDeleteController
+                                                  .reportTitle.value),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 18,
