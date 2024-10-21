@@ -12,6 +12,7 @@ import 'package:app_wl_tw1/widgets/id_card.dart';
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
 
+import '../vip/subscription_card.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -62,9 +63,8 @@ class UserScreenState extends State<UserScreen> {
                   height: MediaQuery.paddingOf(context).top,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: UserInfo(),
-              ),
+              const SliverToBoxAdapter(child: UserInfo()),
+              const SliverToBoxAdapter(child: VIPSubscriptionCard()),
               const GridMenu(),
               const SliverToBoxAdapter(
                 child: SizedBox(

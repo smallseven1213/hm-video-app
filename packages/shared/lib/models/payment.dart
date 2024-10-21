@@ -1,11 +1,13 @@
 class Payment {
   final int id;
   final String type;
+  // final String code;
   final String? iconSid;
 
   Payment(
     this.id,
     this.type,
+    // this.code,
     this.iconSid,
   );
 
@@ -14,6 +16,7 @@ class Payment {
       json['id'],
       json['paymentTypeName'],
       json['paymentTypeIcon'],
+      // json['paymentTypeCode'],
     );
   }
 }

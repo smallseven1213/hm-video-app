@@ -199,7 +199,7 @@ class UserInfo extends StatelessWidget {
           topRight: Radius.circular(16),
         ),
         child: Container(
-          height: 32,
+          height: 16,
           color: const Color(0xff1c202f),
         ),
       ),
