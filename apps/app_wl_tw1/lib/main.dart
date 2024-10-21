@@ -47,6 +47,35 @@ void main() async {
         primaryContainer: AppColors.colors[ColorKeys.buttonBgPrimary],
         primary: AppColors.colors[ColorKeys.textPrimary], // textPrimaryColor
       ),
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+        headlineMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+        headlineSmall: TextStyle(
+          fontSize: 14,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.colors[ColorKeys.background],
+        // shad /owColor: AppColors.colors[ColorKeys.textPrimary]!,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(8),
+          ),
+        ),
+      ),
     ),
     globalLoadingWidget: ({String? text}) =>
         Loading(loadingText: text ?? '正在加载...'),

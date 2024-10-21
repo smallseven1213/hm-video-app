@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/purchase_type.dart';
-import 'package:shared/models/user.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
@@ -215,25 +214,25 @@ class CoinPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.find<UserController>();
-    return UserInfoConsumer(
-      child: (User info, isVIP, isGuest, isLoading) {
-        if (info.id.isEmpty) {
-          return const SizedBox();
+    return UserInfoV2Consumer(
+      child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+        if (isInfoV2Init) {
+          return Obx(
+            () => Coin(
+              direction: direction,
+              userPoints: userController.infoV2.value.points.toString(),
+              buyPoints: buyPoints,
+              videoId: videoId,
+              videoPlayerInfo: videoPlayerInfo,
+              timeLength: timeLength,
+              onSuccess: onSuccess,
+              showConfirmDialog: showConfirmDialog,
+              tag: tag,
+              purchaseType: purchaseType, // 傳入不同的 purchaseType
+            ),
+          );
         }
-        return Obx(
-          () => Coin(
-            direction: direction,
-            userPoints: userController.infoV2.value.points.toString(),
-            buyPoints: buyPoints,
-            videoId: videoId,
-            videoPlayerInfo: videoPlayerInfo,
-            timeLength: timeLength,
-            onSuccess: onSuccess,
-            showConfirmDialog: showConfirmDialog,
-            tag: tag,
-            purchaseType: purchaseType, // 傳入不同的 purchaseType
-          ),
-        );
+        return const SizedBox();
       },
     );
   }

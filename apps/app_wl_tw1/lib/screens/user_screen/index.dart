@@ -12,6 +12,7 @@ import 'package:app_wl_tw1/widgets/id_card.dart';
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
 
+import '../vip/subscription_card.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -52,6 +53,7 @@ class UserScreenState extends State<UserScreen> {
           );
         },
         child: Scaffold(
+          backgroundColor: const Color(0xff1c202f),
           body: CustomScrollView(
             physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
@@ -61,24 +63,8 @@ class UserScreenState extends State<UserScreen> {
                   height: MediaQuery.paddingOf(context).top,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: UserInfo(),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: AppColors.colors[ColorKeys.primary] as Color,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                    child: Container(
-                      height: 10,
-                      color: AppColors.colors[ColorKeys.background],
-                    ),
-                  ),
-                ),
-              ),
+              const SliverToBoxAdapter(child: UserInfo()),
+              const SliverToBoxAdapter(child: VIPSubscriptionCard()),
               const GridMenu(),
               const SliverToBoxAdapter(
                 child: SizedBox(

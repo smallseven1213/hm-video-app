@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 class CellData {
@@ -41,7 +42,8 @@ class ConfigsPage extends StatelessWidget {
       appBar: const CustomAppBar(title: '設置'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
+        child: UserInfoV2Consumer(
+            child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
           // 檢查是否為 guest，如果是則不顯示修改密碼的項目
           final displayedCellDataList = cellDataList.where((data) {
             return data.text != '修改密碼' || !isGuest;
