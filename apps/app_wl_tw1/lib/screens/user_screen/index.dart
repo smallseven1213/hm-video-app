@@ -12,7 +12,7 @@ import 'package:app_wl_tw1/widgets/id_card.dart';
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
 
-import '../vip/subscription_card.dart';
+import 'subscription_card.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
