@@ -15,6 +15,9 @@ class CommentController extends GetxController {
   RxList<Report> reportList = RxList<Report>();
   int _page = 1;
   bool _hasMoreData = true;
+  RxString reportTitle = ''.obs;
+  RxInt reportType = 0.obs;
+  RxInt reportLength = 0.obs;
 
   CommentController({
     required this.topicType,
