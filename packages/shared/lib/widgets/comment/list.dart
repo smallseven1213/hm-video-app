@@ -41,6 +41,7 @@ class _CommentListState extends State<CommentList> {
         Get.find<CommentController>(tag: 'comment-${widget.topicId}');
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _commentController.commentReportType();
   }
 
   void _scrollListener() {
@@ -110,7 +111,7 @@ class _CommentListState extends State<CommentList> {
                         item: comment,
                         expandedCommentId:
                             _expandedCommentId, // 传递共享的 ValueNotifier
-                            index: index,
+                        index: index,
                       );
                     } else {
                       // This is the extra item at the end
@@ -155,7 +156,7 @@ class CommentItem extends StatefulWidget {
     Key? key,
     required this.item,
     required this.expandedCommentId, // 添加这个参数
-    required this.index, 
+    required this.index,
   }) : super(key: key);
 
   @override

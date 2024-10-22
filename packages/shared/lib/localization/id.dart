@@ -97,4 +97,8 @@ const Map<String, String> sharedIdIdStrings = {
   "comment": "Komentar",
   "collapse": "Lipat",
   "expand": "Buka",
+  "i_want_to_report": "Laporkan",
+  "delete_comment": "Hapus",
+  "please_select_a_reason": "Pilih Alasan",
+  "please_select_type": "Pilih Jenis",
 };

@@ -57,3 +57,22 @@ class InfinityComments {
 
   InfinityComments(this.comments, this.total, this.hasMore);
 }
+
+class Report {
+  final String title;
+  final List<String> options;
+
+  Report({required this.title, required this.options});
+
+  factory Report.fromJson(Map<String, dynamic> json) {
+    return Report(
+      title: json['title'] ?? '',
+      options:
+          json['options'] != null ? List<String>.from(json['options']) : [],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {};
+  }
+}

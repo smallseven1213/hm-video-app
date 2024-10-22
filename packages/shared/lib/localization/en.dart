@@ -97,4 +97,8 @@ const Map<String, String> sharedEnUsStrings = {
   "comment": "Comment",
   "collapse": "Collapse",
   "expand": "Expand",
+  "i_want_to_report": "Report",
+  "delete_comment": "Delete",
+  "please_select_a_reason": "Select Reason",
+  "please_select_type": "Select Type",
 };
