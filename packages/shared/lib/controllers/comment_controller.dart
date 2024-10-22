@@ -10,18 +10,11 @@ class CommentController extends GetxController {
   final int topicType;
   final int topicId;
   final offset = 1.obs;
-  RxString title = ''.obs;
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
   RxList<Report> reportList = RxList<Report>();
-  RxInt selectedIndex = 0.obs;
-  RxBool isTypeSelection = true.obs;
-  RxBool isReport = true.obs;
   int _page = 1;
   bool _hasMoreData = true;
-  RxString reportTitle = ''.obs;
-  RxInt reportType = 0.obs;
-  RxInt reportLength = 0.obs;
 
   CommentController({
     required this.topicType,
@@ -98,40 +91,6 @@ class CommentController extends GetxController {
   // 检查是否有更多数据
   bool get hasMoreData => _hasMoreData;
 
-  //替換按鈕標題為刪除
-  void changeTitleToDelete() {
-    title.value = 'delete_comment';
-    isReport.value = false;
-  }
-
-  //替換按鈕標題為舉報
-  void changeTitleToReport() {
-    title.value = 'i_want_to_report';
-    isReport.value = true;
-  }
-
-  //選擇舉報內容
-  void selectedReportIndex(int index) {
-    selectedIndex.value = index;
-  }
-
-  //舉報初始化
-  void initReport() {
-    reportType.value = 0;
-    isTypeSelection.value = true;
-    reportTitle.value = 'please_select_type';
-    reportLength.value = reportList.length;
-  }
-
-  //完成舉報類型選擇後
-  void completeTypeSelection(int index) {
-    selectedIndex.value = 0;
-    reportType.value = index;
-    isTypeSelection.value = false;
-    reportTitle.value = 'please_select_a_reason';
-    reportLength.value = reportList[index].options.length;
-  }
-
   //刪除評論
   Future<void> commentDelete(int id, int index) async {
     var comment = await commentApi.commentDelete(
@@ -159,11 +118,12 @@ class CommentController extends GetxController {
   }
 
   //舉報評論
-  Future<void> commentReport(int id) async {
+  Future<void> commentReport(int id, int reportType, String reason) async {
     var commentRepor = await commentApi.commentReport(
-        id: id,
-        type: reportType.value,
-        reason: reportList[reportType.value].options[selectedIndex.value]);
+      id: id,
+      type: reportType,
+      reason: reason,
+    );
     if (commentRepor == null) {
       // Handle error (e.g., show a snackbar)
       Get.snackbar('Error', 'Failed to comment report');
