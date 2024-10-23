@@ -62,7 +62,7 @@ class CommentReportDeleteState extends State<CommentReportDelete> {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 35),
           ElevatedButton(
             onPressed: () {
               if (isReport) {

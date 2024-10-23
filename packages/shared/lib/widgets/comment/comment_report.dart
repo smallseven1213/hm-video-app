@@ -107,13 +107,13 @@ class CommentReportState extends State<CommentReport> {
               ),
             ),
           ),
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
           Stack(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: IconButton(
-                  onPressed: () {
+                child: GestureDetector(
+                  onTap: () {
                     if (isTypeSelection) {
                       Navigator.pop(context);
                     } else {
@@ -124,9 +124,14 @@ class CommentReportState extends State<CommentReport> {
                       }
                     }
                   },
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  iconSize: 16,
-                  color: Colors.white,
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 8.0), // 調整圖標的左邊距
+                    child: Icon(
+                      Icons.arrow_back_ios_new,
+                      size: 14,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               Align(
@@ -134,14 +139,16 @@ class CommentReportState extends State<CommentReport> {
                 child: Text(
                   localizations.translate(reportTitle),
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center, // 保證文字在容器內水平居中
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Expanded(
             // 彈跳視窗內容切換
             child: isTypeSelection
@@ -179,12 +186,17 @@ class CommentReportState extends State<CommentReport> {
                   padding: const EdgeInsets.fromLTRB(16, 13, 16, 13),
                   child: Stack(
                     children: [
-                      Text(
-                        commentReportDeleteController.reportList[index].title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                            commentReportDeleteController
+                                .reportList[index].title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
                       ),
                       const Align(
                         alignment: Alignment.centerRight,
@@ -201,12 +213,7 @@ class CommentReportState extends State<CommentReport> {
             },
           ),
         ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          width: double.infinity,
-          height: 55,
-        ),
+        const SizedBox(height: 25),
       ],
     );
   }
@@ -243,19 +250,20 @@ class CommentReportState extends State<CommentReport> {
                     });
                   },
                   title: Text(
-                    commentReportDeleteController
-                        .reportList[reportType].options[index],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
+                      commentReportDeleteController
+                          .reportList[reportType].options[index],
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
                 ),
               );
             },
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 15),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6166DC),
@@ -274,6 +282,7 @@ class CommentReportState extends State<CommentReport> {
             localizations.translate('i_want_to_report'),
           ),
         ),
+        const SizedBox(height: 5),
       ],
     );
   }
