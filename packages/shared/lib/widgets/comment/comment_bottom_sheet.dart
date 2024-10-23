@@ -40,6 +40,7 @@ class CommentBottomSheet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
+            const SizedBox(height: 10,),
             Expanded(
               child: CommentSection(
                 topicId: postId,
