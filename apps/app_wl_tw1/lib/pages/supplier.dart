@@ -52,18 +52,15 @@ class _SupplierPageState extends State<SupplierPage>
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 1) {
-          shortVideoController.reset();
+        if (_tabController.index == 0) {
           postController.reset();
-          shortVideoController.loadMoreData();
-        } else if (_tabController.index == 2) {
-          supplierVideoController.reset();
-          postController.reset();
-          supplierVideoController.loadMoreData();
-        } else {
           postController.loadMoreData();
+        } else if (_tabController.index == 1) {
           shortVideoController.reset();
+          shortVideoController.loadMoreData();
+        } else {
           supplierVideoController.reset();
+          supplierVideoController.loadMoreData();
         }
       }
     });
