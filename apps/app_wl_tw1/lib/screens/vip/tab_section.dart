@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/tab_bar.dart';
+import 'order_record.dart';
+import 'privilege_record.dart';
 import 'product_list.dart';
 
 class TabSection extends StatefulWidget {
@@ -55,8 +57,8 @@ class TabSectionState extends State<TabSection>
             controller: _tabController,
             children: [
               const ProductList(),
-              Container(color: Colors.teal),
-              Container(color: Colors.amberAccent),
+              PrivilegeRecord(),
+              OrderRecord(),
             ],
           ),
         ),
