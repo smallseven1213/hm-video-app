@@ -46,24 +46,21 @@ class _SupplierPageState extends State<SupplierPage>
     supplierVideoController = SupplierVideoController(
         supplierId: widget.id, scrollController: _parentScrollController);
     postController = ChannelPostController(
-            supplierId: widget.id, scrollController: _parentScrollController);
-            
+        supplierId: widget.id, scrollController: _parentScrollController);
+
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 1) {
-          shortVideoController.reset();
+        if (_tabController.index == 0) {
           postController.reset();
-          shortVideoController.loadMoreData();
-        } else if (_tabController.index == 2) {
-          supplierVideoController.reset();
-          postController.reset();
-          supplierVideoController.loadMoreData();
-        } else {
           postController.loadMoreData();
+        } else if (_tabController.index == 1) {
           shortVideoController.reset();
+          shortVideoController.loadMoreData();
+        } else {
           supplierVideoController.reset();
+          supplierVideoController.loadMoreData();
         }
       }
     });
@@ -197,7 +194,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['貼文','短視頻', '長視頻'],
+      tabs: const ['貼文', '短視頻', '長視頻'],
     );
   }
 

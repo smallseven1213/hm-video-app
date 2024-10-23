@@ -51,18 +51,15 @@ class _SupplierPageState extends State<SupplierPage>
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 1) {
+        if (_tabController.index == 0) {
           shortVideoController.reset();
-          postController.reset();
           shortVideoController.loadMoreData();
-        } else if (_tabController.index == 2) {
+        } else if (_tabController.index == 1) {
           supplierVideoController.reset();
-          postController.reset();
           supplierVideoController.loadMoreData();
         } else {
+          postController.reset();
           postController.loadMoreData();
-          shortVideoController.reset();
-          supplierVideoController.reset();
         }
       }
     });
@@ -114,28 +111,6 @@ class _SupplierPageState extends State<SupplierPage>
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
                         _tabController.index == 0) {
-                      postController.loadMoreData();
-                    }
-                    return false;
-                  },
-                  child: Obx(() => SliverPostGrid(
-                        posts: postController.postList.value,
-                        displayLoading: postController.displayLoading.value,
-                        displayNoMoreData:
-                            postController.displayNoMoreData.value,
-                        isListEmpty: postController.isListEmpty.value,
-                        isError: postController.isError.value,
-                        onReload: postController.pullToRefresh,
-                        onScrollEnd: postController.loadMoreData,
-                        displaySupplierInfo: false,
-                      )),
-                ),
-                NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollInfo) {
-                    if (scrollInfo is ScrollEndNotification &&
-                        scrollInfo.metrics.pixels ==
-                            scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 0) {
                       shortVideoController.loadMoreData();
                     }
                     return false;
@@ -174,6 +149,28 @@ class _SupplierPageState extends State<SupplierPage>
                         supplierVideoController.loadMoreData();
                       })),
                 ),
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 2) {
+                      postController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SliverPostGrid(
+                        posts: postController.postList.value,
+                        displayLoading: postController.displayLoading.value,
+                        displayNoMoreData:
+                            postController.displayNoMoreData.value,
+                        isListEmpty: postController.isListEmpty.value,
+                        isError: postController.isError.value,
+                        onReload: postController.pullToRefresh,
+                        onScrollEnd: postController.loadMoreData,
+                        displaySupplierInfo: false,
+                      )),
+                ),
               ],
             )),
         const FloatPageBackButton()
@@ -195,7 +192,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return GSTabBar(
       controller: tabController,
-      tabs: [I18n.post,I18n.shortVideo, I18n.longVideo],
+      tabs: [I18n.shortVideo, I18n.longVideo, I18n.post],
     );
   }
 
