@@ -48,7 +48,7 @@ class OrderApi {
     String? startedAt,
     String? endedAt,
   }) async {
-    var url = '$apiHost/public/orders/order/record?page=$page&limit=$limit';
+    var url = '$apiHost/api/v1/user/orders?page=$page&limit=$limit';
     if (paymentStatus != null) {
       url += '&paymentStatus=$paymentStatus';
     }
@@ -90,6 +90,6 @@ class OrderApi {
     // ] as List<dynamic>)
     //     .map((e) => Order.fromJson(e)));
     return List.from(
-        (res['data']['data'] as List<dynamic>).map((e) => Order.fromJson(e)));
+        (res['data'] as List<dynamic>).map((e) => Order.fromJson(e)));
   }
 }
