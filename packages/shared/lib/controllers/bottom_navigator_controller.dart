@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 
 import '../apis/image_api.dart';
 import '../apis/navigator_api.dart';
+import '../enums/navigation_type.dart';
 import '../models/navigation.dart';
 import '../utils/sid_image_result_decode.dart';
 
@@ -22,7 +23,6 @@ class BottomNavigatorController extends GetxController {
   void onInit() {
     super.onInit();
     fetchData();
-    fetchFabData();
   }
 
   // set display function
@@ -32,7 +32,8 @@ class BottomNavigatorController extends GetxController {
 
   // _fetchData
   void fetchData() async {
-    var value = await NavigatorApi().getNavigations(1);
+    var value = await NavigatorApi()
+        .getNavigations(NavigationType.bottomNavigator.index);
     var sidImageBox = await Hive.openBox('sidImage');
     for (var item in value) {
       var photoSid = item.photoSid;
@@ -68,12 +69,17 @@ class BottomNavigatorController extends GetxController {
     navigatorItems.value = items;
   }
 
-  void fetchFabData() async {
-    var fabData = await NavigatorApi().getNavigations(4);
+  void fetchFabData(NavigationType navigationType) async {
+    var fabData = await NavigatorApi().getNavigations(navigationType.index);
     fabLink.value = fabData;
   }
 
   void setDisplayFab(bool value) {
     displayFab.value = value;
+  }
+
+  // 確認是否為首頁
+  bool isHome(String key) {
+    return key == navigatorItems.first.path;
   }
 }
