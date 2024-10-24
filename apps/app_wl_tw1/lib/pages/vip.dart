@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/modules/user/user_info_v2_consumer.dart';
+import 'package:shared/controllers/user_controller.dart';
+import 'package:get/get.dart';
 
 import '../screens/vip/tab_section.dart';
 import '../widgets/avatar.dart';
@@ -45,15 +47,69 @@ class VipPage extends StatelessWidget {
     );
   }
 
+  Widget _vipBookmark(String vipExpiredAt) {
+    return UserInfoV2Consumer(child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+      return isVIP
+          ? Container(
+              width: 135,
+              height: 42,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  topRight: Radius.zero,
+                  bottomRight: Radius.zero,
+                ),
+                gradient: LinearGradient(
+                  colors: [Color(0xFFF0BBC2), Color(0xFFE18AB5)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5),
+                child: Column(
+                  children: [
+                    const Text(
+                      'VIP會員',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '效期至：$vipExpiredAt',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ))
+          : Container();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
     return Scaffold(
       backgroundColor: const Color(0xff0f1320),
       appBar: const CustomAppBar(title: 'VIP會員'),
       body: Column(
         children: [
           // User Profile Section
-          _buildUserInfo(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildUserInfo(),
+              _vipBookmark(userController.infoV2.value.vipExpiredAt
+                  .toString()
+                  .split(' ')[0]),
+            ],
+          ),
           // Tab Section
           const Expanded(child: TabSection()),
         ],

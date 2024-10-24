@@ -125,7 +125,7 @@ class CommentReportState extends State<CommentReport> {
                     }
                   },
                   child: const Padding(
-                    padding: EdgeInsets.only(left: 8.0), // 調整圖標的左邊距
+                    padding: EdgeInsets.only(left: 8.0),
                     child: Icon(
                       Icons.arrow_back_ios_new,
                       size: 14,
@@ -143,7 +143,7 @@ class CommentReportState extends State<CommentReport> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
-                  textAlign: TextAlign.center, // 保證文字在容器內水平居中
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -237,27 +237,32 @@ class CommentReportState extends State<CommentReport> {
                     ),
                   ),
                 ),
-                child: RadioListTile(
-                  contentPadding: EdgeInsets.zero,
-                  activeColor: const Color(0xFF6166DC),
-                  value: index,
-                  groupValue: selectedIndex,
-                  onChanged: (int? value) {
-                    setState(() {
-                      selectedIndex = value!;
-                      reason = commentReportDeleteController
-                          .reportList[reportType].options[index];
-                    });
-                  },
-                  title: Text(
-                      commentReportDeleteController
-                          .reportList[reportType].options[index],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    unselectedWidgetColor: Colors.grey, // 未選中的圓圈顏色
+                  ),
+                  child: RadioListTile(
+                    contentPadding: EdgeInsets.zero,
+                    activeColor: const Color(0xFF6166DC),
+                    value: index,
+                    groupValue: selectedIndex,
+                    onChanged: (int? value) {
+                      setState(() {
+                        selectedIndex = value!;
+                        reason = commentReportDeleteController
+                            .reportList[reportType].options[index];
+                      });
+                    },
+                    title: Text(
+                        commentReportDeleteController
+                            .reportList[reportType].options[index],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
               );
             },
