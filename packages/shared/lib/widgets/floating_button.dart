@@ -61,7 +61,9 @@ class _FloatingButtonState extends State<FloatingButton> {
   }
 
   bool _isHttpUrl(String path) =>
-      path.startsWith('http://') || path.startsWith('https://');
+      path.startsWith('http://') ||
+      path.startsWith('https://') ||
+      path.startsWith('*');
 
   bool _hasDepositType(Uri parsedUrl) =>
       parsedUrl.queryParameters.containsKey('depositType');
