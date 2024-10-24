@@ -10,7 +10,7 @@ import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/utils/show_confirm_dialog.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/comment/comment_report_delete.dart'; // 引入你剛才創建的文件
+import 'package:shared/widgets/comment/comment_report_delete.dart';
 
 class CommentList extends StatefulWidget {
   final int topicId;
@@ -240,12 +240,15 @@ class _CommentItemState extends State<CommentItem> {
             showModalBottomSheet(
                 context: context,
                 backgroundColor: const Color(0xFF333344),
+                isScrollControlled: true,
                 builder: (BuildContext context) {
-                  return CommentReportDelete(
-                    id: widget.item.id,
-                    uid: widget.item.uid,
-                    topicId: widget.item.topicId,
-                    index: widget.index,
+                  return SafeArea(
+                    child: CommentReportDelete(
+                      id: widget.item.id,
+                      uid: widget.item.uid,
+                      topicId: widget.item.topicId,
+                      index: widget.index,
+                    ),
                   );
                 });
           }

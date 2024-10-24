@@ -70,11 +70,14 @@ class CommentReportDeleteState extends State<CommentReportDelete> {
                 // 處理舉報邏輯
                 showModalBottomSheet(
                   context: context,
+                  isScrollControlled: true,
                   backgroundColor: const Color(0xFF333344),
                   builder: (BuildContext context) {
-                    return CommentReport(
-                      id: widget.id,
-                      topicId: widget.topicId,
+                    return SafeArea(
+                      child: CommentReport(
+                        id: widget.id,
+                        topicId: widget.topicId,
+                      ),
                     );
                   },
                 );

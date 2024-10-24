@@ -24,6 +24,7 @@ class UserController extends GetxController {
     nickname: '',
     points: 0,
     isFree: false,
+    vipExpiredAt: null,
   ).obs;
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
