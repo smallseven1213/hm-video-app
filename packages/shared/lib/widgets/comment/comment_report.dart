@@ -81,6 +81,9 @@ class CommentReportState extends State<CommentReport> {
             }
           });
         }
+        if (reportLength > 0) {
+          reason = commentReportDeleteController.reportList[index].options[0];
+        }
       });
     }
   }
@@ -88,6 +91,7 @@ class CommentReportState extends State<CommentReport> {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       height: 350,
@@ -269,6 +273,7 @@ class CommentReportState extends State<CommentReport> {
           ),
         ),
         const SizedBox(height: 15),
+        if (reportLength > 0)
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6166DC),

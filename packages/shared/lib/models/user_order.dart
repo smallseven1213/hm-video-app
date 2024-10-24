@@ -3,11 +3,11 @@ import 'product.dart';
 
 class Order {
   final String id;
-  final double? orderAmount;
+  final String? orderAmount;
   final int? paymentStatus;
   final String? createdAt;
   final String? paymentType;
-  final Product? product;
+  final int? productId;
 
   Order(
     this.id, {
@@ -15,19 +15,17 @@ class Order {
     this.paymentStatus,
     this.paymentType,
     this.createdAt,
-    this.product,
+    this.productId,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       json['id'],
-      orderAmount: double.parse(json['orderAmount'].toString()),
+      orderAmount: json['orderAmount'],
       paymentStatus: json['paymentStatus'],
       paymentType: json['paymentType'],
       createdAt: formatDateTime(json['createdAt']),
-      product: json['product'] != null
-          ? Product.fromJson(json['product'])
-          : Product(),
+      productId: json['product'],
     );
   }
 }

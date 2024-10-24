@@ -143,7 +143,7 @@ class OrderRecordState extends State<OrderRecord> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${record.product!.name} / ${record.paymentType}",
+                                          "/ ${record.paymentType}",
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,

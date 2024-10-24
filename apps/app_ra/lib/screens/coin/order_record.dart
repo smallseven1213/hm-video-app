@@ -141,7 +141,7 @@ class OrderRecordState extends State<OrderRecord> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      record.product!.name ?? '',
+                                      '',
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
