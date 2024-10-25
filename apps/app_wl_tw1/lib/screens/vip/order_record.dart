@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/user_order.dart';
 import 'package:shared/modules/user/user_order_record_consumer.dart';
@@ -9,23 +8,27 @@ import '../../widgets/no_data.dart';
 
 final logger = Logger();
 
-const List<Map> option = <Map>[
+final List<Map<String, dynamic>> option = <Map<String, dynamic>>[
   {
     'name': '全部',
     'value': '',
   },
   {
-    'name': '金幣',
+    'name': '確認中',
     'value': '1',
   },
   {
-    'name': 'VIP',
+    'name': '已完成',
     'value': '2',
-  }
+  },
+  {
+    'name': '失敗',
+    'value': ['3', '4', '5'],
+  },
 ];
 
 class CustomDropdownMenu extends StatefulWidget {
-  final ValueChanged<String>? onChanged;
+  final ValueChanged<dynamic>? onChanged;
 
   const CustomDropdownMenu({
     Key? key,
@@ -37,18 +40,31 @@ class CustomDropdownMenu extends StatefulWidget {
 }
 
 class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
-  String? _selectedValue = "";
+  dynamic _selectedValue;
   bool isMenuOpen = false;
 
   @override
+  void initState() {
+    super.initState();
+    _selectedValue = option.first['value'];
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String selectedName = option.firstWhere((e) {
+      if (_selectedValue is List && e['value'] is List) {
+        return listEquals(_selectedValue as List, e['value'] as List);
+      } else {
+        return _selectedValue == e['value'];
+      }
+    })['name'];
     Widget selectedOption = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            option.firstWhere((e) => e['value'] == _selectedValue)['name'],
+            selectedName,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 12,
@@ -89,6 +105,13 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: option.map((e) {
+                bool isSelected;
+                if (_selectedValue is List && e['value'] is List) {
+                  isSelected =
+                      listEquals(_selectedValue as List, e['value'] as List);
+                } else {
+                  isSelected = _selectedValue == e['value'];
+                }
                 return InkWell(
                   onTap: () => setState(() {
                     isMenuOpen = false;
@@ -131,7 +154,10 @@ class OrderRecord extends StatefulWidget {
 class OrderRecordState extends State<OrderRecord> {
   final ScrollController _scrollController = ScrollController();
   bool showNoMore = false;
-  
+  List<Order> allRecords = [];
+  List<Order> filteredRecords = [];
+  dynamic chargeType = option.first['value'];
+
   @override
   void initState() {
     super.initState();
@@ -180,7 +206,25 @@ class OrderRecordState extends State<OrderRecord> {
     }
   }
 
-  String chargeType = option.first['value'];
+  void filterRecords() {
+    if (chargeType == '') {
+      // 全部
+      filteredRecords = allRecords;
+    } else if (chargeType is String) {
+      // 狀態為字串
+      filteredRecords = allRecords
+          .where((order) => order.paymentStatus.toString() == chargeType)
+          .toList();
+    } else if (chargeType is List) {
+      // 狀態為列表
+      filteredRecords = allRecords
+          .where((order) => chargeType.contains(order.paymentStatus.toString()))
+          .toList();
+    } else {
+      filteredRecords = allRecords;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -194,20 +238,28 @@ class OrderRecordState extends State<OrderRecord> {
                 const SizedBox(height: 8),
                 Expanded(
                   child: UserOrderRecordConsumer(
-                      key: Key('order-record-$chargeType'),
-                      type: chargeType,
+                      key: const Key('order-record'),
+                      type: '',
                       child: (List<Order> records) {
                         if (records.isEmpty) return const NoDataWidget();
+                        if (allRecords.isEmpty) {
+                          allRecords = records;
+                          filterRecords();
+                        }
+                        if (filteredRecords.isEmpty) {
+                          return const NoDataWidget();
+                        }
+
                         return ListView.separated(
                           controller: _scrollController,
-                          itemCount: records.length,
+                          itemCount: filteredRecords.length,
                           separatorBuilder: (BuildContext context, int index) {
                             return Divider(
                               color: Colors.grey.shade200.withOpacity(0.5),
                             );
                           },
                           itemBuilder: (context, index) {
-                            final record = records[index];
+                            final record = filteredRecords[index];
                             return Container(
                               padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                               child: Row(
@@ -277,10 +329,11 @@ class OrderRecordState extends State<OrderRecord> {
             left: 20,
             top: 0,
             child: CustomDropdownMenu(
-              onChanged: (String? value) {
+              onChanged: (dynamic value) {
                 logger.i(value);
                 setState(() {
                   chargeType = value!;
+                  filterRecords();
                 });
               },
             ),
