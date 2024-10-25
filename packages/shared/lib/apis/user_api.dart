@@ -344,7 +344,7 @@ class UserApi {
 
   Future<User> getCurrentUser() => fetcher(
               url:
-                  '$apiHost/public/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
+                  '$apiHost/api/v1/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
