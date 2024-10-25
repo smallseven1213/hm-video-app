@@ -135,7 +135,7 @@ class RootWidget extends StatelessWidget {
         if (kIsWeb) {
           return Center(
             child: Container(
-              constraints: const BoxConstraints(maxWidth: 480),
+              constraints: const BoxConstraints(maxWidth: 800),
               child: child,
             ),
           );
