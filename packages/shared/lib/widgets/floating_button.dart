@@ -104,9 +104,8 @@ class _FloatingButtonState extends State<FloatingButton> {
     final isH5PromotionDownloadOnWeb =
         widget.type == NavigationType.h5PromotionDownload && kIsWeb;
 
-    return (isHomePage && hasFabLink) ||
-        isNotH5PromotionDownload ||
-        isH5PromotionDownloadOnWeb;
+    return (isHomePage && hasFabLink) &&
+        (isNotH5PromotionDownload || isH5PromotionDownloadOnWeb);
   }
 
   Widget _buildFabWithCloseButton() {
