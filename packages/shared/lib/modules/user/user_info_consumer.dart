@@ -16,10 +16,10 @@ class UserInfoConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<UserController>();
-    var vipExpiredAt = userController.infoV2.value.vipExpiredAt;
 
     // ignore: invalid_use_of_protected_member
     return Obx(() {
+      var vipExpiredAt = userController.infoV2.value.vipExpiredAt;
       var isVIP = vipExpiredAt != null && vipExpiredAt.isAfter(DateTime.now());
       var isGuest = userController.info.value.roles.contains('guest');
       var isLoading = userController.isLoading.value;
