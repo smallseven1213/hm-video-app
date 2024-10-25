@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/utils/handle_url.dart';
-import 'package:shared/utils/platform_utils_stub.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import '../enums/navigation_type.dart';
+import '../utils/platform_utils.dart';
 
 final _logger = Logger();
 
