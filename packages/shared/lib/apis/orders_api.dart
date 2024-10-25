@@ -25,7 +25,7 @@ class OrderApi {
     String? name,
   }) async {
     var value = await fetcher(
-      url: '$apiHost/public/orders/order',
+      url: '$apiHost/api/v1/order',
       method: 'POST',
       body: {
         'name': name,

@@ -23,7 +23,7 @@ class ProductApi {
   Future<List<Product>> getManyBy(
       {int type = 1, int page = 1, int limit = 100}) async {
     var res = await fetcher(
-        url: '$apiPrefix/product/list?page=$page&limit=$limit&type=$type');
+        url: '$apiHost/api/v1/product?page=$page&limit=$limit&type=$type');
     if (res.data['code'] != '00') {
       return [];
     }
