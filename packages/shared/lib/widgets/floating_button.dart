@@ -98,8 +98,9 @@ class _FloatingButtonState extends State<FloatingButton> {
         _bottomNavigatorController
             .isHome(_bottomNavigatorController.activeKey.value);
     final hasFabLink = _bottomNavigatorController.fabLink.isNotEmpty;
-
-    return isHomePage && hasFabLink && kIsWeb;
+    final displayOnAllDevices =
+        widget.type == NavigationType.h5PromotionDownload && kIsWeb;
+    return isHomePage && hasFabLink && displayOnAllDevices;
   }
 
   Widget _buildFabWithCloseButton() {
