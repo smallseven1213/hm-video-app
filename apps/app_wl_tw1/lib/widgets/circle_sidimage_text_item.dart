@@ -36,7 +36,9 @@ class CircleTextItem extends StatelessWidget {
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(5),
-                color: hasBorder ? AppColors.colors[ColorKeys.jingangBorder] : null ,
+                color: hasBorder
+                    ? AppColors.colors[ColorKeys.jingangBorder]
+                    : null,
               )
             : BoxDecoration(
                 borderRadius: isRounded
