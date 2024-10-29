@@ -5,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class CellData {
   final Widget image;
@@ -31,20 +32,20 @@ class ConfigsPage extends StatelessWidget {
           size: 20,
           color: AppColors.colors[ColorKeys.textPrimary],
         ),
-        text: '修改密碼',
+        text: I18n.modifyPassword,
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.updatePassword);
         },
       ),
     ];
     return Scaffold(
-      appBar: const CustomAppBar(title: '設置'),
+      appBar: CustomAppBar(title: I18n.settingTranslationKey),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
           // 檢查是否為 guest，如果是則不顯示修改密碼的項目
           final displayedCellDataList = cellDataList.where((data) {
-            return data.text != '修改密碼' || !isGuest;
+            return data.text != I18n.modifyPassword || !isGuest;
           }).toList();
 
           return ListView.builder(

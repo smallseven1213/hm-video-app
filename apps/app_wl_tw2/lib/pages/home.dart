@@ -17,7 +17,6 @@ import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 import 'package:live_ui_basic/pages/live.dart';
-import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../screens/enter_game_screen/index.dart';
 import '../screens/main_screen/index.dart';

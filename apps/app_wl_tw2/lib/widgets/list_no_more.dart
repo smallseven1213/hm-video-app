@@ -1,6 +1,7 @@
 import 'package:app_wl_tw2/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import 'package:shared/models/color_keys.dart';
 
@@ -9,11 +10,11 @@ class ListNoMore extends StatelessWidget {
 
   // 定义可能的文字
   final List<String> messages = [
-    '頂到底了',
-    '太深了客倌',
-    '慢慢看，別這麼挑',
-    '花心已抵達',
-    '確認過眼神，您是同道中人'
+    I18n.theTopIsDown,
+    I18n.itsTooDeepMaam,
+    I18n.takeYourTimeDontBeSoPicky,
+    I18n.iveReachedTheCenterOfMyHeart,
+    I18n.imSureYourAreTheSameKindOfMe
   ];
 
   @override

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/capture_screenshot_button.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import 'package:app_wl_tw2/config/colors.dart';
 
@@ -74,7 +75,7 @@ class IDCardContentState extends State<IDCardContent> {
             child: Column(
               children: [
                 Text(
-                  '用於找回帳號，請妥善保存，請勿洩露',
+                  I18n.forAccountRetrieval,
                   style: TextStyle(
                     color: AppColors.colors[ColorKeys.textSecondary],
                     fontWeight: FontWeight.w400,
@@ -121,7 +122,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：av-uu.com',
+                    '${I18n.officialWebsite}av-uu.com',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,
@@ -160,13 +161,12 @@ class IDCardContentState extends State<IDCardContent> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      successMessage: '已成功保存身份卡',
+                      successMessage: I18n.identityCardHasBeenSuccessfullySaved,
                       child: Center(
                         child: Text(
-                          '請截圖保存',
+                          I18n.pleaseSaveTheScreenshot,
                           style: TextStyle(
-                              color: AppColors
-                                      .colors[ColorKeys.textSecondary]
+                              color: AppColors.colors[ColorKeys.textSecondary]
                                   as Color),
                         ),
                       ),

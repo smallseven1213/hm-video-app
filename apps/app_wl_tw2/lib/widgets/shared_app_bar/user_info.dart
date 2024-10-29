@@ -74,9 +74,9 @@ class _UserInfoState extends State<UserInfo>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '當前餘額',
-                style: TextStyle(
+              Text(
+                I18n.currentBalance,
+                style: const TextStyle(
                   fontSize: 10,
                   color: Color(0xffb2bac5),
                 ),

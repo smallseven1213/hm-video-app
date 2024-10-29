@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/publisher_controller.dart';
 import '../screens/vendor_videos/list.dart';
 import '../widgets/tab_bar.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class PublisherPage extends StatefulWidget {
   final int id;
@@ -43,8 +44,8 @@ class VendorVideosPageState extends State<PublisherPage>
                 fontSize: 15,
               ),
             )),
-        bottom:
-            TabBarWidget(tabs: const ['最新', '最熱'], controller: _tabController),
+        bottom: TabBarWidget(
+            tabs: [I18n.latest, I18n.hot], controller: _tabController),
       ),
       body: TabBarView(
         controller: _tabController,

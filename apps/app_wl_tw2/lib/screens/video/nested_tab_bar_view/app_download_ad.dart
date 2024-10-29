@@ -7,6 +7,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/app_icon.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class AppDownloadAd extends StatefulWidget {
   const AppDownloadAd({super.key});
@@ -113,18 +114,18 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(8.0)),
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.download,
                                       color: Color(0xffffffff),
                                       size: 16,
                                     ),
                                     Text(
-                                      '立即下載',
-                                      style: TextStyle(
+                                      I18n.immediateDownload,
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Color(0xffffffff),
                                       ),

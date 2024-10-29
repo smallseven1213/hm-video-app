@@ -14,6 +14,7 @@ import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import '../../utils/show_confirm_dialog.dart';
 import 'short_bottom_area.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class GeneralShortCard extends StatefulWidget {
   final int index;
@@ -66,8 +67,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       showConfirmDialog: () {
         showConfirmDialog(
           context: context,
-          message: '請先登入後觀看。',
-          cancelButtonText: '返回',
+          message: I18n.plsLoginToWatch,
+          cancelButtonText: I18n.back,
           barrierDismissible: false,
           onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
           onCancel: () => MyRouteDelegate.of(context).popToHome(),

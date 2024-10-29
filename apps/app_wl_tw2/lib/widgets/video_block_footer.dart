@@ -6,6 +6,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class CustomButton extends StatefulWidget {
   final String text;
@@ -123,7 +124,7 @@ class VideoBlockFooter extends StatelessWidget {
             if (block.isCheckMore == true)
               Expanded(
                 child: CustomButton(
-                  text: '觀看全部',
+                  text: I18n.watchAll,
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
                   buttonTextColor:
                       AppColors.colors[ColorKeys.buttonTextPrimary],
@@ -162,7 +163,7 @@ class VideoBlockFooter extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: '換一批',
+                  text: I18n.refreshBatch,
                   animate: true,
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgCancel],
                   buttonTextColor: AppColors.colors[ColorKeys.buttonTextCancel],

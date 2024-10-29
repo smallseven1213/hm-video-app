@@ -11,6 +11,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 final vodApi = VodApi();
 
@@ -63,10 +64,10 @@ class SearchResultPageState extends State<SearchResultPage> with SingleTickerPro
         // GSTabBar
         TabBarWidget(
           controller: _tabController,
-          tabs: const [
-            '長視頻',
-            '短視頻',
-            '貼文',
+          tabs: [
+            I18n.longVideo,
+            I18n.shortVideo,
+            I18n.post,
           ],
         ),
         // SliverVodGrid

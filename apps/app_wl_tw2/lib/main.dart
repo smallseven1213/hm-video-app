@@ -47,7 +47,7 @@ void main() async {
       ),
     ),
     globalLoadingWidget: ({String? text}) =>
-        Loading(loadingText: text ?? '正在加载...'),
+        Loading(loadingText: text ?? '${I18n.loadingNow}...'),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
     i18nSupport: true,

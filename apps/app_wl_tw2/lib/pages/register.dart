@@ -3,6 +3,7 @@
 import 'package:app_wl_tw2/config/colors.dart';
 import 'package:app_wl_tw2/widgets/custom_app_bar.dart';
 import 'package:app_wl_tw2/widgets/forgot_password_button.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
@@ -22,8 +23,8 @@ class RegisterPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: const CustomAppBar(
-          title: '註冊',
+        appBar: CustomAppBar(
+          title: I18n.register,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -53,25 +54,26 @@ class RegisterPage extends StatelessWidget {
                   Column(
                     children: [
                       AuthTextField(
-                        label: '帳　　號',
+                        label: I18n.account,
                         controller: accountController,
-                        placeholderText: '請輸入帳號',
+                        placeholderText: I18n.pleaseEnterYourAccountNumber,
                         validator: validateUsername,
                       ),
                       const SizedBox(height: 10),
                       AuthTextField(
-                        label: '密　　碼',
+                        label: I18n.password,
                         obscureText: true,
                         controller: passwordController,
-                        placeholderText: '請輸入密碼',
+                        placeholderText: I18n.pleaseEnterYourPassword,
                         validator: validatePassword,
                       ),
                       const SizedBox(height: 10),
                       AuthTextField(
-                        label: '驗證密碼',
+                        label: I18n.verifyPassword,
                         obscureText: true,
                         controller: confirmPasswordController,
-                        placeholderText: '請輸入驗證密碼',
+                        placeholderText:
+                            I18n.pleaseEnterTheVerificationPassword,
                         validator: validateConfirmPassword,
                       ),
                     ],
@@ -84,7 +86,7 @@ class RegisterPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Button(
-                            text: '註冊',
+                            text: I18n.register,
                             type: 'primary',
                             onPressed: () {
                               handleRegister();
@@ -94,7 +96,7 @@ class RegisterPage extends StatelessWidget {
                         const SizedBox(width: 10),
                         Expanded(
                           child: Button(
-                            text: '取消',
+                            text: I18n.cancel,
                             type: 'cancel',
                             onPressed: () {
                               MyRouteDelegate.of(context).popRoute();
@@ -119,7 +121,7 @@ class RegisterPage extends StatelessWidget {
                                     deletePreviousCount: 1);
                               },
                               child: Column(children: [
-                                Text('前往登入',
+                                Text(I18n.goToLogin,
                                     style: TextStyle(
                                         color: AppColors
                                                 .colors[ColorKeys.textPrimary]
