@@ -3,14 +3,16 @@ import 'package:app_wl_cn1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
+import '../localization/i18n.dart';
+
 final List<String> loadingTextList = [
-  '档案很大，你忍一下',
-  '还没准备好，你先悠著来',
-  '精彩即将呈现',
-  '努力加载中',
-  '让档案载一会儿',
-  '美好事物，值得等待',
-  '拼命搬砖中',
+  I18n.itsABigFile,
+  I18n.itsNotReadyYet,
+  I18n.comingSoon,
+  I18n.weAreTryingToLoadT,
+  I18n.letTheFileLoadForAWhile,
+  I18n.itsWorthWatingForTheGoodStuff,
+  I18n.tryingToMoveBricks,
 ];
 
 class VideoListLoadingText extends StatefulWidget {

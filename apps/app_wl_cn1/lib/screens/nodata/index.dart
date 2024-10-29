@@ -29,7 +29,7 @@ class NoDataScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30),
                 child: Button(
                   onPressed: () => Navigator.of(context).pop(),
-                  text: '返回',
+                  text: I18n.back,
                 ),
               ),
           ],

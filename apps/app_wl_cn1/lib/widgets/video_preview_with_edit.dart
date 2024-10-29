@@ -70,15 +70,15 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final Function()? onTap;
   final bool? noTags;
   final bool? noInfoView;
-  final int? film; // 1长视频, 2短视频, 3漫画
+  final int? film; // 1長視頻, 2短視頻, 3漫畫
   final int? blockId;
-  final bool? hasRadius; // 要不要圆角
-  final bool? hasTitle; // 要不要标题
+  final bool? hasRadius; // 要不要圓角
+  final bool? hasTitle; // 要不要標題
   final bool? hasTags;
   final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
-  final Function(int id)? onOverrideRedirectTap; // 自定义路由转址
+  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWithEditWidget(
       {Key? key,

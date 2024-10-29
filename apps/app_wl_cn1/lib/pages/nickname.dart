@@ -8,6 +8,7 @@ import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
+import '../localization/i18n.dart';
 
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
@@ -30,9 +31,9 @@ class NicknamePageState extends State<NicknamePage> {
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return '请输入暱称';
+      return I18n.pleaseEnterNickname;
     }
-    // 可在此添加其他验证逻辑
+    // 可在此添加其他驗證邏輯
     return null;
   }
 
@@ -45,7 +46,7 @@ class NicknamePageState extends State<NicknamePage> {
       } catch (error) {
         showConfirmDialog(
           context: context,
-          title: '修改错误',
+          title: I18n.editError,
           message: '',
           showCancelButton: false,
           onConfirm: () {
@@ -59,8 +60,8 @@ class NicknamePageState extends State<NicknamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '修改暱称',
+      appBar: CustomAppBar(
+        title: I18n.modifyNickname,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -73,9 +74,9 @@ class NicknamePageState extends State<NicknamePage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '新暱称',
+                      label: I18n.newNickname,
                       controller: _accountController,
-                      placeholderText: '请输入暱称',
+                      placeholderText: I18n.pleaseEnterNickname,
                       validator: _validateUsername,
                     ),
                   ],
@@ -85,7 +86,7 @@ class NicknamePageState extends State<NicknamePage> {
               SizedBox(
                 width: 200,
                 child: Button(
-                  text: '设置完成',
+                  text: I18n.setupCompleted,
                   onPressed: () => _handleLogin(context),
                 ),
               ),

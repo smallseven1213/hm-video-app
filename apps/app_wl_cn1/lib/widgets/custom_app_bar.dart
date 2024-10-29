@@ -9,13 +9,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleWidget,
     this.backgroundColor,
     this.bottom,
-    this.actions, // 新增actions参数
+    this.actions, // 新增actions參數
   }) : super(key: key);
 
   final String? title;
   final Widget? titleWidget;
   final Color? backgroundColor;
-  final List<Widget>? actions; // 定义actions列表
+  final List<Widget>? actions; // 定義actions列表
   final PreferredSizeWidget? bottom;
 
   @override
@@ -49,15 +49,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Container(),
       backgroundColor: backgroundColor ?? AppColors.colors[ColorKeys.primary],
-      title: titleWidget ??
-          Text(
-            title!,
-            style: const TextStyle(
-              fontSize: 15,
-            ),
-          ),
+      title: titleWidget ?? Text(title!, style: const TextStyle(fontSize: 15)),
       bottom: bottom,
-      actions: actions, // 将actions添加到AppBar
+      actions: actions, // 將actions添加到AppBar
     );
   }
 }

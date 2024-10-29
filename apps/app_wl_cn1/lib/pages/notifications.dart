@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
+import '../localization/i18n.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -51,9 +52,9 @@ class NotificationsPageState extends State<NotificationsPage>
     return Obx(
       () => Scaffold(
         appBar: CustomAppBar(
-          title: '消息中心',
+          title: I18n.messageCenter,
           bottom: TabBarWidget(
-              tabs: const ['公告', '系统通知'],
+              tabs: [I18n.announcement, I18n.systemNotification],
               dotIndexes: eventsController.hasUnRead.value ? [1] : [],
               controller: _tabController),
           actions: [
@@ -64,7 +65,9 @@ class NotificationsPageState extends State<NotificationsPage>
                       listEditorController.toggleEditing();
                     },
                     child: Text(
-                      listEditorController.isEditing.value ? '取消' : '编辑',
+                      listEditorController.isEditing.value
+                          ? I18n.cancel
+                          : I18n.editTranslation,
                       style: const TextStyle(color: Colors.white),
                     ))
           ],

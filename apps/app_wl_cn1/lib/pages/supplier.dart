@@ -1,12 +1,15 @@
 import 'package:app_wl_cn1/config/colors.dart';
+import 'package:app_wl_cn1/widgets/sliver_post_grid.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/supplier_short_controller.dart';
 import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import '../localization/i18n.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
@@ -30,16 +33,20 @@ class _SupplierPageState extends State<SupplierPage>
   late ScrollController _parentScrollController;
   late final SupplierShortController shortVideoController;
   late final SupplierVideoController supplierVideoController;
+  late final ChannelPostController postController;
+
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _parentScrollController = ScrollController();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
     shortVideoController = SupplierShortController(
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
+        supplierId: widget.id, scrollController: _parentScrollController);
+    postController = ChannelPostController(
         supplierId: widget.id, scrollController: _parentScrollController);
 
     _tabController.addListener(() {
@@ -47,6 +54,9 @@ class _SupplierPageState extends State<SupplierPage>
         _parentScrollController.jumpTo(0.0);
 
         if (_tabController.index == 0) {
+          postController.reset();
+          postController.loadMoreData();
+        } else if (_tabController.index == 1) {
           shortVideoController.reset();
           shortVideoController.loadMoreData();
         } else {
@@ -63,6 +73,7 @@ class _SupplierPageState extends State<SupplierPage>
     _parentScrollController.dispose();
     shortVideoController.dispose();
     supplierVideoController.dispose();
+    postController.dispose();
     super.dispose();
   }
 
@@ -95,7 +106,6 @@ class _SupplierPageState extends State<SupplierPage>
             body: TabBarView(
               controller: _tabController,
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
-              // physics: const NeverScrollableScrollPhysics(),
               children: [
                 NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollInfo) {
@@ -103,6 +113,28 @@ class _SupplierPageState extends State<SupplierPage>
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
                         _tabController.index == 0) {
+                      postController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SliverPostGrid(
+                        posts: postController.postList.value,
+                        displayLoading: postController.displayLoading.value,
+                        displayNoMoreData:
+                            postController.displayNoMoreData.value,
+                        isListEmpty: postController.isListEmpty.value,
+                        isError: postController.isError.value,
+                        onReload: postController.pullToRefresh,
+                        onScrollEnd: postController.loadMoreData,
+                        displaySupplierInfo: false,
+                      )),
+                ),
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 1) {
                       shortVideoController.loadMoreData();
                     }
                     return false;
@@ -122,7 +154,7 @@ class _SupplierPageState extends State<SupplierPage>
                     if (scrollInfo is ScrollEndNotification &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 1) {
+                        _tabController.index == 2) {
                       supplierVideoController.loadMoreData();
                     }
                     return false;
@@ -162,7 +194,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['短视频', '长视频'],
+      tabs: [I18n.post, I18n.shortVideo, I18n.longVideo],
     );
   }
 

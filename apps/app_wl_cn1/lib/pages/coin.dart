@@ -1,19 +1,11 @@
+import 'package:app_wl_cn1/widgets/custom_app_bar.dart';
+import 'package:app_wl_cn1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
-import '../screens/coin/order_record.dart';
-import '../screens/coin/products.dart';
-import '../screens/coin/purchase_record.dart';
-import '../screens/user_screen/info.dart';
-import '../widgets/coin_tab_bar.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/tab_bar.dart';
-import '../widgets/user/balance.dart';
-
-final logger = Logger();
+import '../localization/i18n.dart';
 
 class CoinPage extends StatefulWidget {
   const CoinPage({Key? key}) : super(key: key);
@@ -29,7 +21,7 @@ class CoinPageState extends State<CoinPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -45,8 +37,8 @@ class CoinPageState extends State<CoinPage>
       onAccountProtectionShownH5: () {
         showConfirmDialog(
           context: context,
-          title: '提示',
-          message: '為保持您的帳號，請先註冊防止丟失',
+          title: I18n.hintMessage,
+          message: I18n.maintainAccountPleaseRegisterToPreventLoss,
           showCancelButton: false,
           onConfirm: () => {},
         );
@@ -64,46 +56,36 @@ class CoinPageState extends State<CoinPage>
         );
       },
       child: Scaffold(
-        appBar: const CustomAppBar(
-          title: '金幣錢包',
+        appBar: CustomAppBar(
+          title: I18n.coinWallet,
         ),
         body: Column(
           children: [
-            const UserInfo(),
-            const UserBalance(),
-            const SizedBox(height: 25),
+            // const UserInfo(),
+            // const UserBalance(),
+            TabBarWidget(
+              controller: _tabController,
+              tabs: [
+                I18n.coin,
+                I18n.purchaseRecord,
+                I18n.privilegeRecord,
+                I18n.depositRecord
+              ],
+            ),
             Expanded(
-                child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    // CoinProducts(),
+                    // PurchaseRecord(),
+                    // PrivilegeRecord(),
+                    // OrderRecord(),
+                  ],
                 ),
               ),
-              child: Column(
-                children: [
-                  CoinTabBarWidget(
-                    controller: _tabController,
-                    backgroundColor: Colors.transparent,
-                    tabs: const ['金幣', '購買記錄', '存款記錄'],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: const [
-                          CoinProducts(),
-                          PurchaseRecord(),
-                          OrderRecord(),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )),
+            ),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../config/colors.dart';
+import '../localization/i18n.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class NoDataWidget extends StatelessWidget {
               height: 106,
             ),
             const SizedBox(height: 18),
-            Text('這裡什麼都沒有',
+            Text(I18n.thereIsNothingHere,
                 style: TextStyle(color: AppColors.colors[ColorKeys.menuColor]))
           ],
         ),

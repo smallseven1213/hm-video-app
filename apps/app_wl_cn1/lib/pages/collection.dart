@@ -5,6 +5,7 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 
+import '../localization/i18n.dart';
 import '../screens/collection/short.dart';
 import '../screens/collection/video.dart';
 import '../widgets/custom_app_bar.dart';
@@ -68,19 +69,22 @@ class CollectionPageState extends State<CollectionPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '我的收藏',
+        title: I18n.collectPlaylist,
         actions: [
           Obx(() => TextButton(
               onPressed: () {
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? '取消' : '编辑',
+                listEditorController.isEditing.value
+                    ? I18n.cancel
+                    : I18n.editTranslation,
                 style: const TextStyle(color: Colors.white),
               )))
         ],
         bottom: TabBarWidget(
-            tabs: const ['长视频', '短视频'], controller: _tabController),
+            tabs: [I18n.longVideo, I18n.shortVideo],
+            controller: _tabController),
       ),
       body: Stack(
         children: [
