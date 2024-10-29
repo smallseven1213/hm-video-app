@@ -40,7 +40,7 @@ class AdState extends State<Ad> {
 
   GetStorage box = GetStorage();
 
-  int countdownSeconds = 0;
+  int countdownSeconds = 5;
   bool imageLoaded = false;
   Timer? _timer;
 
