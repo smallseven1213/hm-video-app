@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/product.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../localization/i18n.dart';
 import '../../utils/show_modal_bottom_sheet.dart';
 import 'payment_list.dart';
 
@@ -75,9 +76,9 @@ class ProductCard extends StatelessWidget {
                           color: Colors.yellow,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
-                          '限時特價',
-                          style: TextStyle(
+                        child: Text(
+                          I18n.limitedTimeOffer,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 12,
                           ),
@@ -102,7 +103,7 @@ class ProductCard extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               child: Text(
-                                '${product.vipDays}天VIP 視頻免費看',
+                                '${product.vipDays}${I18n.daysVipFreeVideoAccess}',
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 11,
@@ -120,7 +121,7 @@ class ProductCard extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          '原價: ¥${product.fiatMoneyPrice}',
+                          '${I18n.originalPrice}${product.fiatMoneyPrice}',
                           style: const TextStyle(
                             color: Color(0xffe1e1e1),
                             fontSize: 10,

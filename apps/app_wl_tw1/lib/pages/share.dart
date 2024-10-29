@@ -10,6 +10,7 @@ import 'package:app_wl_tw1/config/colors.dart';
 import 'package:app_wl_tw1/widgets/button.dart';
 import 'package:shared/widgets/capture_screenshot_button.dart';
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
+import '../localization/i18n.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
@@ -23,14 +24,14 @@ class SharePage extends StatelessWidget {
       canPop: false, // HC: 煩死，勿動!!
       child: Scaffold(
         appBar: CustomAppBar(
-          title: '推廣分享',
+          title: I18n.promotionalShare,
           actions: [
             TextButton(
               onPressed: () {
                 // share record
               },
               child: Text(
-                '推廣紀錄',
+                I18n.promotionRecord,
                 style: TextStyle(
                   color: AppColors.colors[ColorKeys.buttonTextPrimary],
                   fontSize: 14,
@@ -90,7 +91,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   // 2. Platform title
 
                   Text(
-                    '${promoteData.promotedMembers}人推廣',
+                    '${promoteData.promotedMembers}${I18n.promotionPerson}',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textPrimary],
                       fontWeight: FontWeight.w400,
@@ -100,7 +101,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
 
                   // 3. Info text
                   Text(
-                    '已推廣',
+                    I18n.promoted,
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textSecondary],
                       fontWeight: FontWeight.w400,
@@ -126,7 +127,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: double.infinity,
                       child: Text(
-                        '邀請碼 ${promoteData.invitationCode}',
+                        '${I18n.invitationCode} ${promoteData.invitationCode}',
                         style: TextStyle(
                           color: AppColors.colors[ColorKeys.buttonBgPrimary],
                           fontWeight: FontWeight.w400,
@@ -153,16 +154,16 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ),
                   const SizedBox(height: 25),
                   Button(
-                    text: '複製分享',
+                    text: I18n.copyAndShare,
                     type: 'primary',
                     onPressed: () {
                       Clipboard.setData(ClipboardData(
                           text: "https://${promoteData.promoteLink}"));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text(
-                            '複製成功',
-                            style: TextStyle(color: Colors.white),
+                            I18n.successfullyCopied,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       );
@@ -178,10 +179,11 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      successMessage: '已成功保存推廣卡',
+                      successMessage:
+                          I18n.promotionalCardHasBeenSuccessfullySaved,
                       child: Center(
                         child: Text(
-                          '截圖分享',
+                          I18n.screenShortShare,
                           style: TextStyle(
                               color: AppColors
                                       .colors[ColorKeys.buttonTextSecondary]

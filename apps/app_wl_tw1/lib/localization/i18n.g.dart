@@ -6,14 +6,15 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Tue, 24 Oct 2023 14:25:00 +08:00
+// Generated at: Tue, 29 Oct 2024 10:53:11 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
     Locale('zh', 'TW'),
     Locale('zn', 'CN'),
     Locale('vi', 'VN'),
-    Locale('ja', 'JP')
+    Locale('ja', 'JP'),
+    Locale('id', 'ID')
   ];
 
   // title
@@ -349,4 +350,432 @@ class I18n {
 
   // login
   static String get login => 'login'.tr();
+
+  // confirm
+  static String get confirmAction => 'confirm_action'.tr();
+
+  // same
+  static String get sameType => 'same_type'.tr();
+
+  // immediate
+  static String get immediateDownload => 'immediate_download'.tr();
+
+  // hint
+  static String get hintMessage => 'hint_message'.tr();
+
+  // maintain
+  static String get maintainAccountPleaseRegisterToPreventLoss =>
+      'maintain_account_please_register_to_prevent_loss'.tr();
+
+  // more
+  static String get moreServices => 'more_services'.tr();
+
+  // version
+  static String get versionNumber => 'version_number'.tr();
+
+  // register
+  static String get registerLogin => 'register_login'.tr();
+
+  // login
+  static String get loginSuccess => 'login_success'.tr();
+  static String get loginFailedUserDoesNotExist =>
+      'login_failed_user_does_not_exist'.tr();
+
+  // album
+  static String get albumSelection => 'album_selection'.tr();
+
+  // take
+  static String get takePhoto => 'take_photo'.tr();
+
+  // insufficient
+  static String get insufficientPermissions => 'insufficient_permissions'.tr();
+
+  // allow
+  static String get allowCameraAccess => 'allow_camera_access'.tr();
+
+  // find
+  static String get findAccount => 'find_account'.tr();
+
+  // use
+  static String get useMobileAppToRecoverAccount =>
+      'use_mobile_app_to_recover_account'.tr();
+
+  // download
+  static String get downloadFile => 'download_file'.tr();
+
+  // like
+  static String get likeButton => 'like_button'.tr();
+
+  // more
+  static String get moreOptions => 'more_options'.tr();
+
+  // follow
+  static String get followStatus => 'follow_status'.tr();
+
+  // account
+  static String get accountCredentials => 'account_credentials'.tr();
+
+  // edit
+  static String get editTranslation => 'edit_translation'.tr();
+
+  // input
+  static String get inputName => 'input_name'.tr();
+
+  // please
+  static String get pleaseEnterNickname => 'please_enter_nickname'.tr();
+
+  // edit
+  static String get editError => 'edit_error'.tr();
+
+  // modify
+  static String get modifyNickname => 'modify_nickname'.tr();
+
+  // new
+  static String get newNickname => 'new_nickname'.tr();
+
+  // setup
+  static String get setupCompleted => 'setup_completed'.tr();
+
+  // all
+  static String get allCreators => 'all_creators'.tr();
+
+  // account
+  static String get accountLength6To12LettersNumbers =>
+      'account_length_6_to_12_letters_numbers'.tr();
+
+  // password
+  static String get passwordLength8To20CharactersAndNumbers =>
+      'password_length_8_to_20_characters_and_numbers'.tr();
+
+  // validate
+  static String get validatePasswordMismatch =>
+      'validate_password_mismatch'.tr();
+
+  // register
+  static String get registerError => 'register_error'.tr();
+
+  // invalid
+  static String get invalidAccountOrPassword =>
+      'invalid_account_or_password'.tr();
+
+  // account
+  static String get accountAlreadyExists => 'account_already_exists'.tr();
+
+  // go
+  static String get goToLogin => 'go_to_login'.tr();
+
+  // message
+  static String get messageCenter => 'message_center'.tr();
+
+  // announcement
+  static String get announcement => 'announcement'.tr();
+
+  // system
+  static String get systemNotification => 'system_notification'.tr();
+
+  // password
+  static String get passwordSavedSuccessfully =>
+      'password_saved_successfully'.tr();
+  static String get passwordError => 'password_error'.tr();
+
+  // original
+  static String get originalPasswordIncorrect =>
+      'original_password_incorrect'.tr();
+
+  // modify
+  static String get modifyPassword => 'modify_password'.tr();
+
+  // original
+  static String get originalPassword => 'original_password'.tr();
+
+  // enter
+  static String get enterOriginalPassword => 'enter_original_password'.tr();
+
+  // new
+  static String get newPassword => 'new_password'.tr();
+
+  // confirm
+  static String get confirmEdit => 'confirm_edit'.tr();
+
+  // personalization
+  static String get personalizationSettings => 'personalization_settings'.tr();
+
+  // safety
+  static String get safetyLockSettings => 'safety_lock_settings'.tr();
+
+  // not
+  static String get notSet => 'not_set'.tr();
+
+  // update
+  static String get updateCheck => 'update_check'.tr();
+
+  // setting
+  static String get settingTranslationKey => 'setting_translation_key'.tr();
+
+  // promotion
+  static String get promotionPerson => 'promotion_person'.tr();
+
+  // refresh
+  static String get refreshBatch => 'refresh_batch'.tr();
+
+  // more
+  static String get moreVideosLoading => 'more_videos_loading'.tr();
+
+  // countdown
+  static String get countdownTimer => 'countdown_timer'.tr();
+
+  // g
+  static String get gPointVideo => 'g_point_video'.tr();
+
+  // account
+  static String get accountRecoveryInstructions =>
+      'account_recovery_instructions'.tr();
+
+  // website
+  static String get website => 'website'.tr();
+
+  // popular
+  static String get popularFemaleActors => 'popular_female_actors'.tr();
+
+  // view
+  static String get viewAll => 'view_all'.tr();
+
+  // selected
+  static String get selectedUp => 'selected_up'.tr();
+
+  // favorites
+  static String get favorites => 'favorites'.tr();
+
+  // followed
+  static String get followedUpUserSeeMoreVideo =>
+      'followed_up_user_see_more_video'.tr();
+
+  // number
+  static String get numberOfVideos => 'number_of_videos'.tr();
+
+  // latest
+  static String get latest => 'latest'.tr();
+
+  // hot
+  static String get hot => 'hot'.tr();
+
+  // all
+  static String get allRegions => 'all_regions'.tr();
+  static String get allPublisher => 'all_publisher'.tr();
+  static String get allSupplier => 'all_supplier'.tr();
+  static String get allChargeType => 'all_charge_type'.tr();
+
+  // free
+  static String get free => 'free'.tr();
+
+  // coin
+  static String get coin => 'coin'.tr();
+
+  // vip
+  static String get vip => 'vip'.tr();
+
+  // guest
+  static String get guest => 'guest'.tr();
+
+  // content
+  static String get contentUpdated => 'content_updated'.tr();
+
+  // fullscreen
+  static String get fullscreenView => 'fullscreen_view'.tr();
+
+  // please
+  static String get pleaseEnterYourAccount => 'please_enter_your_account'.tr();
+
+  // game
+  static String get game => 'game'.tr();
+
+  // followed
+  static String get followed => 'followed'.tr();
+
+  // no
+  static String get noMoreForNow => 'no_more_for_now'.tr();
+
+  // you
+  static String get youMightBeInterested => 'you_might_be_interested'.tr();
+
+  // dollar
+  static String get dollar => 'dollar'.tr();
+
+  // login
+  static String get loginError => 'login_error'.tr();
+
+  // Incorrect
+  static String get incorrectAccountOrPassword =>
+      'Incorrect_account_or_password'.tr();
+
+  // duplicate
+  static String get duplicateLoginAccount => 'duplicate_login_account'.tr();
+
+  // you
+  static String get youHaveBeenLoggedOutPleaseLogInAgain =>
+      'you_have_been_logged_out_please_log_in_again'.tr();
+
+  // user
+  static String get userLogin => 'user_login'.tr();
+
+  // get
+  static String get getTheLatestResources => 'get_the_latest_resources'.tr();
+
+  // back
+  static String get back => 'back'.tr();
+
+  // mute
+  static String get mute => 'mute'.tr();
+
+  // unmute
+  static String get unmute => 'unmute'.tr();
+
+  // try
+  static String get tryWatchingEnds => 'try_watching_ends'.tr();
+
+  // unlock
+  static String get unlockForFullPlayback => 'unlock_for_full_playback'.tr();
+
+  // duration
+  static String get duration => 'duration'.tr();
+
+  // become
+  static String get becomeVip => 'become_vip'.tr();
+
+  // pls
+  static String get plsLoginToWatch => 'pls_login_to_watch'.tr();
+
+  // view
+  static String get viewDetails => 'view_details'.tr();
+
+  // activate
+  static String get activateVipForFree => 'activate_vip_for_free'.tr();
+
+  // want
+  static String get wantToWatch => 'want_to_watch'.tr();
+
+  // coins
+  static String get coinsUnlock => 'coins_unlock'.tr();
+
+  // post
+  static String get post => 'post'.tr();
+
+  // coin
+  static String get coinWallet => 'coin_wallet'.tr();
+
+  // purchase
+  static String get purchaseRecord => 'purchase_record'.tr();
+
+  // privilege
+  static String get privilegeRecord => 'privilege_record'.tr();
+
+  // deposit
+  static String get depositRecord => 'deposit_record'.tr();
+
+  // confirm
+  static String get confirmDelete => 'confirm_delete'.tr();
+  static String get confirmDeleteSelected => 'confirm_delete_selected'.tr();
+
+  // serial
+  static String get serialNumberExchange => 'serial_number_exchange'.tr();
+
+  // enter
+  static String get enterSerialNumber => 'enter_serial_number'.tr();
+
+  // exchange
+  static String get exchange => 'exchange'.tr();
+
+  // video
+  static String get videoRecommended => 'video_recommended'.tr();
+
+  // redeem
+  static String get redeemRecord => 'redeem_record'.tr();
+  static String get redeemName => 'redeem_name'.tr();
+  static String get redeemTime => 'redeem_time'.tr();
+
+  // watch
+  static String get watchVideo => 'watch_video'.tr();
+
+  // payment
+  static String get paymentConfirmation => 'payment_confirmation'.tr();
+
+  // order
+  static String get orderCreatedPaymentPending =>
+      'order_created_payment_pending'.tr();
+
+  // signup
+  static String get signup => 'signup'.tr();
+
+  // warm
+  static String get warmHint => 'warm_hint'.tr();
+
+  // completed
+  static String get completed => 'completed'.tr();
+
+  // pending
+  static String get pending => 'pending'.tr();
+
+  // all
+  static String get all => 'all'.tr();
+
+  // failed
+  static String get failed => 'failed'.tr();
+
+  // product
+  static String get productNameOrPaymentType =>
+      'product_name_or_payment_type'.tr();
+
+  // amount
+  static String get amount => 'amount'.tr();
+
+  // order
+  static String get orderTime => 'order_time'.tr();
+  static String get orderNumber => 'order_number'.tr();
+
+  // payment
+  static String get paymentError => 'payment_error'.tr();
+
+  // selected
+  static String get selected => 'selected'.tr();
+
+  // please
+  static String get pleaseSelectPaymentMethod =>
+      'please_select_payment_method'.tr();
+
+  // no
+  static String get noAvailablePaymentMethod =>
+      'no_available_payment_method'.tr();
+
+  // valid
+  static String get valid => 'valid'.tr();
+
+  // expired
+  static String get expired => 'expired'.tr();
+
+  // start
+  static String get startTime => 'start_time'.tr();
+
+  // valid
+  static String get validPeriod => 'valid_period'.tr();
+
+  // enter
+  static String get enter => 'enter'.tr();
+
+  // vip
+  static String get vipMember => 'vip_member'.tr();
+
+  // valid
+  static String get validUntil => 'valid_until'.tr();
+
+  // limited
+  static String get limitedTimeOffer => 'limited_time_offer'.tr();
+
+  // days
+  static String get daysVipFreeVideoAccess => 'days_vip_free_video_access'.tr();
+
+  // original
+  static String get originalPrice => 'original_price'.tr();
+
+  // show
+  static String get showOnlyValid => 'show_only_valid'.tr();
 }

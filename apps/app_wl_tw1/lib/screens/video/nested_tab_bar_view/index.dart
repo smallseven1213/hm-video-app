@@ -9,6 +9,7 @@ import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 import 'package:app_wl_tw1/screens/main_screen/block_header.dart';
 import 'package:app_wl_tw1/widgets/sliver_vod_list.dart';
 
+import '../../../localization/i18n.dart';
 import '../../../widgets/list_no_more.dart';
 import 'video_actor.dart';
 import 'app_download_ad.dart';
@@ -75,20 +76,20 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               ),
             ),
             if (widget.videoDetail.actors!.isNotEmpty)
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 16, right: 8, left: 8),
-                  child: BlockHeader(text: '演員'),
+                  padding: const EdgeInsets.only(top: 16, right: 8, left: 8),
+                  child: BlockHeader(text: I18n.actor),
                 ),
               ),
             if (widget.videoDetail.actors!.isNotEmpty)
               SliverToBoxAdapter(
                 child: VideoActor(actors: widget.videoDetail.actors),
               ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(top: 16, right: 8, left: 8),
-                child: BlockHeader(text: '推薦'),
+                padding: const EdgeInsets.only(top: 16, right: 8, left: 8),
+                child: BlockHeader(text: I18n.videoRecommended),
               ),
             ),
           ];

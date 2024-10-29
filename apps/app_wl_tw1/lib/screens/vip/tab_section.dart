@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/tab_bar.dart';
 import 'order_record.dart';
 import 'privilege_record.dart';
@@ -48,15 +49,15 @@ class TabSectionState extends State<TabSection>
           padding: const EdgeInsets.all(8),
           child: TabBarWidget(
             bgColor: const Color(0xff1c202f),
-            tabs: const ['VIP', '特權紀錄', '存款紀錄'],
+            tabs: [I18n.vip, I18n.privilegeRecord, I18n.depositRecord],
             controller: _tabController,
           ),
         ),
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [
-              const ProductList(),
+            children: const [
+              ProductList(),
               PrivilegeRecord(),
               OrderRecord(),
             ],

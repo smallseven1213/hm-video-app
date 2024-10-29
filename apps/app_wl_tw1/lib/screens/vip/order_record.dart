@@ -4,25 +4,26 @@ import 'package:logger/logger.dart';
 import 'package:shared/models/user_order.dart';
 import 'package:shared/modules/user/user_order_record_consumer.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/no_data.dart';
 
 final logger = Logger();
 
 final List<Map<String, dynamic>> option = <Map<String, dynamic>>[
   {
-    'name': '全部',
+    'name': I18n.all,
     'value': '',
   },
   {
-    'name': '確認中',
+    'name': I18n.pending,
     'value': '1',
   },
   {
-    'name': '已完成',
+    'name': I18n.completed,
     'value': '2',
   },
   {
-    'name': '失敗',
+    'name': I18n.failed,
     'value': ['3', '4', '5'],
   },
 ];
@@ -198,11 +199,11 @@ class OrderRecordState extends State<OrderRecord> {
   Widget paymentStatus(Order record) {
     switch (record.paymentStatus) {
       case 1:
-        return statusContainer('確認中', const Color(0xff464c61));
+        return statusContainer(I18n.pending, const Color(0xff464c61));
       case 2:
-        return statusContainer('已完成', const Color(0xff2c9b66));
+        return statusContainer(I18n.completed, const Color(0xff2c9b66));
       default:
-        return statusContainer('失敗', const Color(0xffe05252));
+        return statusContainer(I18n.failed, const Color(0xffe05252));
     }
   }
 
@@ -271,19 +272,8 @@ class OrderRecordState extends State<OrderRecord> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        '購買商品名稱/支付類型',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8,
-                                      ),
                                       Text(
-                                        '金額：${record.orderAmount}',
+                                        I18n.productNameOrPaymentType,
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
@@ -294,7 +284,18 @@ class OrderRecordState extends State<OrderRecord> {
                                         height: 8,
                                       ),
                                       Text(
-                                        '訂單時間：${record.createdAt}',
+                                        '${I18n.amount}${record.orderAmount}',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8,
+                                      ),
+                                      Text(
+                                        '${I18n.orderTime}${record.createdAt}',
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Color(0xff919bb3),
@@ -305,7 +306,7 @@ class OrderRecordState extends State<OrderRecord> {
                                         height: 8,
                                       ),
                                       Text(
-                                        '訂單編號：${record.id}',
+                                        '${I18n.orderNumber}${record.id}',
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Color(0xff919bb3),

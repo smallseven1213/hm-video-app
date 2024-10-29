@@ -3,6 +3,8 @@ import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
 
+import '../../localization/i18n.dart';
+
 class VIPSubscriptionCard extends StatelessWidget {
   const VIPSubscriptionCard({super.key});
 
@@ -38,22 +40,22 @@ class VIPSubscriptionCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Row(
                           children: [
-                            Image(
+                            const Image(
                               image: AssetImage(
                                   'assets/images/purchase/icon-vip.webp'),
                               width: 20,
                               height: 20,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             Expanded(
                               child: Text(
-                                '開通 VIP 無限看片',
-                                style: TextStyle(
+                                I18n.activateVipForFree,
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -75,9 +77,9 @@ class VIPSubscriptionCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(32.0),
                             border: Border.all(color: Colors.white),
                           ),
-                          child: const Text(
-                            '查看詳情',
-                            style: TextStyle(
+                          child: Text(
+                            I18n.viewDetails,
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                           ),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/user_controller.dart';
+import '../localization/i18n.dart'; // Added import
 
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
@@ -33,20 +34,20 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入密碼';
+      return I18n.pleaseEnterYourPassword;
     }
     if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
-      return '密碼為8-20位字母及數字';
+      return I18n.passwordLength8To20CharactersAndNumbers;
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入驗證密碼';
+      return I18n.pleaseEnterTheVerificationPassword;
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一致';
+      return I18n.validatePasswordMismatch;
     }
     return null;
   }
@@ -61,10 +62,10 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         if (res['code'] == '00') {
           userController.fetchUserInfo();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text(
-                '已成功保存密碼',
-                style: TextStyle(
+                I18n.passwordSavedSuccessfully,
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
@@ -74,8 +75,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         } else {
           showConfirmDialog(
             context: context,
-            title: '密碼錯誤',
-            message: '原密碼錯誤',
+            title: I18n.passwordError,
+            message: I18n.originalPasswordIncorrect,
             showCancelButton: false,
             onConfirm: () {
               Navigator.of(context).pop();
@@ -86,8 +87,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         logger.i(error);
         showConfirmDialog(
           context: context,
-          title: '密碼錯誤',
-          message: '原密碼錯誤',
+          title: I18n.passwordError,
+          message: I18n.originalPasswordIncorrect,
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -100,9 +101,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '修改密碼',
-      ),
+      appBar: CustomAppBar(title: I18n.modifyPassword),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -114,25 +113,25 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '原密碼',
+                      label: I18n.originalPassword,
                       obscureText: true,
                       controller: _originPasswordController,
-                      placeholderText: '請輸入原密碼',
+                      placeholderText: I18n.enterOriginalPassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '新密碼',
+                      label: I18n.newPassword,
                       obscureText: true,
                       controller: _passwordController,
-                      placeholderText: '請輸入密碼',
+                      placeholderText: I18n.pleaseEnterYourPassword,
                       validator: _validatePassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: I18n.verifyPassword,
                       obscureText: true,
                       controller: _confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: I18n.pleaseEnterTheVerificationPassword,
                       validator: _validateConfirmPassword,
                     ),
                   ],
@@ -146,7 +145,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                   children: [
                     Expanded(
                       child: Button(
-                        text: '確認修改',
+                        text: I18n.confirmEdit,
                         type: 'secondary',
                         onPressed: () {
                           _handleUpdatePassword(context);

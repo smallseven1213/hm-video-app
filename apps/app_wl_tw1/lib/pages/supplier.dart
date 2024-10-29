@@ -9,6 +9,7 @@ import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import '../localization/i18n.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
@@ -193,7 +194,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['貼文', '短視頻', '長視頻'],
+      tabs: [I18n.post, I18n.shortVideo, I18n.longVideo],
     );
   }
 

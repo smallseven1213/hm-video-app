@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../config/colors.dart';
+import '../localization/i18n.dart';
 import '../widgets/button.dart';
 
 Future<bool?> showConfirmDialog({
   required BuildContext context,
   String? title,
   String? message,
-  String confirmButtonText = '確定',
-  String cancelButtonText = '取消',
+  String? confirmButtonText,
+  String? cancelButtonText,
   Function? onConfirm,
   Function? onCancel,
   bool showConfirmButton = true,
@@ -21,7 +22,7 @@ Future<bool?> showConfirmDialog({
     barrierDismissible: barrierDismissible ?? true,
     builder: (BuildContext context) {
       return PopScope(
-        canPop: barrierDismissible ?? true, 
+        canPop: barrierDismissible ?? true,
         child: Dialog(
           backgroundColor: Colors.transparent,
           insetPadding: const EdgeInsets.all(0),
@@ -80,7 +81,7 @@ Future<bool?> showConfirmDialog({
                           if (showCancelButton)
                             Expanded(
                               child: Button(
-                                text: cancelButtonText,
+                                text: cancelButtonText ?? I18n.cancel,
                                 onPressed: () {
                                   if (onCancel != null) {
                                     onCancel();
@@ -96,7 +97,7 @@ Future<bool?> showConfirmDialog({
                           if (showConfirmButton)
                             Expanded(
                               child: Button(
-                                text: confirmButtonText,
+                                text: confirmButtonText ?? I18n.confirm,
                                 onPressed: () {
                                   if (onConfirm != null) {
                                     onConfirm();

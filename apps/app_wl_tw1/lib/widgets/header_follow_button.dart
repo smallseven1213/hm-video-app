@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../localization/i18n.dart';
+
 class HeaderFollowButton extends StatelessWidget {
   final bool isLiked;
   final void Function()? handleLike;
@@ -27,7 +29,7 @@ class HeaderFollowButton extends StatelessWidget {
           children: [
             const SizedBox(width: 8),
             Text(
-              isLiked ? '已關注' : '+ 關注',
+              isLiked ? I18n.followed : '+ ${I18n.followStatus}',
               style: TextStyle(
                 fontSize: 12,
                 color:

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 
+import '../localization/i18n.dart';
 import 'button.dart';
 
 class ListPagePanelWidget extends StatelessWidget {
@@ -43,7 +44,7 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                        text: '全選',
+                        text: I18n.selectAll,
                         type: 'secondary',
                         onPressed: onSelectButtonClick!),
                   )),
@@ -53,7 +54,7 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                      text: '刪除',
+                      text: I18n.delete,
                       type: listEditorController.selectedIds.isNotEmpty
                           ? 'primary'
                           : 'cancel',

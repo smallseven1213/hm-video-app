@@ -6,6 +6,8 @@ import 'package:shared/models/user_privilege_record.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user/user_privilege_record_consumer.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class PrivilegeRecord extends StatefulWidget {
@@ -28,7 +30,7 @@ class PrivilegeRecordState extends State<PrivilegeRecord> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        isAvailable ? '有效' : '失效',
+        isAvailable ? I18n.valid : I18n.expired,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 12,
@@ -68,7 +70,7 @@ class PrivilegeRecordState extends State<PrivilegeRecord> {
             ),
             const SizedBox(height: 8),
             Text(
-              '開始時間：${record.createdAt}',
+              '${I18n.startTime}${record.createdAt}',
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xff919bb3),
@@ -76,7 +78,7 @@ class PrivilegeRecordState extends State<PrivilegeRecord> {
             ),
             const SizedBox(height: 4),
             Text(
-              '有效時間：${record.vipExpiredAt}',
+              '${I18n.validPeriod}${record.vipExpiredAt}',
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xff919bb3),
@@ -100,8 +102,8 @@ class PrivilegeRecordState extends State<PrivilegeRecord> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
-                  '只顯示有效',
+                Text(
+                  I18n.showOnlyValid,
                   style: TextStyle(fontSize: 14, color: Color(0xff919bb3)),
                 ),
                 const SizedBox(width: 4),

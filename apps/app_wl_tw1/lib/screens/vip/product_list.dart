@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/modules/user/user_product_consumer.dart';
 
+import '../../localization/i18n.dart';
 import 'product_card.dart';
 
 class ProductList extends StatelessWidget {
@@ -17,9 +18,9 @@ class ProductList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            '溫馨提示',
-            style: TextStyle(
+          Text(
+            I18n.warmHint,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -27,7 +28,7 @@ class ProductList extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '1.溫馨提示內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
+            '1.溫馨I18n.hintMessage內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
             style: TextStyle(
               color: Colors.grey[400],
               fontSize: 14,
@@ -35,7 +36,7 @@ class ProductList extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            '2.溫馨提示內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
+            '2.溫馨I18n.hintMessage內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
             style: TextStyle(
               color: Colors.grey[400],
               fontSize: 14,

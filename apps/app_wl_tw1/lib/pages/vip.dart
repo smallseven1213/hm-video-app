@@ -3,6 +3,7 @@ import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:get/get.dart';
 
+import '../localization/i18n.dart';
 import '../screens/vip/tab_section.dart';
 import '../widgets/avatar.dart';
 import '../widgets/custom_app_bar.dart';
@@ -48,7 +49,8 @@ class VipPage extends StatelessWidget {
   }
 
   Widget _vipBookmark(String vipExpiredAt) {
-    return UserInfoV2Consumer(child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+    return UserInfoV2Consumer(
+        child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
       return isVIP
           ? Container(
               width: 135,
@@ -70,16 +72,16 @@ class VipPage extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Column(
                   children: [
-                    const Text(
-                      'VIP會員',
-                      style: TextStyle(
+                    Text(
+                      I18n.vipMember,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      '效期至：$vipExpiredAt',
+                      '${I18n.validUntil}$vipExpiredAt',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
@@ -97,7 +99,7 @@ class VipPage extends StatelessWidget {
     final UserController userController = Get.find<UserController>();
     return Scaffold(
       backgroundColor: const Color(0xff0f1320),
-      appBar: const CustomAppBar(title: 'VIP會員'),
+      appBar: CustomAppBar(title: I18n.vipMember),
       body: Column(
         children: [
           // User Profile Section

@@ -7,6 +7,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../config/colors.dart';
+import '../localization/i18n.dart';
 import '../widgets/button.dart';
 import '../widgets/custom_app_bar.dart';
 
@@ -18,7 +19,7 @@ class OrderConfirmPage extends StatelessWidget {
     final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
     return Scaffold(
-      appBar: const CustomAppBar(title: '支付確認'),
+      appBar: CustomAppBar(title: I18n.paymentConfirmation),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -26,12 +27,12 @@ class OrderConfirmPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 60),
               child: Text(
-                '訂單已建立，付款確認中...',
+                I18n.orderCreatedPaymentPending,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
             Button(
-              text: '觀看視頻',
+              text: I18n.watchVideo,
               onPressed: () => {
                 MyRouteDelegate.of(context).pushAndRemoveUntil(
                   AppRoutes.home,
@@ -51,8 +52,8 @@ class OrderConfirmPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '溫馨提示',
+                  Text(
+                    I18n.warmHint,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,

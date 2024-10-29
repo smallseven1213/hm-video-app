@@ -15,6 +15,8 @@ import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared/apis/user_api.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class NoticeDialog extends StatefulWidget {
@@ -152,7 +154,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.leftButton ?? '取消',
+                                        text: notice.leftButton ?? I18n.cancel,
                                         type: 'cancel',
                                         onPressed: () => handleUrl(
                                             notice.leftButtonUrl, context),
@@ -163,7 +165,8 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.rightButton ?? '確認',
+                                        text:
+                                            notice.rightButton ?? I18n.confirm,
                                         type: 'primary',
                                         onPressed: () => handleUrl(
                                             notice.rightButtonUrl, context),

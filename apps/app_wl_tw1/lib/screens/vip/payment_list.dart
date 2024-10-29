@@ -7,6 +7,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/button.dart';
 
@@ -45,7 +46,7 @@ class PaymentListState extends State<PaymentList> {
       if (!mounted) return;
       _handlePaymentResponse(context, res);
     } catch (error) {
-      _showErrorDialog(context, '付款錯誤', '付款錯誤');
+      _showErrorDialog(context, I18n.paymentError, I18n.paymentError);
     } finally {
       setState(() => isLoading = false);
     }
@@ -60,7 +61,7 @@ class PaymentListState extends State<PaymentList> {
         MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
       }
     } else {
-      _showErrorDialog(context, '付款錯誤', res['message']);
+      _showErrorDialog(context, I18n.paymentError, res['message']);
     }
   }
 
@@ -106,7 +107,7 @@ class PaymentListState extends State<PaymentList> {
 
   Widget _buildHeader(BuildContext context) {
     return Text(
-      '請選擇支付方式',
+      I18n.pleaseSelectPaymentMethod,
       style: Theme.of(context).textTheme.headlineSmall,
     );
   }
@@ -119,7 +120,7 @@ class PaymentListState extends State<PaymentList> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: '已選擇 ${widget.name} ',
+              text: '${I18n.selected} ${widget.name} ',
               style: const TextStyle(fontSize: 12.0, color: Colors.white),
             ),
             TextSpan(
@@ -137,12 +138,12 @@ class PaymentListState extends State<PaymentList> {
   }
 
   Widget _buildEmptyPaymentMessage() {
-    return const Expanded(
+    return Expanded(
       child: Padding(
-        padding: EdgeInsets.only(top: 5),
+        padding: const EdgeInsets.only(top: 5),
         child: Text(
-          '無可用支付方式',
-          style: TextStyle(color: Colors.grey),
+          I18n.noAvailablePaymentMethod,
+          style: const TextStyle(color: Colors.grey),
         ),
       ),
     );
@@ -174,7 +175,7 @@ class PaymentListState extends State<PaymentList> {
   Widget _buildConfirmButton() {
     return SizedBox(
       child: Button(
-        text: '確認',
+        text: I18n.confirm,
         type: selectedId == null || isLoading ? 'cancel' : 'primary',
         onPressed: () {
           if (selectedId == null || isLoading) return;
