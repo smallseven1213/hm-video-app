@@ -9,9 +9,11 @@ import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:app_wl_tw1/config/colors.dart';
 import 'package:app_wl_tw1/widgets/id_card.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
 
+import 'subscription_card.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -33,8 +35,8 @@ class UserScreenState extends State<UserScreen> {
         onAccountProtectionShownH5: () {
           showConfirmDialog(
             context: context,
-            title: '提示',
-            message: '為保持您的帳號，請先註冊防止丟失',
+            title: I18n.hintMessage,
+            message: I18n.maintainAccountPleaseRegisterToPreventLoss,
             showCancelButton: false,
             onConfirm: () => {},
           );
@@ -52,6 +54,7 @@ class UserScreenState extends State<UserScreen> {
           );
         },
         child: Scaffold(
+          backgroundColor: const Color(0xff1c202f),
           body: CustomScrollView(
             physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
@@ -61,24 +64,8 @@ class UserScreenState extends State<UserScreen> {
                   height: MediaQuery.paddingOf(context).top,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: UserInfo(),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  color: AppColors.colors[ColorKeys.primary] as Color,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                    child: Container(
-                      height: 10,
-                      color: AppColors.colors[ColorKeys.background],
-                    ),
-                  ),
-                ),
-              ),
+              const SliverToBoxAdapter(child: UserInfo()),
+              const SliverToBoxAdapter(child: VIPSubscriptionCard()),
               const GridMenu(),
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -95,8 +82,8 @@ class UserScreenState extends State<UserScreen> {
                   height: 20,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: Header(text: '更多服務'),
+              SliverToBoxAdapter(
+                child: Header(text: I18n.moreServices),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -111,7 +98,7 @@ class UserScreenState extends State<UserScreen> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '版本號:${systemConfigController.version.value}',
+                      '${I18n.versionNumber}:${systemConfigController.version.value}',
                       style: TextStyle(
                           color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),

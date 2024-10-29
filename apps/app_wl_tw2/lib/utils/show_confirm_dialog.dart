@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../config/colors.dart';
 import '../widgets/button.dart';
@@ -8,8 +9,8 @@ Future<bool?> showConfirmDialog({
   required BuildContext context,
   String? title,
   String? message,
-  String confirmButtonText = '確定',
-  String cancelButtonText = '取消',
+  String confirmButtonText = '',
+  String cancelButtonText = '',
   Function? onConfirm,
   Function? onCancel,
   bool showConfirmButton = true,
@@ -80,7 +81,9 @@ Future<bool?> showConfirmDialog({
                           if (showCancelButton)
                             Expanded(
                               child: Button(
-                                text: cancelButtonText,
+                                text: cancelButtonText.isEmpty
+                                    ? I18n.cancel
+                                    : cancelButtonText,
                                 onPressed: () {
                                   if (onCancel != null) {
                                     onCancel();
@@ -96,7 +99,9 @@ Future<bool?> showConfirmDialog({
                           if (showConfirmButton)
                             Expanded(
                               child: Button(
-                                text: confirmButtonText,
+                                text: confirmButtonText.isEmpty
+                                    ? I18n.confirmAction
+                                    : confirmButtonText,
                                 onPressed: () {
                                   if (onConfirm != null) {
                                     onConfirm();

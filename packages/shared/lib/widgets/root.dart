@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/localization/en.dart';
@@ -130,6 +131,18 @@ class RootWidget extends StatelessWidget {
       routerDelegate: delegate,
       routeInformationParser: parser,
       theme: theme,
+      builder: (context, child) {
+        if (kIsWeb) {
+          return Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: child,
+            ),
+          );
+        } else {
+          return child!;
+        }
+      },
     );
   }
 }

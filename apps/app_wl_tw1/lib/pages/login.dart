@@ -11,6 +11,7 @@ import 'package:app_wl_tw1/config/colors.dart';
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:app_wl_tw1/widgets/forgot_password_button.dart';
 
+import '../localization/i18n.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
@@ -23,8 +24,8 @@ class LoginPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-        appBar: const CustomAppBar(
-          title: '登入',
+        appBar: CustomAppBar(
+          title: I18n.login,
         ),
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -50,16 +51,16 @@ class LoginPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 80),
                   AuthTextField(
-                    label: '帳號',
+                    label: I18n.account,
                     controller: accountController,
-                    placeholderText: '請輸入帳號',
+                    placeholderText: I18n.pleaseEnterYourAccount,
                     validator: validateUsername,
                   ),
                   const SizedBox(height: 10),
                   AuthTextField(
-                    label: '密碼',
+                    label: I18n.password,
                     controller: passwordController,
-                    placeholderText: '請輸入密碼',
+                    placeholderText: I18n.pleaseEnterYourPassword,
                     obscureText: true,
                     validator: validatePassword,
                   ),
@@ -67,7 +68,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: Button(
-                      text: '登入',
+                      text: I18n.login,
                       onPressed: () => handleLogin(),
                     ),
                   ),
@@ -82,7 +83,7 @@ class LoginPage extends StatelessWidget {
                         },
                         child: Column(children: [
                           Text(
-                            '還沒有帳號',
+                            I18n.noAccountYet,
                             style: TextStyle(
                               color: AppColors.colors[ColorKeys.textPrimary],
                             ),

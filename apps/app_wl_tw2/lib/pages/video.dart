@@ -16,6 +16,7 @@ import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
 import '../config/colors.dart';
 import 'package:app_wl_tw2/widgets/flash_loading.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 final userApi = UserApi();
 
@@ -55,8 +56,8 @@ class VideoState extends State<Video> {
             child: WatchPermissionProvider(showConfirmDialog: () {
               showConfirmDialog(
                 context: context,
-                message: '請先登入後觀看。',
-                cancelButtonText: '返回',
+                message: I18n.plsLoginToWatch,
+                cancelButtonText: I18n.back,
                 barrierDismissible: false,
                 onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                 onCancel: () => MyRouteDelegate.of(context).popToHome(),

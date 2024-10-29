@@ -11,8 +11,9 @@ import '../screens/favorites/short.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
 import '../widgets/list_page_panel.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
-const tabs = ['長視頻', '短視頻', '演員'];
+final tabs = [I18n.longVideo, I18n.shortVideo, I18n.actor];
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -86,14 +87,14 @@ class FavoritesPageState extends State<FavoritesPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: '我的喜歡',
+          title: I18n.likePlaylist,
           actions: [
             Obx(() => TextButton(
                 onPressed: () {
                   listEditorController.toggleEditing();
                 },
                 child: Text(
-                  listEditorController.isEditing.value ? '取消' : '編輯',
+                  listEditorController.isEditing.value ? I18n.cancel : I18n.editTranslation,
                   style: const TextStyle(color: Colors.white),
                 )))
           ],

@@ -141,7 +141,7 @@ class OrderRecordState extends State<OrderRecord> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      record.product!.name ?? '',
+                                      '',
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class OrderRecordState extends State<OrderRecord> {
                                       ),
                                     ),
                                     Text(
-                                      '\$ ${record.orderAmount}',
+                                      '\$ ${record.amount}',
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
                                     ),
@@ -169,7 +169,7 @@ class OrderRecordState extends State<OrderRecord> {
                                   ],
                                 ),
                                 Text(
-                                  record.paymentStatus == 0 ? '成功' : '失敗',
+                                  record.status == 0 ? '成功' : '失敗',
                                   style:
                                       Theme.of(context).textTheme.headlineLarge,
                                 ),

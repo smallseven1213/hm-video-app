@@ -6,6 +6,11 @@ import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/refresh_list.dart';
+import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/utils/show_confirm_dialog.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/comment/comment_report_delete.dart';
 
 class CommentList extends StatefulWidget {
   final int topicId;
@@ -36,6 +41,7 @@ class _CommentListState extends State<CommentList> {
         Get.find<CommentController>(tag: 'comment-${widget.topicId}');
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    _commentController.commentReportType();
   }
 
   void _scrollListener() {
@@ -66,8 +72,7 @@ class _CommentListState extends State<CommentList> {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
     return Obx(() {
-      int itemCount =
-          _commentController.comments.length;
+      int itemCount = _commentController.comments.length;
       bool showExtraItem = _commentController.isLoading.value ||
           (!_commentController.hasMoreData && widget.showNoMoreComments);
 
@@ -106,6 +111,7 @@ class _CommentListState extends State<CommentList> {
                         item: comment,
                         expandedCommentId:
                             _expandedCommentId, // 传递共享的 ValueNotifier
+                        index: index,
                       );
                     } else {
                       // This is the extra item at the end
@@ -144,11 +150,13 @@ class _CommentListState extends State<CommentList> {
 class CommentItem extends StatefulWidget {
   final Comment item;
   final ValueNotifier<int?> expandedCommentId; // 添加这个参数
+  final int index;
 
   const CommentItem({
     Key? key,
     required this.item,
     required this.expandedCommentId, // 添加这个参数
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -207,37 +215,74 @@ class _CommentItemState extends State<CommentItem> {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
-
-    return ListTile(
-      leading: AvatarWidget(
-        photoSid: widget.item.avatar,
-        width: 36,
-        height: 36,
-        backgroundColor: Colors.transparent,
-      ),
-      title: Text(
-        widget.item.userName,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
+    return UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
+      return ListTile(
+        onLongPress: () {
+          if (isGuest) {
+            showConfirmDialog(
+              context: context,
+              title: '',
+              message: localizations.translate('please_login'),
+              showCancelButton: true,
+              showConfirmButton: true,
+              cancelButtonText: localizations.translate('cancel'),
+              confirmButtonText: localizations.translate('login'),
+              onCancel: () {
+                Navigator.of(context).pop();
+              },
+              onConfirm: () {
+                Navigator.of(context).pop();
+                MyRouteDelegate.of(context).push(AppRoutes.login);
+              },
+            );
+          } else {
+            // 顯示底部檢舉或刪除彈出菜單
+            showModalBottomSheet(
+                context: context,
+                backgroundColor: const Color(0xFF333344),
+                isScrollControlled: true,
+                builder: (BuildContext context) {
+                  return SafeArea(
+                    child: CommentReportDelete(
+                      id: widget.item.id,
+                      uid: widget.item.uid,
+                      topicId: widget.item.topicId,
+                      index: widget.index,
+                    ),
+                  );
+                });
+          }
+        },
+        leading: AvatarWidget(
+          photoSid: widget.item.avatar,
+          width: 36,
+          height: 36,
+          backgroundColor: Colors.transparent,
         ),
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ReadMoreText(
-            widget.item.content,
-            trimLines: 5,
-            colorClickableText: Colors.grey,
-            trimMode: TrimMode.Line,
-            trimCollapsedText: localizations.translate('expand'),
-            trimExpandedText: ' ${localizations.translate('collapse')}',
-            style: const TextStyle(color: Colors.white, fontSize: 11),
-            isCollapsed: isCollapsed,
+        title: Text(
+          widget.item.userName,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
-    );
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReadMoreText(
+              widget.item.content,
+              trimLines: 5,
+              colorClickableText: Colors.grey,
+              trimMode: TrimMode.Line,
+              trimCollapsedText: localizations.translate('expand'),
+              trimExpandedText: ' ${localizations.translate('collapse')}',
+              style: const TextStyle(color: Colors.white, fontSize: 11),
+              isCollapsed: isCollapsed,
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

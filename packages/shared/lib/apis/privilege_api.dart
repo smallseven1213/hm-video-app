@@ -16,7 +16,7 @@ class PrivilegeApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/privileges';
+  String get apiPrefix => '$apiHost/api/v1/user/privileges';
 
   Future<List<UserPrivilegeRecord>> getManyBy({
     required String userId,
@@ -25,7 +25,7 @@ class PrivilegeApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/privilege/list/userId?page=$page&limit=$limit&userId=$userId');
+            '$apiPrefix?page=$page&limit=$limit&userId=$userId');
     if (res.data['code'] != '00') {
       return [];
     }

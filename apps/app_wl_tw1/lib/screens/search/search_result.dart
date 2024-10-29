@@ -9,6 +9,7 @@ import 'package:shared/controllers/search_temp_controller.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+import '../../localization/i18n.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
 
@@ -67,10 +68,10 @@ class SearchResultPageState extends State<SearchResultPage>
         // GSTabBar
         TabBarWidget(
           controller: _tabController,
-          tabs: const [
-            '長視頻',
-            '短視頻',
-            '貼文',
+          tabs: [
+            I18n.longVideo,
+            I18n.shortVideo,
+            I18n.post,
           ],
         ),
         Expanded(

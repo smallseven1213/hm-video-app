@@ -8,22 +8,23 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-class ChannelStyle6Suppliers extends StatelessWidget {
-  ChannelStyle6Suppliers({Key? key}) : super(key: key);
+import '../../../localization/i18n.dart';
 
-  final controller = Get.put(SupplierRecommendsController());
-  var userFavoritesSupplierController =
-      Get.find<UserFavoritesSupplierController>();
+class ChannelStyle6Suppliers extends StatelessWidget {
+  const ChannelStyle6Suppliers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userFavoritesSupplierController =
+        Get.find<UserFavoritesSupplierController>();
+    final controller = Get.put(SupplierRecommendsController());
     return Obx(() => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
             crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
             children: [
-              const Text("精选UP主",
-                  style: TextStyle(
+              Text(I18n.selectedUp,
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   )),
@@ -31,8 +32,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
               const SizedBox(
                 height: 7,
               ),
-              const Text("关注某个UP主，以查看其最新影片。",
-                  style: TextStyle(
+              Text(I18n.followedUpUserSeeMoreVideo,
+                  style: const TextStyle(
                     color: Color(0xFFcfcece),
                     fontSize: 14,
                   )),
@@ -164,10 +165,10 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(4),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              '关注',
-                                              style: TextStyle(
+                                              I18n.followStatus,
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500),

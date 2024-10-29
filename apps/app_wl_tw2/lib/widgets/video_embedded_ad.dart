@@ -5,6 +5,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class VideoEmbeddedAdWidget extends StatelessWidget {
   final Vod detail;
@@ -119,18 +120,18 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                     ], // 圓角大小
                   ),
                   padding: const EdgeInsets.all(4),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.download,
                         color: Colors.black,
                         size: 10,
                       ),
-                      SizedBox(width: 1),
+                      const SizedBox(width: 1),
                       Text(
-                        '立刻下載',
-                        style: TextStyle(
+                        I18n.downloadNow,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 10,
                         ),

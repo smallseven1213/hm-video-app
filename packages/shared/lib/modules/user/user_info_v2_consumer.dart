@@ -20,7 +20,8 @@ class UserInfoV2Consumer extends StatelessWidget {
 
     // ignore: invalid_use_of_protected_member
     return Obx(() {
-      var isVIP = userController.infoV2.value.roles.contains('vip');
+      var vipExpiredAt = userController.infoV2.value.vipExpiredAt;
+      var isVIP = vipExpiredAt != null && vipExpiredAt.isAfter(DateTime.now());
       var isGuest = userController.infoV2.value.roles.contains('guest');
       var isLoading = userController.isInfoV2Loading.value;
       var isInfoV2Init = userController.isInfoV2Init.value;

@@ -12,9 +12,8 @@ class CommentController extends GetxController {
   final offset = 1.obs;
   RxBool isLoading = false.obs;
   RxList<Comment> comments = RxList<Comment>();
-
+  RxList<Report> reportList = RxList<Report>();
   int _page = 1;
-
   bool _hasMoreData = true;
 
   CommentController({
@@ -91,4 +90,43 @@ class CommentController extends GetxController {
 
   // 检查是否有更多数据
   bool get hasMoreData => _hasMoreData;
+
+  //刪除評論
+  Future<void> commentDelete(int id, int index) async {
+    var comment = await commentApi.commentDelete(
+      id: id,
+    );
+    if (comment != null) {
+      comments.removeAt(index);
+      update();
+    } else {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment delete');
+    }
+  }
+
+  //舉報類型
+  Future<void> commentReportType() async {
+    var commentReportType = await commentApi.commentReportType();
+    if (commentReportType.isNotEmpty) {
+      reportList.value = commentReportType;
+      update();
+    } else {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment report type');
+    }
+  }
+
+  //舉報評論
+  Future<void> commentReport(int id, int reportType, String reason) async {
+    var commentRepor = await commentApi.commentReport(
+      id: id,
+      type: reportType,
+      reason: reason,
+    );
+    if (commentRepor == null) {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to comment report');
+    }
+  }
 }

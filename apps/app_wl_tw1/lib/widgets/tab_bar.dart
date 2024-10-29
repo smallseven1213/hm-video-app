@@ -22,6 +22,7 @@ class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final EdgeInsetsGeometry? padding;
   final Function(int)? onTabChange;
   final List<int> dotIndexes;
+  final Color? bgColor;
 
   const TabBarWidget({
     Key? key,
@@ -30,6 +31,7 @@ class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.controller,
     this.padding,
     this.dotIndexes = const [],
+    this.bgColor,
   }) : super(key: key);
 
   @override
@@ -65,7 +67,7 @@ class TabBarWidgetState extends State<TabBarWidget> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        color: AppColors.colors[ColorKeys.tabBgColor],
+        color: widget.bgColor ?? AppColors.colors[ColorKeys.tabBgColor],
         padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 15),
         child: Align(
           child: TabBar(

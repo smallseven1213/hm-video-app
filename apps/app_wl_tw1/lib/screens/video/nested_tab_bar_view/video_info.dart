@@ -48,7 +48,7 @@ class VideoInfo extends StatelessWidget {
           title: title,
           color: AppColors.colors[ColorKeys.textPrimary]!,
         ),
-        // 供應商、演員、觀看次數、時長
+        // 供應商、I18n.actor、觀看次數、時長
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
           child: Row(

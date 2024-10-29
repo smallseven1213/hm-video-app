@@ -12,6 +12,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
+import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../flash_loading.dart';
 import 'short_bottom_area.dart';
@@ -67,8 +68,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       showConfirmDialog: () {
         showConfirmDialog(
           context: context,
-          message: '請先登入後觀看。',
-          cancelButtonText: '返回',
+          message: I18n.plsLoginToWatch,
+          cancelButtonText: I18n.back,
           barrierDismissible: false,
           onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
           onCancel: () => MyRouteDelegate.of(context).popToHome(),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../controllers/system_config_controller.dart';
-import 'user_info_consumer.dart';
+import 'user_info_v2_consumer.dart';
 
 final logger = Logger();
 
@@ -49,7 +49,8 @@ class WatchPermissionProviderState extends State<WatchPermissionProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
+    return UserInfoV2Consumer(
+        child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
       if (isLoading) {
         return const SizedBox.shrink();
       } else if (isGuest && systemConfigController.loginToWatch.value) {

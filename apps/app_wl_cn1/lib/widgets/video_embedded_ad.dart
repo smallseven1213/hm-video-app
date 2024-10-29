@@ -6,6 +6,8 @@ import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../localization/i18n.dart';
+
 class VideoEmbeddedAdWidget extends StatelessWidget {
   final Vod detail;
   final double imageRatio;
@@ -25,7 +27,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 广告封面
+          // 廣告封麵
           AspectRatio(
             aspectRatio: imageRatio,
             child: Container(
@@ -75,13 +77,13 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
               ],
-              // 主标+副标
+              // 主標+副標
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // 主标
+                    // 主標
                     Text(
                       detail.title,
                       maxLines: 1,
@@ -91,21 +93,21 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                         color: AppColors.colors[ColorKeys.textPrimary],
                       ),
                     ),
-                    // 副标
-                    // Text(
-                    //   detail.titleSub ?? '',
-                    //   maxLines: 1,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   style: const TextStyle(
-                    //     fontSize: 10,
-                    //     color: Colors.grey,
-                    //   ),
-                    // ),
+                    // 副標
+                    Text(
+                      detail.titleSub ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
               ),
               if (imageRatio == 374 / 198) ...[
-                // 下载按钮
+                // 下載按鈕
                 const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
@@ -116,21 +118,21 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                         color: Colors.yellow.shade700.withOpacity(0.6),
                         blurRadius: 5,
                       ),
-                    ], // 圆角大小
+                    ], // 圓角大小
                   ),
                   padding: const EdgeInsets.all(4),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.download,
                         color: Colors.black,
                         size: 10,
                       ),
-                      SizedBox(width: 1),
+                      const SizedBox(width: 1),
                       Text(
-                        '立刻下载',
-                        style: TextStyle(
+                        I18n.downloadNow,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 10,
                         ),

@@ -17,6 +17,7 @@ import 'package:shared/widgets/sid_image.dart';
 import 'package:app_wl_tw2/config/colors.dart';
 import 'package:app_wl_tw2/screens/user_screen/scan_qrcode.dart';
 import 'package:app_wl_tw2/utils/show_confirm_dialog.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../widgets/id_card.dart';
 
@@ -52,13 +53,13 @@ class ListMenuState extends State<ListMenu> {
             children: <Widget>[
               ListTile(
                   leading: const Icon(Icons.photo_library),
-                  title: const Text('相簿選擇'),
+                  title:  Text(I18n.albumSelection),
                   onTap: () {
                     imgFromGallery(context);
                   }),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title: const Text('拍照'),
+                title:  Text(I18n.takePhoto),
                 onTap: () async {
                   Navigator.of(context).pop();
                   Permission.camera.request().then((PermissionStatus status) {
@@ -68,7 +69,7 @@ class ListMenuState extends State<ListMenu> {
               ),
               ListTile(
                 leading: const Icon(Icons.cancel),
-                title: const Text('取消'),
+                title:  Text(I18n.cancel),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
@@ -91,14 +92,14 @@ class ListMenuState extends State<ListMenu> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('權限不足'),
-            content: const Text('請允許訪問相機'),
+            title:  Text(I18n.insufficientPermissions),
+            content:  Text(I18n.allowCameraAccess),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('確定'),
+                child:  Text(I18n.confirmAction),
               ),
             ],
           );
@@ -119,8 +120,8 @@ class ListMenuState extends State<ListMenu> {
         Get.find<AuthController>().setToken(res.data?['token']);
         showConfirmDialog(
           context: context,
-          title: '提示',
-          message: '登入成功',
+          title: I18n.hintMessage,
+          message: I18n.loginSuccess,
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -129,8 +130,8 @@ class ListMenuState extends State<ListMenu> {
       } else {
         showConfirmDialog(
           context: context,
-          title: '提示',
-          message: '登入失敗，用戶不存在。',
+          title: I18n.hintMessage,
+          message: I18n.loginFailedUserDoesNotExist,
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -171,8 +172,8 @@ class ListMenuState extends State<ListMenu> {
                 if (kIsWeb) {
                   showConfirmDialog(
                     context: context,
-                    title: '提示',
-                    message: '請使用手機應用程式找回帳號',
+                    title: I18n.hintMessage,
+                    message: I18n.useMobileAppToRecoverAccount,
                     showCancelButton: false,
                   );
                 } else {

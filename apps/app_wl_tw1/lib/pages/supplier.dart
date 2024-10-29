@@ -9,6 +9,7 @@ import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import '../localization/i18n.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
@@ -52,18 +53,15 @@ class _SupplierPageState extends State<SupplierPage>
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 1) {
-          shortVideoController.reset();
+        if (_tabController.index == 0) {
           postController.reset();
-          shortVideoController.loadMoreData();
-        } else if (_tabController.index == 2) {
-          supplierVideoController.reset();
-          postController.reset();
-          supplierVideoController.loadMoreData();
-        } else {
           postController.loadMoreData();
+        } else if (_tabController.index == 1) {
           shortVideoController.reset();
+          shortVideoController.loadMoreData();
+        } else {
           supplierVideoController.reset();
+          supplierVideoController.loadMoreData();
         }
       }
     });
@@ -196,7 +194,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['貼文', '短視頻', '長視頻'],
+      tabs: [I18n.post, I18n.shortVideo, I18n.longVideo],
     );
   }
 

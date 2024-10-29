@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:app_wl_cn1/widgets/general_shortcard/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -8,19 +7,20 @@ import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
+import '../localization/i18n.dart';
 import '../screens/nodata/index.dart';
+import 'flash_loading.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
-import 'no_data.dart';
 
 final List<String> loadingTextList = [
-  '档案很大，你忍一下',
-  '还没准备好，你先悠著来',
-  '精彩即将呈现',
-  '努力加载中',
-  '让档案载一会儿',
-  '美好事物，值得等待',
-  '拼命搬砖中',
+  I18n.itsABigFile,
+  I18n.itsNotReadyYet,
+  I18n.comingSoon,
+  I18n.weAreTryingToLoadT,
+  I18n.letTheFileLoadForAWhile,
+  I18n.itsWorthWatingForTheGoodStuff,
+  I18n.tryingToMoveBricks,
 ];
 
 class RefreshIndicatorWidget extends StatefulWidget {
@@ -136,7 +136,7 @@ class BaseShortPage extends StatelessWidget {
                                 isActive: isActive,
                                 id: shortData.id,
                                 title: shortData.title,
-                                shortData: shortData,
+                                shortData: video ?? Vod(0, ''),
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
                               )
@@ -146,7 +146,7 @@ class BaseShortPage extends StatelessWidget {
                                 isActive: isActive,
                                 id: shortData.id,
                                 title: shortData.title,
-                                shortData: shortData,
+                                shortData: video ?? Vod(0, ''),
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
                               ))),

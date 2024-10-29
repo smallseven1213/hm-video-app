@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/localization/shared_localization_delegate.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/show_confirm_dialog.dart';
 import 'package:shared/widgets/avatar.dart';
@@ -55,8 +55,8 @@ class _CommentInputState extends State<CommentInput> {
       child: UIBottomSafeArea(
         child: Row(
           children: [
-            UserInfoConsumer(
-              child: (info, isVIP, isGuest, isLoading) {
+            UserInfoV2Consumer(
+              child: (info, isVIP, isGuest, isLoading,isInfoV2Init)  {
                 return AvatarWidget(
                   photoSid: info.avatar,
                   width: 40,
@@ -120,8 +120,8 @@ class _CommentInputState extends State<CommentInput> {
                 },
               ),
             ),
-            UserInfoConsumer(
-              child: (info, isVIP, isGuest, isLoading) {
+            UserInfoV2Consumer(
+              child: (info, isVIP, isGuest, isLoading,isInfoV2Init)  {
                 return TextButton(
                   onPressed: () {
                     if (_controller.text.isNotEmpty) {

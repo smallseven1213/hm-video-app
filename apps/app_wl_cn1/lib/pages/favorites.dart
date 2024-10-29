@@ -7,12 +7,13 @@ import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import 'package:shared/enums/list_editor_category.dart';
+import '../localization/i18n.dart';
 import '../screens/favorites/short.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
 import '../widgets/list_page_panel.dart';
 
-const tabs = ['长视频', '短视频', '演员'];
+final tabs = [I18n.longVideo, I18n.shortVideo, I18n.actor];
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -86,14 +87,16 @@ class FavoritesPageState extends State<FavoritesPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: '我的喜欢',
+          title: I18n.likePlaylist,
           actions: [
             Obx(() => TextButton(
                 onPressed: () {
                   listEditorController.toggleEditing();
                 },
                 child: Text(
-                  listEditorController.isEditing.value ? '取消' : '编辑',
+                  listEditorController.isEditing.value
+                      ? I18n.cancel
+                      : I18n.editTranslation,
                   style: const TextStyle(color: Colors.white),
                 )))
           ],

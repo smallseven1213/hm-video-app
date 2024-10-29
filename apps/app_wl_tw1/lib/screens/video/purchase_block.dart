@@ -11,6 +11,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 
+import '../../localization/i18n.dart';
+
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
   final int id;
@@ -58,22 +60,22 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       ),
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Row(
                               children: [
-                                Image(
+                                const Image(
                                   image: AssetImage(
                                       'assets/images/purchase/icon-vip.webp'),
                                   width: 20,
                                   height: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '開通 VIP 無限看片',
-                                    style: TextStyle(
+                                    I18n.activateVipForFree,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
@@ -95,9 +97,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 borderRadius: BorderRadius.circular(32.0),
                                 border: Border.all(color: Colors.white),
                               ),
-                              child: const Text(
-                                '查看詳情',
-                                style: TextStyle(
+                              child: Text(
+                                I18n.viewDetails,
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -147,7 +149,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        '看不過癮，${widget.videoDetail.buyPoint}金幣解鎖',
+                                        '${I18n.notEnough} ${widget.videoDetail.buyPoint}${I18n.coinsUnlock}',
                                         style: const TextStyle(
                                           color: Color(0xff644c14),
                                         ),
@@ -186,9 +188,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     borderRadius: BorderRadius.circular(32.0),
                                     border: Border.all(color: Colors.white),
                                   ),
-                                  child: const Text(
-                                    '立即解鎖',
-                                    style: TextStyle(
+                                  child: Text(
+                                    I18n.unlockNow,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),

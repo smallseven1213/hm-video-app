@@ -30,8 +30,8 @@ class JingangButton extends StatelessWidget {
       child: CircleTextItem(
         text: item?.name ?? '',
         photoSid: item?.photoSid ?? '',
-        imageWidth: size.width * 0.15,
-        imageHeight: size.width * 0.15,
+        imageWidth: 60,
+        imageHeight: 60,
         isRounded: isRounded,
         hasBorder: hasBorder,
       ),

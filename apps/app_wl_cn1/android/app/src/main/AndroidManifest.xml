@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="SV传媒"
+        android:label="夜色传媒"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -32,6 +32,6 @@
 
         <meta-data
             android:name="flutterPreviewText"
-            android:value="SV传媒 打开你的影音新世界" />
+            android:value="夜色传媒 打开你的影音新世界" />
     </application>
 </manifest>

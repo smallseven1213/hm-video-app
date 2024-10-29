@@ -12,6 +12,7 @@ import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
 import 'package:shared/widgets/video/purchase_block.dart';
 import '../config/colors.dart';
+import '../localization/i18n.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
@@ -55,8 +56,8 @@ class VideoState extends State<Video> {
               showConfirmDialog: () {
                 showConfirmDialog(
                   context: context,
-                  message: '請先登入後觀看。',
-                  cancelButtonText: '返回',
+                  message: I18n.plsLoginToWatch,
+                  cancelButtonText: I18n.back,
                   barrierDismissible: false,
                   onConfirm: () =>
                       MyRouteDelegate.of(context).push(AppRoutes.login),

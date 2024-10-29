@@ -89,4 +89,8 @@ const Map<String, String> sharedZhTwStrings = {
   "comment": "評論",
   "collapse": "收起",
   "expand": "展開",
+  "i_want_to_report": "我要舉報",
+  "delete_comment": "刪除評論",
+  "please_select_a_reason": "選擇理由",
+  "please_select_type": "選擇類型",
 };

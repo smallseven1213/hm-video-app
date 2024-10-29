@@ -10,7 +10,7 @@ import '../widgets/base_short_page.dart';
 
 final logger = Logger();
 
-/// 适用于Collection, Playrecord and Favorites
+/// 適用於Collection, Playrecord and Favorites
 /// itemId:
 /// 0 - Collection
 /// 1 - Playrecord

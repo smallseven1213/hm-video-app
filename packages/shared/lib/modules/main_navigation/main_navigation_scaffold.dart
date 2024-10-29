@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:game/widgets/h5webview.dart';
 import 'package:get/get.dart';
+import 'package:shared/utils/floating_button_offset_location.dart';
 
 import '../../controllers/bottom_navigator_controller.dart';
+import '../../enums/navigation_type.dart';
 import '../../models/navigation.dart';
+import '../../widgets/floating_button.dart';
 import '../../widgets/webview_page.dart';
 import 'main_navigation_provider.dart';
 
@@ -12,19 +17,22 @@ class MainNavigationScaffold extends StatefulWidget {
   final Map<String, Widget Function()> screens;
   final Widget? screenNotFoundWidget;
   final PreferredSizeWidget? appBar;
-  final Function(
-      {required String activeKey,
-      required List<Navigation> navigatorItems,
-      required Function(String tabKey) changeTabKey}) bottomNavigationBarWidget;
+  final NavigationType? floatButtonType;
+  final Function({
+    required String activeKey,
+    required List<Navigation> navigatorItems,
+    required Function(String tabKey) changeTabKey,
+  }) bottomNavigationBarWidget;
 
-  const MainNavigationScaffold(
-      {Key? key,
-      required this.screens,
-      this.defaultScreenKey,
-      this.screenNotFoundWidget,
-      this.appBar,
-      required this.bottomNavigationBarWidget})
-      : super(key: key);
+  const MainNavigationScaffold({
+    Key? key,
+    required this.screens,
+    this.defaultScreenKey,
+    this.screenNotFoundWidget,
+    this.appBar,
+    required this.bottomNavigationBarWidget,
+    this.floatButtonType,
+  }) : super(key: key);
 
   @override
   MainNavigationScaffoldState createState() => MainNavigationScaffoldState();
@@ -76,6 +84,13 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
               changeTabKey: (String tabKey) {
                 bottomNavigatorController.changeKey(tabKey);
               }),
+          floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+            FloatingActionButtonLocation.endFloat,
+            offsetY: -50,
+          ),
+          floatingActionButton: FloatingButton(
+            type: widget.floatButtonType ?? NavigationType.h5PromotionDownload,
+          ),
         );
       },
     );

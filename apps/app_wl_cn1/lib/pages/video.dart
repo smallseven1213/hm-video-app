@@ -11,11 +11,11 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
 import 'package:shared/widgets/video/purchase_block.dart';
+import '../config/colors.dart';
+import '../localization/i18n.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
-import '../config/colors.dart';
-import 'package:app_wl_cn1/widgets/general_shortcard/flash_loading.dart';
 
 final userApi = UserApi();
 
@@ -56,10 +56,11 @@ class VideoState extends State<Video> {
               showConfirmDialog: () {
                 showConfirmDialog(
                   context: context,
-                  message: '請先登入後觀看。',
-                  cancelButtonText: '返回',
+                  message: I18n.plsLoginToWatch,
+                  cancelButtonText: I18n.back,
                   barrierDismissible: false,
-                  onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
+                  onConfirm: () =>
+                      MyRouteDelegate.of(context).push(AppRoutes.login),
                   onCancel: () => MyRouteDelegate.of(context).popToHome(),
                 );
               },
@@ -75,7 +76,8 @@ class VideoState extends State<Video> {
                       aspectRatio: 16 / 9,
                       child: Container(
                         color: Colors.black,
-                        child: VideoLoading(coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                        child: VideoLoading(
+                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
                       ),
                     ),
                     child: (isReady, controller) {
@@ -86,10 +88,6 @@ class VideoState extends State<Video> {
                         tag: videoUrl,
                         showConfirmDialog: showConfirmDialog,
                         themeColor: AppColors.colors[ColorKeys.secondary],
-                        buildLoadingWidget: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          loadingAnimation: const FlashLoading(),
-                        ),
                       );
                     },
                   ),

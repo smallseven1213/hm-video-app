@@ -1,8 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../controllers/system_config_controller.dart';
 import '../models/payment.dart';
 import '../utils/fetcher.dart';
+
+enum deviceType {
+  none,
+  web,
+  ios,
+  android,
+}
 
 class PaymentApi {
   static final PaymentApi _instance = PaymentApi._internal();
@@ -22,7 +30,8 @@ class PaymentApi {
 // deviceType=2 代表是app端 3代表是web端
   Future<List<Payment>> getPaymentsBy(int productId) async {
     var res = await fetcher(
-        url: '$apiPrefix/channel/list?productId=$productId&deviceType=2');
+        url:
+            '$apiHost/api/v1/payment-channel?productId=$productId&deviceType=${kIsWeb ? deviceType.web.index : deviceType.android.index}');
     if (res.data['code'] != '00') {
       return [];
     }

@@ -8,6 +8,7 @@ import 'package:shared/modules/videos/actor_hotest_videos_consumer.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import '../localization/i18n.dart';
 import '../screens/actor/card.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
@@ -142,7 +143,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['最新', '最热'],
+      tabs: [I18n.latest, I18n.hot],
     );
   }
 

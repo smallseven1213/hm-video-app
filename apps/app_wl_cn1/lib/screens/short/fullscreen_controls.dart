@@ -24,7 +24,7 @@ class FullScreenControls extends StatefulWidget {
 class ControlsOverlayState extends State<FullScreenControls> {
   bool hasH5FirstPlay = kIsWeb ? false : true;
   bool isForward = false;
-  bool isScrolling = false; // 正在拖动影片
+  bool isScrolling = false; // 正在拖動影片
 
   Widget playPauseButton(videoPlayerInfo) {
     return GestureDetector(
@@ -192,15 +192,15 @@ class ControlsOverlayState extends State<FullScreenControls> {
                       style: const TextStyle(color: Colors.white),
                     ),
                     Expanded(
-                      // 使用Expanded让SliderTheme填充剩余的空间
+                      // 使用Expanded讓SliderTheme填充剩餘的空間
                       child: SliderTheme(
                         data: SliderThemeData(
                           // trackShape: CustomTrackShape(),
-                          trackHeight: 4.0, // 这可以设定滑块轨道的高度
+                          trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                           thumbShape: TransparentSliderThumbShape(),
-                          activeTrackColor: Colors.blue, // 滑块左边（或上面）的部分的颜色
+                          activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
                           inactiveTrackColor:
-                              Colors.blue.withOpacity(0.3), // 滑块右边（或下面）的部分的颜色
+                              Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
                           overlayShape:
                               const RoundSliderOverlayShape(overlayRadius: 0.0),
                         ),

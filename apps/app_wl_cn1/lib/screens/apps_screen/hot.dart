@@ -22,8 +22,8 @@ class HotWidget extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            int start = index * 4; // 每一行开始的索引
-            int end = min(start + 4, items.length); // 每一行结束的索引
+            int start = index * 4; // 每一行開始的索引
+            int end = min(start + 4, items.length); // 每一行結束的索引
             return Padding(
               padding: EdgeInsets.only(
                   bottom: index == (items.length ~/ 4) - 1 ? 10 : 0),
@@ -31,13 +31,13 @@ class HotWidget extends StatelessWidget {
                 height: 90,
                 child: Row(
                   mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly, // 每一行物件之间的间距
+                      MainAxisAlignment.spaceEvenly, // 每一行物件之間的間距
                   children: List.generate(
-                    4, // 生成五个物件，包括占位符
+                    4, // 生成五個物件，包括占位符
                     (i) {
-                      int itemIndex = start + i; // 计算当前物件的索引
+                      int itemIndex = start + i; // 計算當前物件的索引
                       if (itemIndex < end) {
-                        // 如果当前索引在资料范围内，则显示相应的物件
+                        // 如果當前索引在資料範圍內，則顯示相應的物件
                         return Expanded(
                           child: AppsItemButton(
                             id: items[itemIndex].id,
@@ -67,7 +67,7 @@ class HotWidget extends StatelessWidget {
                           ),
                         );
                       } else {
-                        // 如果当前索引超出资料范围，则显示占位符
+                        // 如果當前索引超出資料範圍，則顯示占位符
                         return const Expanded(child: SizedBox.shrink());
                       }
                     },
@@ -76,7 +76,7 @@ class HotWidget extends StatelessWidget {
               ),
             );
           },
-          childCount: (items.length / 4).ceil(), // 每一行4个物件，因此总行数为物件数除以4然后向上取整
+          childCount: (items.length / 4).ceil(), // 每一行4個物件，因此總行數為物件數除以4然後向上取整
         ),
       ),
     );

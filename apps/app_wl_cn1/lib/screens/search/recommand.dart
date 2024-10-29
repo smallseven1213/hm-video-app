@@ -5,6 +5,7 @@ import 'package:shared/controllers/tag_popular_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/video_preview.dart';
 import '../main_screen/block_header.dart';
 import 'tag_item.dart';
@@ -50,7 +51,7 @@ class RecommandScreenState extends State<RecommandScreen> {
           }
           return SliverToBoxAdapter(
             child: BlockHeader(
-                text: '搜索纪录',
+                text: I18n.searchRecord,
                 // moreButton is a Button from Image AssetImage
                 moreButton: GestureDetector(
                   onTap: () {
@@ -77,8 +78,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
-                    spacing: 8, // 标签之间的水平间距
-                    runSpacing: 8, // 标签之间的垂直间距
+                    spacing: 8, // 標籤之間的水平間距
+                    runSpacing: 8, // 標籤之間的垂直間距
                     children: userSearchHistoryController.searchHistory
                         .map((keyword) => TagItem(
                             tag: '#$keyword',
@@ -93,18 +94,16 @@ class RecommandScreenState extends State<RecommandScreen> {
             ),
           );
         }),
-        const SliverToBoxAdapter(
-          child: BlockHeader(
-            text: '搜索推荐',
-          ),
+        SliverToBoxAdapter(
+          child: BlockHeader(text: I18n.searchRecommendation),
         ),
         Obx(() => SliverList(
               delegate: SliverChildListDelegate([
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
-                    spacing: 8, // 标签之间的水平间距
-                    runSpacing: 8, // 标签之间的垂直间距
+                    spacing: 8, // 標籤之間的水平間距
+                    runSpacing: 8, // 標籤之間的垂直間距
                     children: tagPopularController.data
                         .map((tag) => TagItem(
                             tag: '#${tag.name}',
@@ -122,10 +121,8 @@ class RecommandScreenState extends State<RecommandScreen> {
             height: 20,
           ),
         ),
-        const SliverToBoxAdapter(
-          child: BlockHeader(
-            text: '热门推荐',
-          ),
+        SliverToBoxAdapter(
+          child: BlockHeader(text: I18n.popularRecommendation),
         ),
         const SliverToBoxAdapter(
           child: SizedBox(

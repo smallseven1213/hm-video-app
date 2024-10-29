@@ -7,6 +7,8 @@ import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/i18n.dart';
+
 class CustomButton extends StatefulWidget {
   final String text;
   final Widget? icon;
@@ -123,7 +125,7 @@ class VideoBlockFooter extends StatelessWidget {
             if (block.isCheckMore == true)
               Expanded(
                 child: CustomButton(
-                  text: '进入橱窗',
+                  text: I18n.viewAll,
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
                   buttonTextColor:
                       AppColors.colors[ColorKeys.buttonTextPrimary],
@@ -162,7 +164,7 @@ class VideoBlockFooter extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: '换一批',
+                  text: I18n.refreshBatch,
                   animate: true,
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgCancel],
                   buttonTextColor: AppColors.colors[ColorKeys.buttonTextCancel],

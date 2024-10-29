@@ -16,6 +16,7 @@ import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_wl_tw2/widgets/button.dart';
 import 'package:app_wl_tw2/widgets/reload_button.dart';
 import 'package:app_wl_tw2/widgets/video_list_loading_text.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
@@ -133,9 +134,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                           )
                                         }
                                     },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
+                                child: Text(
+                                  I18n.moreOptions,
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
@@ -159,7 +160,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       loadingWidget: const VideoListLoadingText(),
-                      loadingText: Text('內容已更新',
+                      loadingText: Text(I18n.contentUpdated,
                           style: TextStyle(
                             fontSize: 13,
                             color: AppColors.colors[ColorKeys.textSecondary],
@@ -199,7 +200,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                       height: 38,
                                       width: 183,
                                       child: Button(
-                                        text: '探索更多內容',
+                                        text: I18n.discover,
                                         onPressed: () {
                                           MyRouteDelegate.of(context)
                                               .push(AppRoutes.filter);

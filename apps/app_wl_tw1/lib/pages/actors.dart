@@ -11,6 +11,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/i18n.dart';
 import '../screens/actors/tabbar.dart';
 import '../widgets/circle_sidimage_text_item.dart';
 import '../widgets/no_data.dart';
@@ -98,8 +99,8 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '全部女優',
+      appBar: CustomAppBar(
+        title: I18n.allFemaleActors,
       ),
       body: Column(
         children: [
@@ -112,7 +113,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: I18n.inputName,
                     backgroundColor:
                         AppColors.colors[ColorKeys.formBg] as Color,
                     onSubmitted: (val) {
@@ -131,7 +132,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Center(
                         child: Text(
-                          '排序',
+                          I18n.sort,
                           style: TextStyle(
                               fontSize: 12,
                               color: AppColors.colors[ColorKeys.textPrimary]),
@@ -142,8 +143,8 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(0, '視頻'),
-                          _buildCustomRadioButton(1, '人氣'),
+                          _buildCustomRadioButton(0, I18n.video),
+                          _buildCustomRadioButton(1, I18n.popularity),
                         ],
                       ),
                     )

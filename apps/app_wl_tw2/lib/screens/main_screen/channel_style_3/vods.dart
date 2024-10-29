@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channe_block_vod_controller.dart';
 import 'package:shared/widgets/base_video_block_template.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/no_data.dart';
@@ -114,7 +115,7 @@ class VodsState extends State<Vods> {
           },
           loadingWidget: const VideoListLoadingText(),
           loadingText: Text(
-            '內容已更新',
+            I18n.contentUpdated,
             style: TextStyle(
               fontSize: 13,
               color: AppColors.colors[ColorKeys.textSecondary],

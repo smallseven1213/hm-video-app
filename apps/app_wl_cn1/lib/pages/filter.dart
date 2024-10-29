@@ -3,6 +3,7 @@ import 'package:app_wl_cn1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
+import '../localization/i18n.dart';
 
 import '../screens/filter/short.dart';
 import '../screens/filter/video.dart';
@@ -25,10 +26,10 @@ class FilterScrollViewState extends State<FilterPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
 
-    // 监听tab滑动
+    // 監聽tab滑動
     _tabController.animation!.addListener(() {
       if (_tabController.animation!.value % 1 != 0) {
-        // 如果动画值不是整数，表示滑动正在进行中
+        // 如果動畫值不是整數，表示滑動正在進行中
         filterScreenController.handleOption(showTab: true, openOption: false);
       }
     });
@@ -36,7 +37,7 @@ class FilterScrollViewState extends State<FilterPage>
 
   @override
   void dispose() {
-    _tabController.animation!.removeListener(() {}); // 别忘了在 dispose 中移除监听器
+    _tabController.animation!.removeListener(() {}); // 別忘了在 dispose 中移除監聽器
     _tabController.dispose();
     super.dispose();
   }
@@ -46,10 +47,11 @@ class FilterScrollViewState extends State<FilterPage>
     return Obx(() {
       return Scaffold(
         appBar: CustomAppBar(
-          title: '筛选',
+          title: I18n.filter,
           bottom: filterScreenController.showTabBar.value
               ? TabBarWidget(
-                  tabs: const ['长视频', '短视频'], controller: _tabController)
+                  tabs: [I18n.longVideo, I18n.shortVideo],
+                  controller: _tabController)
               : null,
         ),
         body: TabBarView(

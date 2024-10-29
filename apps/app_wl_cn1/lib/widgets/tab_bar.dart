@@ -18,20 +18,20 @@ Widget _buildDot() {
 
 class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<String> tabs;
-  final Color? backgroundColor;
   final TabController? controller;
   final EdgeInsetsGeometry? padding;
   final Function(int)? onTabChange;
   final List<int> dotIndexes;
+  final Color? bgColor;
 
   const TabBarWidget({
     Key? key,
     required this.tabs,
-    this.backgroundColor,
     this.onTabChange,
     this.controller,
     this.padding,
     this.dotIndexes = const [],
+    this.bgColor,
   }) : super(key: key);
 
   @override
@@ -67,7 +67,7 @@ class TabBarWidgetState extends State<TabBarWidget> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        color: widget.backgroundColor ?? AppColors.colors[ColorKeys.tabBgColor],
+        color: widget.bgColor ?? AppColors.colors[ColorKeys.tabBgColor],
         padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 15),
         child: Align(
           child: TabBar(
