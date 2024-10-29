@@ -24,8 +24,13 @@ class OrderConfirmPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0,60,0,30),
+              child:
+                  Image(image: AssetImage('assets/images/icon-prosessing.png')),
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 60),
+              padding: const EdgeInsets.symmetric(vertical: 30),
               child: Text(
                 I18n.orderCreatedPaymentPending,
                 style: Theme.of(context).textTheme.headlineSmall,
