@@ -18,24 +18,27 @@
 
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-    <meta name="description" content="SV传媒 打开你的影音新世界" />
+    <meta name="description" content="夜色传媒 打开你的影音新世界" />
 
     <!-- iOS meta tags & icons -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="apple-mobile-web-app-title" content="app_wl_cn1" />
 
-    <meta property="og:title" content="SV传媒" />
-    <meta property="og:description" content="SV传媒 打开你的影音新世界" />
+    <meta property="og:title" content="夜色传媒" />
+    <meta property="og:description" content="夜色传媒 打开你的影音新世界" />
 
     <meta name="theme-color" content="#000000" />
     <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.ico" />
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-    <title>SV传媒 打开你的影音新世界</title>
+    <title>夜色传媒 打开你的影音新世界</title>
     <link rel="manifest" href="manifest.json" />
     <script>
       // The value below is injected by flutter build, do not touch.
@@ -76,17 +79,9 @@
   </head>
   <body>
     <script>
-      window.addEventListener('load', function (ev) {
-        {
-          {
-            flutter_js
-          }
-        }
-        {
-          {
-            flutter_build_config
-          }
-        }
+      window.addEventListener("load", function (ev) {
+        {{flutter_js}}
+        {{flutter_build_config}}
         // Download main.dart.js
         _flutter.loader.load({
           serviceWorker: {
@@ -101,7 +96,8 @@
                 appRunner.runApp()
                 setTimeout(function () {
                   //  隐藏 SplashScreen
-                  document.querySelector('.splash-screen img').style.display = 'none'
+                  document.querySelector('.splash-screen img').style.display =
+                    'none'
                   document.querySelector('.splash-screen').style.zIndex = -1
                 }, 500)
               })
