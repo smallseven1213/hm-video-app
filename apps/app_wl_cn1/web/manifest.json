@@ -1,11 +1,11 @@
 {
-    "name": "SV传媒",
-    "short_name": "SV传媒",
+    "name": "夜色传媒",
+    "short_name": "夜色传媒",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "SV传媒 打开你的影音新世界",
+    "description": "夜色传媒 打开你的影音新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

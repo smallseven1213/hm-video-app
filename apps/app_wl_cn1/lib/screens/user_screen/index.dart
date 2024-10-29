@@ -98,7 +98,7 @@ class UserScreenState extends State<UserScreen> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      'I18n.versionNumber:${systemConfigController.version.value}',
+                      '${I18n.versionNumber}:${systemConfigController.version.value}',
                       style: TextStyle(
                           color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),

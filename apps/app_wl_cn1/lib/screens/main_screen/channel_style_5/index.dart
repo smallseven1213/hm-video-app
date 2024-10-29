@@ -212,7 +212,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                   fontSize: 11),
                                                             ),
                                                           Text(
-                                                              'I18n.popularity:${data.supplier.followTimes}',
+                                                              '${I18n.popularity}:${data.supplier.followTimes}',
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
