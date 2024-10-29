@@ -109,11 +109,16 @@ class _FloatingButtonState extends State<FloatingButton> {
   }
 
   Widget _buildFabWithCloseButton() {
-    return Stack(
-      children: [
-        _buildMainFab(),
-        _buildCloseButton(),
-      ],
+    return SizedBox(
+      height: 100,
+      width: 70,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          _buildMainFab(),
+          _buildCloseButton(),
+        ],
+      ),
     );
   }
 
@@ -127,9 +132,8 @@ class _FloatingButtonState extends State<FloatingButton> {
         child: SidImage(
           key: ValueKey(_fabLinkData!.id),
           sid: _fabLinkData!.photoSid!,
-          width: 45,
-          height: 45,
-          fit: BoxFit.cover,
+          width: 65,
+          fit: BoxFit.contain,
         ),
       ),
     );
@@ -138,7 +142,7 @@ class _FloatingButtonState extends State<FloatingButton> {
   Widget _buildCloseButton() {
     return Positioned(
       right: 0,
-      top: 0,
+      top: 10,
       child: GestureDetector(
         onTap: _hideFab,
         child: Container(
