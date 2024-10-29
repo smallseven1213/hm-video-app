@@ -152,7 +152,7 @@ class OrderRecordState extends State<OrderRecord> {
                                       ),
                                     ),
                                     Text(
-                                      '\$ ${record.orderAmount}',
+                                      '\$ ${record.amount}',
                                       style:
                                           Theme.of(context).textTheme.bodySmall,
                                     ),

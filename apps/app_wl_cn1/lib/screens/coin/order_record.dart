@@ -153,7 +153,7 @@ class OrderRecordState extends State<OrderRecord> {
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
-                                          '金額 : ${record.orderAmount}',
+                                          '金額 : ${record.amount}',
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,

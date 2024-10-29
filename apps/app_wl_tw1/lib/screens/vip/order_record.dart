@@ -284,7 +284,7 @@ class OrderRecordState extends State<OrderRecord> {
                                         height: 8,
                                       ),
                                       Text(
-                                        '${I18n.amount}${record.orderAmount}',
+                                        '${I18n.amount}${record.amount}',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
