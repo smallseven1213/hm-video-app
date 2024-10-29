@@ -178,7 +178,7 @@ class OrderRecordState extends State<OrderRecord> {
                                       ],
                                     ),
                                     StatusLabel(
-                                      status: record.paymentStatus ?? 0,
+                                      status: record.status ?? 0,
                                     ),
                                   ],
                                 ),

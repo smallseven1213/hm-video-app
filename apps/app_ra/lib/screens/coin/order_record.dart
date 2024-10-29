@@ -169,7 +169,7 @@ class OrderRecordState extends State<OrderRecord> {
                                   ],
                                 ),
                                 Text(
-                                  record.paymentStatus == 0 ? '成功' : '失敗',
+                                  record.status == 0 ? '成功' : '失敗',
                                   style:
                                       Theme.of(context).textTheme.headlineLarge,
                                 ),
