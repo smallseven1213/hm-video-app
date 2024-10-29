@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:app_wl_tw2/config/colors.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import 'option_button.dart';
 import 'options.dart';
@@ -67,7 +68,7 @@ class FilterBarState extends State<FilterBar> {
 
   Widget _buildClosed() {
     List<Widget> childrenWithSpacing = [
-      OptionButton(isSelected: true, name: widget.film == 1 ? '長視頻' : '短視頻'),
+      OptionButton(isSelected: true, name: widget.film == 1 ? I18n.longVideo : I18n.shortVideo),
       const SizedBox(width: 10),
     ];
     List<Widget> children = widget.selectedOptions.entries

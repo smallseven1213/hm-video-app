@@ -8,6 +8,7 @@ import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../../widgets/actor_avatar.dart';
 import '../../../widgets/video_preview.dart';
@@ -64,16 +65,16 @@ class ChannelStyle4 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: BlockHeader(
-                            text: '人氣女優',
+                            text: I18n.popularFemaleActors,
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
                                         AppRoutes.actors,
                                       )
                                     },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
+                                child: Text(
+                                  I18n.moreOptions,
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
@@ -187,7 +188,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                                   fontSize:
                                                                       14)),
                                                           Text(
-                                                              '人氣:${data.actor.collectTimes}',
+                                                              '${I18n.popularity}:${data.actor.collectTimes}',
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
@@ -218,7 +219,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                                   .only(
                                                                   top: 18),
                                                           child: Text(
-                                                            '查看全部',
+                                                            I18n.viewAll,
                                                             style: TextStyle(
                                                                 color: AppColors
                                                                         .colors[
@@ -309,7 +310,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.actor.containVideos}部影片',
+                                                    '${data.actor.containVideos}${I18n.numberOfVideos}',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),

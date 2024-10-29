@@ -3,6 +3,7 @@ import 'package:shared/utils/purchase.dart';
 import 'package:app_wl_tw2/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -58,22 +59,22 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       ),
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Row(
                               children: [
-                                Image(
+                                const Image(
                                   image: AssetImage(
                                       'assets/images/purchase/icon-vip.webp'),
                                   width: 20,
                                   height: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '開通 VIP 無限看片',
-                                    style: TextStyle(
+                                    I18n.activateVipForFree,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
@@ -95,9 +96,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 borderRadius: BorderRadius.circular(32.0),
                                 border: Border.all(color: Colors.white),
                               ),
-                              child: const Text(
-                                '查看詳情',
-                                style: TextStyle(
+                              child: Text(
+                                I18n.viewDetails,
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -147,7 +148,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        '看不過癮，${widget.videoDetail.buyPoint}金幣解鎖',
+                                        '${I18n.wantToWatch}${widget.videoDetail.buyPoint}${I18n.coinsUnlock}',
                                         style: const TextStyle(
                                           color: Color(0xff644c14),
                                         ),
@@ -157,17 +158,19 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(context,
-                                    type: PurchaseType.video,
-                                    id: int.parse(widget.id.toString()),
-                                    onSuccess: () {
-                                  final videoDetailController =
-                                      Get.find<VideoDetailController>(
-                                          tag: widget.tag);
-                                  videoDetailController.mutateAll();
-                                  videoPlayerInfo.videoPlayerController?.play();
-                                },
-                                showConfirmDialog: showConfirmDialog,
+                                onTap: () => purchase(
+                                  context,
+                                  type: PurchaseType.video,
+                                  id: int.parse(widget.id.toString()),
+                                  onSuccess: () {
+                                    final videoDetailController =
+                                        Get.find<VideoDetailController>(
+                                            tag: widget.tag);
+                                    videoDetailController.mutateAll();
+                                    videoPlayerInfo.videoPlayerController
+                                        ?.play();
+                                  },
+                                  showConfirmDialog: showConfirmDialog,
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
@@ -181,9 +184,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     borderRadius: BorderRadius.circular(32.0),
                                     border: Border.all(color: Colors.white),
                                   ),
-                                  child: const Text(
-                                    '立即解鎖',
-                                    style: TextStyle(
+                                  child: Text(
+                                    I18n.unlockNow,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),

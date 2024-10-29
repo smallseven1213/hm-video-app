@@ -4,6 +4,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/redemption_api.dart';
 import 'package:shared/controllers/redemption_controller.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
+
 import '../config/colors.dart';
 import '../screens/redemption/auth_text_field.dart';
 import '../widgets/button.dart';
@@ -56,8 +58,8 @@ class RedemptionPageState extends State<RedemptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
-          title: '序號兌換',
+        appBar: CustomAppBar(
+          title: I18n.serialNumberExchange,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +81,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                         child: AuthTextField(
                           label: "",
                           controller: _controller!,
-                          placeholderText: '請輸入序號',
+                          placeholderText: I18n.enterSerialNumber,
                         ),
                       ),
                     ),
@@ -88,7 +90,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                     width: 80,
                     child: Button(
                       onPressed: () => _redeemRequest(),
-                      text: '兌換',
+                      text: I18n.exchange,
                       size: 'small',
                     ),
                   ),
@@ -99,7 +101,7 @@ class RedemptionPageState extends State<RedemptionPage> {
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
-                '兌換記錄',
+                I18n.redeemRecord,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 14,
@@ -115,7 +117,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '兌換名稱',
+                    I18n.redeemName,
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.colors[ColorKeys.tabBarTextColor],
@@ -123,7 +125,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    '兌換時間',
+                    I18n.redeemTime,
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.colors[ColorKeys.tabBarTextColor],

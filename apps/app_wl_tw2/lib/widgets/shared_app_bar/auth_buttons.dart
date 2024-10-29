@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class AuthButtons extends StatelessWidget {
   const AuthButtons({super.key});
@@ -20,8 +21,8 @@ class AuthButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               color: const Color(0xFF082C68),
             ),
-            child: const Text('登入',
-                style: TextStyle(color: Color(0xffb2bac5), fontSize: 12)),
+            child: Text(I18n.login,
+                style: const TextStyle(color: Color(0xffb2bac5), fontSize: 12)),
           ),
         ),
         const SizedBox(width: 8),
@@ -34,8 +35,8 @@ class AuthButtons extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 color: const Color(0xFF6874b6)),
-            child: const Text('註冊',
-                style: TextStyle(color: Colors.white, fontSize: 12)),
+            child: Text(I18n.signup,
+                style: const TextStyle(color: Colors.white, fontSize: 12)),
           ),
         ),
         const SizedBox(width: 10),

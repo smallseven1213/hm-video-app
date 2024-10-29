@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/button.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/no_data.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class NoDataScreen extends StatelessWidget {
   final bool showBackButton;
@@ -28,7 +29,7 @@ class NoDataScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 30),
                 child: Button(
                   onPressed: () => Navigator.of(context).pop(),
-                  text: '返回',
+                  text: I18n.back,
                 ),
               ),
           ],

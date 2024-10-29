@@ -5,6 +5,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/enums/play_record_type.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../screens/playrecord/short.dart';
 import '../screens/playrecord/video.dart';
@@ -87,19 +88,22 @@ class PlayRecordPageState extends State<PlayRecordPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '我的足跡',
+        title: I18n.browseHistory,
         actions: [
           Obx(() => TextButton(
               onPressed: () {
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? '取消' : '編輯',
+                listEditorController.isEditing.value
+                    ? I18n.cancel
+                    : I18n.editTranslation,
                 style: const TextStyle(color: Colors.white),
               )))
         ],
         bottom: TabBarWidget(
-            tabs: const ['長視頻', '短視頻'], controller: _tabController),
+            tabs: [I18n.longVideo, I18n.shortVideo],
+            controller: _tabController),
       ),
       body: Stack(
         children: [

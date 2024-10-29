@@ -8,6 +8,7 @@ import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 
 import 'package:app_wl_tw2/config/colors.dart';
 import 'package:app_wl_tw2/widgets/id_card.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
@@ -33,8 +34,8 @@ class UserScreenState extends State<UserScreen> {
         onAccountProtectionShownH5: () {
           showConfirmDialog(
             context: context,
-            title: '提示',
-            message: '為保持您的帳號，請先註冊防止丟失',
+            title: I18n.hintMessage,
+            message: I18n.maintainAccountPleaseRegisterToPreventLoss,
             showCancelButton: false,
             onConfirm: () => {},
           );
@@ -95,8 +96,8 @@ class UserScreenState extends State<UserScreen> {
                   height: 20,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: Header(text: '更多服務'),
+              SliverToBoxAdapter(
+                child: Header(text: I18n.moreServices),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -111,7 +112,7 @@ class UserScreenState extends State<UserScreen> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '版本號:${systemConfigController.version.value}',
+                      '${I18n.versionNumber}:${systemConfigController.version.value}',
                       style: TextStyle(
                           color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),

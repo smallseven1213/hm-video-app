@@ -7,6 +7,7 @@ import 'package:app_wl_tw2/config/colors.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 
@@ -49,8 +50,8 @@ class _ScanQRViewState extends State<ScanQRView> {
         if (mounted) {
           showConfirmDialog(
               context: context,
-              title: '提示',
-              message: '登入成功',
+              title: I18n.hintMessage,
+              message: I18n.loginSuccess,
               showCancelButton: false,
               onConfirm: () {
                 Navigator.of(context).pop();
@@ -60,8 +61,8 @@ class _ScanQRViewState extends State<ScanQRView> {
         if (mounted) {
           showConfirmDialog(
               context: context,
-              title: '提示',
-              message: '登入失敗，用戶不存在。',
+              title: I18n.hintMessage,
+              message: I18n.loginFailedUserDoesNotExist,
               showCancelButton: false,
               onConfirm: () {
                 controller.resumeCamera();

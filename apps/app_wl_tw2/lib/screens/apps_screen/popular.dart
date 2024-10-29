@@ -5,6 +5,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 class PopularWidget extends StatelessWidget {
   final List<Ads> items;
@@ -89,10 +90,10 @@ class PopularWidget extends StatelessWidget {
                             color: AppColors.colors[ColorKeys.buttonBgPrimary],
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(4))),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            '下載',
-                            style: TextStyle(
+                            I18n.downloadFile,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                             ),

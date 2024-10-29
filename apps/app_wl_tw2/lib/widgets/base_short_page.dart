@@ -11,15 +11,16 @@ import 'package:uuid/uuid.dart';
 import '../screens/nodata/index.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
+import 'package:app_wl_tw2/localization/i18n.dart';
 
 final List<String> loadingTextList = [
-  '檔案很大，你忍一下',
-  '還沒準備好，你先悠著來',
-  '精彩即將呈現',
-  '努力加載中',
-  '讓檔案載一會兒',
-  '美好事物，值得等待',
-  '拼命搬磚中',
+  I18n.itsABigFile,
+  I18n.itsNotReadyYet,
+  I18n.itsAboutToHappen,
+  I18n.weAreTryingToLoadT,
+  I18n.letTheFileLoadForAWhile,
+  I18n.itsWorthWatingForTheGoodStuff,
+  I18n.tryingToMoveBricks,
 ];
 
 class RefreshIndicatorWidget extends StatefulWidget {
