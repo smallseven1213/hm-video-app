@@ -4,16 +4,18 @@ import 'dart:math';
 
 import 'package:shared/models/color_keys.dart';
 
+import '../localization/i18n.dart';
+
 class ListNoMore extends StatelessWidget {
   ListNoMore({Key? key}) : super(key: key);
 
   // 定义可能的文字
   final List<String> messages = [
-    '顶到底了',
-    '太深了客倌',
-    '慢慢看，别这么挑',
-    '花心已抵达',
-    '确认过眼神，您是同道中人'
+    I18n.theTopIsDown,
+    I18n.itsTooDeepMaam,
+    I18n.takeYourTimeDontBeSoPicky,
+    I18n.iveReachedTheCenterOfMyHeart,
+    I18n.imSureYourAreTheSameKindOfMe
   ];
 
   @override

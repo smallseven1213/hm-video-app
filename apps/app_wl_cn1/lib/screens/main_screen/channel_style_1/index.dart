@@ -17,6 +17,7 @@ import 'package:app_wl_cn1/widgets/button.dart';
 import 'package:app_wl_cn1/widgets/reload_button.dart';
 import 'package:app_wl_cn1/widgets/video_list_loading_text.dart';
 
+import '../../../localization/i18n.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_skelton.dart';
@@ -133,7 +134,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                         }
                                     },
                                 child: const Text(
-                                  '更多 >',
+                                  'I18n.more >',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
@@ -158,7 +159,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       loadingWidget: const VideoListLoadingText(),
-                      loadingText: Text('内容已更新',
+                      loadingText: Text(I18n.contentUpdated,
                           style: TextStyle(
                             fontSize: 13,
                             color: AppColors.colors[ColorKeys.textSecondary],
@@ -189,7 +190,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                   const Positioned.fill(
                                     child: Image(
                                       image: AssetImage(
-                                          'assets/images/channel_more_button.png'),
+                                          'assets/images/channel_more_button.webp'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -198,7 +199,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                       height: 38,
                                       width: 183,
                                       child: Button(
-                                        text: '探索更多内容',
+                                        text: I18n.discover,
                                         onPressed: () {
                                           MyRouteDelegate.of(context)
                                               .push(AppRoutes.filter);

@@ -1,6 +1,8 @@
 import 'package:app_wl_cn1/widgets/custom_app_bar.dart';
+import 'package:app_wl_cn1/widgets/sliver_post_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -25,9 +27,9 @@ class TagPage extends StatefulWidget {
 }
 
 class TagPageState extends State<TagPage> {
-  // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final TagVodController vodController;
+  late final ChannelPostController postController;
 
   @override
   void initState() {
@@ -36,11 +38,17 @@ class TagPageState extends State<TagPage> {
       tagId: widget.id,
       scrollController: scrollController,
     );
+    postController = ChannelPostController(
+      tagId: widget.id,
+      scrollController: scrollController,
+      limit: 10,
+    );
   }
 
   @override
   void dispose() {
     vodController.dispose();
+    postController.dispose();
     if (scrollController.hasClients) {
       scrollController.dispose();
     }
@@ -53,31 +61,46 @@ class TagPageState extends State<TagPage> {
       appBar: CustomAppBar(
         title: '#${widget.title}',
       ),
-      body: Obx(() {
-        if (widget.film == 2) {
-          return SliverVodGrid(
-              isListEmpty: vodController.isListEmpty.value,
-              displayVideoFavoriteTimes: false,
-              videos: vodController.vodList.value,
-              displayNoMoreData: vodController.displayNoMoreData.value,
-              displayLoading: vodController.displayLoading.value,
-              noMoreWidget: ListNoMore(),
-              displayCoverVertical: true,
-              onOverrideRedirectTap: (id) {
-                MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-                    args: {'itemId': 3, 'videoId': id});
-              });
-        }
-        return SliverVodGrid(
-          isListEmpty: vodController.isListEmpty.value,
-          displayVideoFavoriteTimes: false,
-          videos: vodController.vodList.value,
-          displayNoMoreData: vodController.displayNoMoreData.value,
-          displayLoading: vodController.displayLoading.value,
-          noMoreWidget: ListNoMore(),
-          customScrollController: vodController.scrollController,
-        );
-      }),
+      body: widget.film == 3
+          ? Obx(() => SliverPostGrid(
+                posts: postController.postList,
+                isError: postController.isError.value,
+                isListEmpty: postController.isListEmpty.value,
+                displayLoading: postController.displayLoading.value,
+                displayNoMoreData: postController.displayNoMoreData.value,
+                onReload: postController.pullToRefresh,
+                onScrollEnd: postController.loadMoreData,
+                customScrollController: scrollController,
+                vertical: false,
+              ))
+          : Obx(
+              () {
+                if (widget.film == 2) {
+                  return SliverVodGrid(
+                      isListEmpty: vodController.isListEmpty.value,
+                      displayVideoFavoriteTimes: false,
+                      videos: vodController.vodList.value,
+                      displayNoMoreData: vodController.displayNoMoreData.value,
+                      displayLoading: vodController.displayLoading.value,
+                      noMoreWidget: ListNoMore(),
+                      displayCoverVertical: true,
+                      onOverrideRedirectTap: (id) {
+                        MyRouteDelegate.of(context).push(
+                            AppRoutes.shortsByLocal,
+                            args: {'itemId': 3, 'videoId': id});
+                      });
+                }
+                return SliverVodGrid(
+                  isListEmpty: vodController.isListEmpty.value,
+                  displayVideoFavoriteTimes: false,
+                  videos: vodController.vodList.value,
+                  displayNoMoreData: vodController.displayNoMoreData.value,
+                  displayLoading: vodController.displayLoading.value,
+                  noMoreWidget: ListNoMore(),
+                  customScrollController: vodController.scrollController,
+                );
+              },
+            ),
     );
   }
 }

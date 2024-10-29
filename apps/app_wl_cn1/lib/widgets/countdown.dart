@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../localization/i18n.dart';
+
 class Countdown extends StatefulWidget {
   final int countdownSeconds;
   const Countdown({Key? key, required this.countdownSeconds}) : super(key: key);
@@ -37,7 +39,7 @@ class CountdownState extends State<Countdown>
             borderRadius: BorderRadius.circular(60),
           ),
           child: Text(
-            widget.countdownSeconds == 0 ? '进入' : '${widget.countdownSeconds}S',
+            widget.countdownSeconds == 0 ? I18n.enter : '${widget.countdownSeconds}S',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,

@@ -10,6 +10,7 @@ import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.da
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../localization/i18n.dart';
 import '../../../widgets/actor_avatar.dart';
 import '../../../widgets/video_preview.dart';
 import '../block_header.dart';
@@ -64,16 +65,16 @@ class ChannelStyle5 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: BlockHeader(
-                            text: '精选UP主',
+                            text: I18n.selectedUp,
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
                                         AppRoutes.suppliers,
                                       )
                                     },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
+                                child: Text(
+                                  '${I18n.more} >',
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
@@ -199,18 +200,19 @@ class ChannelStyle5 extends StatelessWidget {
                                                               data.supplier
                                                                       .description ??
                                                                   '',
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
                                                                       ColorKeys
                                                                           .textPrimary],
                                                                   fontSize: 11),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
                                                             ),
                                                           Text(
-                                                              '人气:${data.supplier.followTimes}',
+                                                              'I18n.popularity:${data.supplier.followTimes}',
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
@@ -239,7 +241,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                   .only(
                                                                   top: 18),
                                                           child: Text(
-                                                            '查看全部',
+                                                            I18n.viewAll,
                                                             style: TextStyle(
                                                               color: AppColors
                                                                       .colors[
@@ -305,6 +307,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                             timeLength:
                                                                 vod.timeLength!,
                                                             tags: vod.tags!,
+                                                            hasTags: false,
                                                             videoViewTimes: vod
                                                                 .videoViewTimes!,
                                                             videoFavoriteTimes:
@@ -348,7 +351,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.supplier.containVideos}部影片',
+                                                    '${data.supplier.containVideos}I18n.numberOfVideos',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),

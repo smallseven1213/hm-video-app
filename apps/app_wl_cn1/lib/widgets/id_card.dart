@@ -8,6 +8,8 @@ import 'package:shared/widgets/capture_screenshot_button.dart';
 
 import 'package:app_wl_cn1/config/colors.dart';
 
+import '../localization/i18n.dart';
+
 final GlobalKey _globalKey = GlobalKey();
 
 class IDCard extends StatelessWidget {
@@ -74,7 +76,7 @@ class IDCardContentState extends State<IDCardContent> {
             child: Column(
               children: [
                 Text(
-                  '用于找回帐号，请妥善保存，请勿泄露',
+                  I18n.forAccountRetrieval,
                   style: TextStyle(
                     color: AppColors.colors[ColorKeys.textSecondary],
                     fontWeight: FontWeight.w400,
@@ -121,7 +123,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：svav.app',
+                    '${I18n.officialWebsite} k9av.app',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,
@@ -160,13 +162,12 @@ class IDCardContentState extends State<IDCardContent> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      successMessage: '已成功保存身份卡',
+                      successMessage: I18n.identityCardHasBeenSuccessfullySaved,
                       child: Center(
                         child: Text(
-                          '请截图保存',
+                          I18n.pleaseSaveTheScreenshot,
                           style: TextStyle(
-                              color: AppColors
-                                      .colors[ColorKeys.buttonTextSecondary]
+                              color: AppColors.colors[ColorKeys.textSecondary]
                                   as Color),
                         ),
                       ),

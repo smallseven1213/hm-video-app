@@ -8,6 +8,8 @@ import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/app_icon.dart';
 
+import '../../../localization/i18n.dart';
+
 class AppDownloadAd extends StatefulWidget {
   const AppDownloadAd({super.key});
 
@@ -21,7 +23,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
   @override
   void initState() {
     super.initState();
-    controller.recordVideoViews(); // 纪录观看次数
+    controller.recordVideoViews(); // 紀錄觀看次數
   }
 
   @override
@@ -113,18 +115,18 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(8.0)),
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.download,
                                       color: Color(0xffffffff),
                                       size: 16,
                                     ),
                                     Text(
-                                      '立即下载',
-                                      style: TextStyle(
+                                      I18n.immediateDownload,
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Color(0xffffffff),
                                       ),

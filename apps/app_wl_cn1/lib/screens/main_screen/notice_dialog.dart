@@ -15,6 +15,8 @@ import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:shared/apis/user_api.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class NoticeDialog extends StatefulWidget {
@@ -47,7 +49,7 @@ class NoticeDialogState extends State<NoticeDialog> {
         // Navigate to internal route
         List<String> parts = url.split('/');
 
-        // 从列表中获取所需的字串和数字
+        // 從列表中獲取所需的字串和數字
         String path = '/${parts[1]}';
 
         if (parts.length == 3) {
@@ -152,7 +154,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.leftButton ?? '取消',
+                                        text: notice.leftButton ?? I18n.cancel,
                                         type: 'cancel',
                                         onPressed: () => handleUrl(
                                             notice.leftButtonUrl, context),
@@ -163,7 +165,8 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.rightButton ?? '确认',
+                                        text:
+                                            notice.rightButton ?? I18n.confirm,
                                         type: 'primary',
                                         onPressed: () => handleUrl(
                                             notice.rightButtonUrl, context),

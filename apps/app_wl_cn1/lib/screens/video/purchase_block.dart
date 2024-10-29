@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:app_wl_cn1/utils/purchase.dart';
+import 'package:shared/utils/purchase.dart';
+import 'package:app_wl_cn1/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
-
+import 'package:shared/enums/charge_type.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/enums/charge_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
+
+import '../../localization/i18n.dart';
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
-  final String id;
+  final int id;
   final String videoUrl;
   final String tag;
 
@@ -56,22 +60,22 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       ),
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Row(
                               children: [
-                                Image(
+                                const Image(
                                   image: AssetImage(
                                       'assets/images/purchase/icon-vip.webp'),
                                   width: 20,
                                   height: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '开通 VIP 无限看片',
-                                    style: TextStyle(
+                                    I18n.activateVipForFree,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),
@@ -93,9 +97,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 borderRadius: BorderRadius.circular(32.0),
                                 border: Border.all(color: Colors.white),
                               ),
-                              child: const Text(
-                                '查看详情',
-                                style: TextStyle(
+                              child: Text(
+                                I18n.viewDetails,
+                                style: const TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
@@ -145,7 +149,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        '看不过瘾，${widget.videoDetail.buyPoint}金币解锁',
+                                        '${I18n.notEnough} ${widget.videoDetail.buyPoint}${I18n.coinsUnlock}',
                                         style: const TextStyle(
                                           color: Color(0xff644c14),
                                         ),
@@ -155,15 +159,23 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(context,
-                                    id: int.parse(widget.id.toString()),
-                                    onSuccess: () {
-                                  final videoDetailController =
-                                      Get.find<VideoDetailController>(
-                                          tag: widget.tag);
-                                  videoDetailController.mutateAll();
-                                  videoPlayerInfo.videoPlayerController?.play();
-                                }),
+                                onTap: () => purchase(
+                                  context,
+                                  type: PurchaseType.video,
+                                  id: widget.id,
+                                  onSuccess: () {
+                                    final controllerTag =
+                                        genaratorLongVideoDetailTag(
+                                            widget.id.toString());
+                                    final videoDetailController =
+                                        Get.find<VideoDetailController>(
+                                            tag: controllerTag);
+                                    videoDetailController.mutateAll();
+                                    videoPlayerInfo.videoPlayerController
+                                        ?.play();
+                                  },
+                                  showConfirmDialog: showConfirmDialog,
+                                ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,
@@ -176,9 +188,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     borderRadius: BorderRadius.circular(32.0),
                                     border: Border.all(color: Colors.white),
                                   ),
-                                  child: const Text(
-                                    '立即解锁',
-                                    style: TextStyle(
+                                  child: Text(
+                                    I18n.unlockNow,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                   ),

@@ -6,24 +6,16 @@ void showCustomModalBottomSheet(
 }) {
   showModalBottomSheet(
     context: context,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(20.0),
-      ),
-    ),
+    isScrollControlled: true,
+    isDismissible: true,
     builder: (BuildContext context) {
       return Container(
         decoration: const BoxDecoration(
-          // border: Border.all(
-          //   color: Theme.of(context).colorScheme.primary,
-          //   width: 1,
-          // ),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
           ),
         ),
-        clipBehavior: Clip.antiAlias,
         child: child,
       );
     },

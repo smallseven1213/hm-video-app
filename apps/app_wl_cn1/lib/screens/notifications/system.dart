@@ -4,6 +4,7 @@ import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/list_page_panel.dart';
 import '../../utils/show_confirm_dialog.dart';
 import 'system_event_card.dart';
@@ -25,8 +26,8 @@ class SystemScreen extends StatelessWidget {
     var selectedIds = listEditorController.selectedIds.toList();
     showConfirmDialog(
       context: context,
-      title: '是否删除',
-      message: '是否删除勾选项目',
+      title: I18n.confirmDelete,
+      message: I18n.confirmDeleteSelected,
       onConfirm: () => {
         eventsController.deleteEvents(selectedIds),
         listEditorController.removeBoundData(selectedIds),

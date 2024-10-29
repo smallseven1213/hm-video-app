@@ -49,7 +49,7 @@ class _VideoFavoriteState extends State<VideoFavorite> {
                 ),
               ),
               const WidgetSpan(
-                child: SizedBox(width: 3), // 添加间距
+                child: SizedBox(width: 3), // 添加間距
               ),
               WidgetSpan(
                 child: Align(

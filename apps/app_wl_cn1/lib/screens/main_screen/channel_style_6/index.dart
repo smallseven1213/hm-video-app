@@ -1,5 +1,5 @@
 import 'package:app_wl_cn1/config/colors.dart';
-import 'package:app_wl_cn1/widgets/general_shortcard/flash_loading.dart';
+import 'package:app_wl_cn1/widgets/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';
@@ -59,7 +59,7 @@ class ChannelStyle6State extends State<ChannelStyle6> {
             width: double.infinity,
             height: double.infinity,
             color: AppColors.colors[ColorKeys.primary],
-            child: Center(
+            child: const Center(
               child: ChannelStyle6Suppliers(),
             ),
           );

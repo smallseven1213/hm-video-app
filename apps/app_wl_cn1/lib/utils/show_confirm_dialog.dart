@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../config/colors.dart';
+import '../localization/i18n.dart';
 import '../widgets/button.dart';
 
 Future<bool?> showConfirmDialog({
   required BuildContext context,
   String? title,
   String? message,
-  String confirmButtonText = '确定',
-  String cancelButtonText = '取消',
+  String? confirmButtonText,
+  String? cancelButtonText,
   Function? onConfirm,
   Function? onCancel,
   bool showConfirmButton = true,
@@ -67,7 +68,7 @@ Future<bool?> showConfirmDialog({
                           : const SizedBox.shrink(),
                     ),
                   ),
-                  // 以下是按钮区
+                  // 以下是按鈕區
                   SizedBox(
                     height: 80,
                     child: Padding(
@@ -80,7 +81,7 @@ Future<bool?> showConfirmDialog({
                           if (showCancelButton)
                             Expanded(
                               child: Button(
-                                text: cancelButtonText,
+                                text: cancelButtonText ?? I18n.cancel,
                                 onPressed: () {
                                   if (onCancel != null) {
                                     onCancel();
@@ -96,7 +97,7 @@ Future<bool?> showConfirmDialog({
                           if (showConfirmButton)
                             Expanded(
                               child: Button(
-                                text: confirmButtonText,
+                                text: confirmButtonText ?? I18n.confirm,
                                 onPressed: () {
                                   if (onConfirm != null) {
                                     onConfirm();

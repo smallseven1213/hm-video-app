@@ -1,10 +1,11 @@
-import 'package:app_wl_cn1/widgets/general_shortcard/flash_loading.dart';
+import 'package:app_wl_cn1/widgets/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/header.dart';
 import 'banner.dart';
 import 'hot.dart';
@@ -42,8 +43,8 @@ class AppsScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
                 ),
-                const SliverToBoxAdapter(
-                  child: Header(text: '热门推荐'),
+                SliverToBoxAdapter(
+                  child: Header(text: I18n.popularRecommendation),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
@@ -52,8 +53,8 @@ class AppsScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
                 ),
-                const SliverToBoxAdapter(
-                  child: Header(text: '大家都在玩'),
+                SliverToBoxAdapter(
+                  child: Header(text: I18n.everbodyPlaying),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),

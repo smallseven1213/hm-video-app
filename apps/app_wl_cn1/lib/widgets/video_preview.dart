@@ -172,7 +172,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                 ),
               ),
             ),
-            // 主体
+            // 主體
             AspectRatio(
               aspectRatio: imageRatio ??
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),

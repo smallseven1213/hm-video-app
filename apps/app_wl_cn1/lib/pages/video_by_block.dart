@@ -58,7 +58,7 @@ class VideoByBlockPageState extends State<VideoByBlockPage> {
           title: widget.title,
         ),
         body: Obx(() {
-          // 使用 splitVodList 函数将 vodList 按每100个Vod分割成子列表
+          // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
           List<List<Vod>> vodChunks =
               splitVodList(blockVodController.vodList, 100);
 

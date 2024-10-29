@@ -2,6 +2,7 @@ import 'package:app_wl_cn1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 class CustomBottomBarItem extends StatelessWidget {
   final bool isActive;
@@ -25,34 +26,39 @@ class CustomBottomBarItem extends StatelessWidget {
         onTap: onTap,
         child: Container(
           color: AppColors.colors[ColorKeys.menuBgColor],
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              isActive
-                  ? SidImage(
-                      key: const Key('activeIcon'),
-                      sid: activeIconSid,
-                      width: 30,
-                      height: 30,
-                      noFadeIn: true,
-                    )
-                  : SidImage(
-                      key: const Key('unactiveIcon'),
-                      sid: iconSid,
-                      width: 30,
-                      height: 30,
-                      noFadeIn: true,
+          child: UIBottomSafeArea(
+            child: SizedBox(
+              height: 76,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isActive
+                      ? SidImage(
+                          key: const Key('activeIcon'),
+                          sid: activeIconSid,
+                          width: 30,
+                          height: 30,
+                          noFadeIn: true,
+                        )
+                      : SidImage(
+                          key: const Key('unactiveIcon'),
+                          sid: iconSid,
+                          width: 30,
+                          height: 30,
+                          noFadeIn: true,
+                        ),
+                  const SizedBox(height: 4),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: isActive
+                          ? AppColors.colors[ColorKeys.menuActiveColor]
+                          : AppColors.colors[ColorKeys.menuColor],
                     ),
-              const SizedBox(height: 4),
-              Text(
-                label,
-                style: TextStyle(
-                  color: isActive
-                      ? AppColors.colors[ColorKeys.menuActiveColor]
-                      : AppColors.colors[ColorKeys.menuColor],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ));
   }
