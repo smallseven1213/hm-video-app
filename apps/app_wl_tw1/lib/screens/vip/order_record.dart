@@ -197,7 +197,7 @@ class OrderRecordState extends State<OrderRecord> {
   }
 
   Widget paymentStatus(Order record) {
-    switch (record.paymentStatus) {
+    switch (record.status) {
       case 1:
         return statusContainer(I18n.pending, const Color(0xff464c61));
       case 2:
@@ -214,12 +214,12 @@ class OrderRecordState extends State<OrderRecord> {
     } else if (chargeType is String) {
       // 狀態為字串
       filteredRecords = allRecords
-          .where((order) => order.paymentStatus.toString() == chargeType)
+          .where((order) => order.status.toString() == chargeType)
           .toList();
     } else if (chargeType is List) {
       // 狀態為列表
       filteredRecords = allRecords
-          .where((order) => chargeType.contains(order.paymentStatus.toString()))
+          .where((order) => chargeType.contains(order.status.toString()))
           .toList();
     } else {
       filteredRecords = allRecords;
@@ -272,8 +272,8 @@ class OrderRecordState extends State<OrderRecord> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        I18n.productNameOrPaymentType,
+                                       Text(
+                                        '${record.product!.name}/${record.paymentType!.name}',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
@@ -284,7 +284,7 @@ class OrderRecordState extends State<OrderRecord> {
                                         height: 8,
                                       ),
                                       Text(
-                                        '${I18n.amount}${record.orderAmount}',
+                                        '${I18n.amount}${record.amount}',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
