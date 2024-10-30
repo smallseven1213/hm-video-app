@@ -33,7 +33,9 @@ class NicknamePageState extends State<NicknamePage> {
     if (value == null || value.isEmpty) {
       return I18n.pleaseEnterNickname;
     }
-    // 可在此添加其他驗證邏輯
+    if (value.length < 6 || value.length > 40) {
+      return '暱稱必須在6到40個字元之間';
+    }
     return null;
   }
 

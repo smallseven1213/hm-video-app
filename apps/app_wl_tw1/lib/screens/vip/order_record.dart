@@ -243,10 +243,8 @@ class OrderRecordState extends State<OrderRecord> {
                       type: '',
                       child: (List<Order> records) {
                         if (records.isEmpty) return const NoDataWidget();
-                        if (allRecords.isEmpty) {
-                          allRecords = records;
-                          filterRecords();
-                        }
+                        allRecords = records;
+                        filterRecords();
                         if (filteredRecords.isEmpty) {
                           return const NoDataWidget();
                         }
@@ -272,7 +270,7 @@ class OrderRecordState extends State<OrderRecord> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                       Text(
+                                      Text(
                                         '${record.product!.name}/${record.paymentType!.name}',
                                         style: const TextStyle(
                                           fontSize: 14,

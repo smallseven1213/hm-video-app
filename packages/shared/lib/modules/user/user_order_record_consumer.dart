@@ -23,8 +23,12 @@ class UserOrderRecordConsumerState extends State<UserOrderRecordConsumer> {
   @override
   void initState() {
     super.initState();
-    userOrderController = Get.put(UserOrderController(type: widget.type),
-        tag: 'order-record-${widget.type}');
+    if (!Get.isRegistered<UserOrderController>()) {
+      userOrderController = Get.put(UserOrderController(), tag: 'order-record');
+    } else {
+      userOrderController = Get.find<UserOrderController>(tag: 'order-record');
+    }
+    userOrderController.fetchData(widget.type);
   }
 
   @override

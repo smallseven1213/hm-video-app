@@ -54,7 +54,7 @@ class UserInfo extends StatelessWidget {
                       Text(
                         info.nickname,
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                         ),
@@ -103,7 +103,6 @@ class UserInfo extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   color: Colors.white,
-                  fontWeight: FontWeight.w700,
                 ),
               );
             },
