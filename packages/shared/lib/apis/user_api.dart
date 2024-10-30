@@ -384,7 +384,7 @@ class UserApi {
       });
 
   Future<void> updateNickname(String nickname) => fetcher(
-      url: '$apiHost/public/users/user/nickname',
+      url: '$apiHost/api/v1/user/modify-nickname',
       method: 'PUT',
       body: {'nickname': nickname});
 

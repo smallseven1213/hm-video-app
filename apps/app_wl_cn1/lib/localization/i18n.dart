@@ -9,7 +9,7 @@ part 'i18n.g.dart';
 
 @SheetLocalization(
   docId: '15etIUrDMLKny63tEI485t6YQoaCUAvuwJ_0OXDBuo1c',
-  version: 9,
+  version: 12,
   outDir: 'assets/langs',
   outName: 'langs.csv',
 )

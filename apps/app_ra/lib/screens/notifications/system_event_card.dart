@@ -53,7 +53,7 @@ class SystemEventCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  formatDateTime(time),
+                  time,
                   style: TextStyle(
                       fontSize: 12, color: Colors.white.withOpacity(0.5)),
                 ),
