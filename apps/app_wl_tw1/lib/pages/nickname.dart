@@ -8,8 +8,8 @@ import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
-import '../localization/i18n.dart';
 
+import '../localization/i18n.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 
@@ -34,7 +34,7 @@ class NicknamePageState extends State<NicknamePage> {
       return I18n.pleaseEnterNickname;
     }
     if (value.length < 6 || value.length > 40) {
-      return '暱稱必須在6到40個字元之間';
+      return I18n.nicknameMustBeBetween6And40Characters;
     }
     return null;
   }

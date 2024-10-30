@@ -1,4 +1,4 @@
-key,en_US,zh_TW,zn_CN,vi_VN,ja_JP,id_ID
+key,en_US,zh_TW,zh_CN,vi_VN,ja_JP,id_ID
 title,TT Application,TT 應用程式,TT 应用程式,Ứng dụng TT,TTアプリケーション,Pusat Aplikasi
 app_center,Applications,應用中心,应用中心,Ứng dụng,アプリケーション,Pusat Aplikasi
 sort,Sort,排序,排序,Sắp xếp,分類する,Urutan
@@ -255,3 +255,6 @@ limited_time_offer,,限時特價,限时特价,,,
 days_vip_free_video_access,,天VIP 視頻免費看,天VIP 视频免费看,,,
 original_price,,原價： $,原价： $,,,
 show_only_valid,,只顯示有效,只显示有效,,,
+watch_all,,觀看全部,,,,
+current_balance,,當前餘額,,,,
+nickname_must_be_between_6_and_40_characters,,暱稱必須在6到40個字元之間,,,,
