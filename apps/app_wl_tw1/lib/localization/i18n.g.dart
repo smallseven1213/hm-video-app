@@ -6,12 +6,12 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Tue, 29 Oct 2024 10:53:11 +08:00
+// Generated at: Wed, 30 Oct 2024 10:36:52 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
     Locale('zh', 'TW'),
-    Locale('zn', 'CN'),
+    Locale('zh', 'CN'),
     Locale('vi', 'VN'),
     Locale('ja', 'JP'),
     Locale('id', 'ID')
@@ -778,4 +778,14 @@ class I18n {
 
   // show
   static String get showOnlyValid => 'show_only_valid'.tr();
+
+  // watch
+  static String get watchAll => 'watch_all'.tr();
+
+  // current
+  static String get currentBalance => 'current_balance'.tr();
+
+  // nickname
+  static String get nicknameMustBeBetween6And40Characters =>
+      'nickname_must_be_between_6_and_40_characters'.tr();
 }

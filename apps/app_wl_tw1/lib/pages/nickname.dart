@@ -8,8 +8,8 @@ import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
-import '../localization/i18n.dart';
 
+import '../localization/i18n.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 
@@ -33,7 +33,9 @@ class NicknamePageState extends State<NicknamePage> {
     if (value == null || value.isEmpty) {
       return I18n.pleaseEnterNickname;
     }
-    // 可在此添加其他驗證邏輯
+    if (value.length < 6 || value.length > 40) {
+      return I18n.nicknameMustBeBetween6And40Characters;
+    }
     return null;
   }
 
