@@ -1,7 +1,7 @@
 class UserV2 {
   final int uid;
   final List<String> roles;
-  final String nickname;
+  String nickname;
   final String? avatar;
   final DateTime? vipExpiredAt;
   double points;
