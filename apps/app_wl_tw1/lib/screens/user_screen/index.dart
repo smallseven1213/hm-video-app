@@ -94,7 +94,8 @@ class UserScreenState extends State<UserScreen> {
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Container(
-                  padding: const EdgeInsets.only(bottom: 20, right: 20),
+                  padding:
+                      const EdgeInsets.only(bottom: 20, right: 20, top: 10),
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
