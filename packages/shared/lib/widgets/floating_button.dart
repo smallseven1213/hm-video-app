@@ -15,9 +15,9 @@ class FloatingButton extends StatefulWidget {
   final NavigationType type;
 
   const FloatingButton({
-    super.key,
+    Key? key,
     required this.type,
-  });
+  }) : super(key: key);
 
   @override
   State<FloatingButton> createState() => _FloatingButtonState();
@@ -29,10 +29,24 @@ class _FloatingButtonState extends State<FloatingButton> {
   bool _isVisible = true;
   Navigation? _fabLinkData;
 
+  Offset _position = Offset.zero; // 初始位置
+  late Size _screenSize;
+
   @override
   void initState() {
     super.initState();
     _initializeController();
+
+    // 在首次渲染后获取屏幕尺寸并设置初始位置
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _screenSize = MediaQuery.of(context).size;
+        _position = Offset(
+          _screenSize.width - 85,
+          _screenSize.height - 250,
+        );
+      });
+    });
   }
 
   void _initializeController() {
@@ -87,7 +101,23 @@ class _FloatingButtonState extends State<FloatingButton> {
       }
 
       _fabLinkData = _bottomNavigatorController.fabLink[0];
-      return _buildFabWithCloseButton();
+
+      return Positioned(
+        left: _position.dx,
+        top: _position.dy,
+        child: GestureDetector(
+          onPanUpdate: (details) {
+            setState(() {
+              _position += details.delta;
+              _position = Offset(
+                _position.dx.clamp(0.0, _screenSize.width - 70),
+                _position.dy.clamp(0.0, _screenSize.height - 100),
+              );
+            });
+          },
+          child: _buildFabWithCloseButton(),
+        ),
+      );
     });
   }
 
@@ -115,48 +145,40 @@ class _FloatingButtonState extends State<FloatingButton> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _buildMainFab(),
-          _buildCloseButton(),
+          FloatingActionButton(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            onPressed: () => _handleFabPress(_fabLinkData!.path!),
+            child: Container(
+              margin: const EdgeInsets.only(top: 4),
+              child: SidImage(
+                key: ValueKey(_fabLinkData!.id),
+                sid: _fabLinkData!.photoSid!,
+                width: 65,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            top: 10,
+            child: GestureDetector(
+              onTap: _hideFab,
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: Colors.white60,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.close,
+                  size: 12,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildMainFab() {
-    return FloatingActionButton(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      onPressed: () => _handleFabPress(_fabLinkData!.path!),
-      child: Container(
-        margin: const EdgeInsets.only(top: 4),
-        child: SidImage(
-          key: ValueKey(_fabLinkData!.id),
-          sid: _fabLinkData!.photoSid!,
-          width: 65,
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCloseButton() {
-    return Positioned(
-      right: 0,
-      top: 10,
-      child: GestureDetector(
-        onTap: _hideFab,
-        child: Container(
-          padding: const EdgeInsets.all(2),
-          decoration: const BoxDecoration(
-            color: Colors.white60,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.close,
-            size: 12,
-            color: Colors.black,
-          ),
-        ),
       ),
     );
   }

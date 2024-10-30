@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:game/widgets/draggable_button.dart';
 import 'package:game/widgets/h5webview.dart';
 import 'package:get/get.dart';
 import 'package:shared/utils/floating_button_offset_location.dart';
@@ -77,19 +78,21 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
 
         return Scaffold(
           appBar: widget.appBar,
-          body: currentScreen,
-          bottomNavigationBar: widget.bottomNavigationBarWidget(
-              activeKey: path,
-              navigatorItems: bottomNavigatorController.navigatorItems,
-              changeTabKey: (String tabKey) {
-                bottomNavigatorController.changeKey(tabKey);
-              }),
-          floatingActionButtonLocation: CustomFloatingActionButtonLocation(
-            FloatingActionButtonLocation.endFloat,
-            offsetY: -50,
+          body: Stack(
+            children: [
+              currentScreen,
+              FloatingButton(
+                type: widget.floatButtonType ??
+                    NavigationType.h5PromotionDownload,
+              ),
+            ],
           ),
-          floatingActionButton: FloatingButton(
-            type: widget.floatButtonType ?? NavigationType.h5PromotionDownload,
+          bottomNavigationBar: widget.bottomNavigationBarWidget(
+            activeKey: path,
+            navigatorItems: bottomNavigatorController.navigatorItems,
+            changeTabKey: (String tabKey) {
+              bottomNavigatorController.changeKey(tabKey);
+            },
           ),
         );
       },
