@@ -22,10 +22,12 @@ class ProductCard extends StatelessWidget {
         child: InkWell(
           onTap: () => showCustomModalBottomSheet(
             context,
-            child: PaymentList(
-              productId: product.id ?? 0,
-              amount: product.discount ?? 0,
-              name: product.name,
+            child: SafeArea(
+              child: PaymentList(
+                productId: product.id ?? 0,
+                amount: product.discount ?? 0,
+                name: product.name,
+              ),
             ),
           ),
           borderRadius: BorderRadius.circular(12),

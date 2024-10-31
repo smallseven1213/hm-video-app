@@ -5,11 +5,13 @@ import 'package:shared/models/color_keys.dart';
 class Header extends StatelessWidget {
   final String text;
   final Widget? moreButton;
+  final bool? isNormalFontWeight;
 
   const Header({
     super.key,
     required this.text,
     this.moreButton,
+    this.isNormalFontWeight = false,
   });
 
   @override
@@ -31,7 +33,9 @@ class Header extends StatelessWidget {
                     text,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: isNormalFontWeight!
+                          ? FontWeight.normal
+                          : FontWeight.bold,
                       color: AppColors.colors[ColorKeys.textPrimary],
                     ),
                   ),

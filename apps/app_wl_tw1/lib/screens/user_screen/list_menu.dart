@@ -212,8 +212,8 @@ class ListMenuState extends State<ListMenu> {
                             padding: const EdgeInsets.all(5),
                             child: SidImage(
                               sid: item.icon,
-                              width: 18,
-                              height: 18,
+                              width: 30,
+                              height: 30,
                             ),
                           ),
                           const SizedBox(width: 16),
@@ -238,7 +238,8 @@ class ListMenuState extends State<ListMenu> {
                   ),
                   Divider(
                     height: 1,
-                    color: AppColors.colors[ColorKeys.dividerColor],
+                    color: AppColors.colors[ColorKeys.dividerColor]!
+                        .withOpacity(0.3),
                   ),
                 ],
               );
