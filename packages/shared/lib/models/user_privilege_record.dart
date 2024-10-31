@@ -1,4 +1,3 @@
-import '../utils/datetime_formatter.dart';
 
 class UserPrivilegeRecord {
   final String? createdAt;
@@ -17,19 +16,19 @@ class UserPrivilegeRecord {
 
   factory UserPrivilegeRecord.fromJson(Map<String, dynamic> json) {
     try {
-      DateTime? previous = formatTimeWithTimeZone(json['previousExpiredAt']);
-      DateTime? expires = formatTimeWithTimeZone(json['expiredAt']);
+      DateTime? previous = json['previousExpiredAt'];
+      DateTime? expires = json['expiredAt'];
       DateTime now = DateTime.now();
       bool isAvailable = true;
       if (previous != null && expires != null) {
-        isAvailable = now.isAfter(previous) && now.isBefore(expires);
+        isAvailable = now.isBefore(expires);
       }
 
       return UserPrivilegeRecord(
-        createdAt: formatDateTime(json['previousExpiredAt']),
+        createdAt: json['previousExpiredAt'],
         name: json['typeName'],
         remark: json['remark'],
-        vipExpiredAt: formatDateTime(json['expiredAt']),
+        vipExpiredAt: json['expiredAt'],
         isAvailable: isAvailable,
       );
     } catch (e) {

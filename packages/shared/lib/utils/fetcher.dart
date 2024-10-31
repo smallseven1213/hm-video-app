@@ -23,6 +23,7 @@ Future<dynamic> fetcher({
   Map<String, dynamic>? body = const {},
   FormData? form,
   bool? shouldValidate = true,
+  String? timezone,
 }) async {
   // create a request options
   // Map? authorization = shouldValidate!
@@ -33,11 +34,12 @@ Future<dynamic> fetcher({
   final token = getx.Get.find<AuthController>().token;
   AuthController authController = getx.Get.find<AuthController>();
   String locale = GetStorage('locale').read('locale');
-
+  
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
     'authorization': 'Bearer $token',
     'lang': locale.toString(),
+    'timezone': timezone ?? '0',
   };
 
   final options = Options(

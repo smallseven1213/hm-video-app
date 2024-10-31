@@ -61,7 +61,10 @@ class OrderApi {
     if (type != null && type.isNotEmpty) {
       url += '&type=$type';
     }
-    var value = await fetcher(url: url);
+    var value = await fetcher(
+      url: url,
+      timezone: '+8',
+    );
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return [];
