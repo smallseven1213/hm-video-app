@@ -92,7 +92,7 @@ class GridMenuState extends State<GridMenu> {
                         item.name,
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.colors[ColorKeys.textPrimary],
+                          color: AppColors.colors[ColorKeys.menuActiveColor],
                         ),
                       ),
                     ],
