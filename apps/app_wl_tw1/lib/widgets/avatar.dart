@@ -39,7 +39,8 @@ class Avatar extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return SafeArea(child: Wrap(
+          return SafeArea(
+              child: Wrap(
             children: <Widget>[
               ListTile(
                   leading: const Icon(
@@ -135,20 +136,23 @@ class Avatar extends StatelessWidget {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      Center(
-                        child: userController.info.value.avatar != null
-                            ? SidImage(
-                                key: ValueKey(userController.info.value.avatar),
-                                sid: userController.info.value.avatar!,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.cover)
-                            : Icon(
-                                Icons.person_rounded,
-                                size: 32,
-                                color:
-                                    AppColors.colors[ColorKeys.textSecondary],
-                              ),
+                      ClipOval(
+                        child: Center(
+                          child: userController.info.value.avatar != null
+                              ? SidImage(
+                                  key: ValueKey(
+                                      userController.info.value.avatar),
+                                  sid: userController.info.value.avatar!,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover)
+                              : Icon(
+                                  Icons.person_rounded,
+                                  size: 32,
+                                  color:
+                                      AppColors.colors[ColorKeys.textSecondary],
+                                ),
+                        ),
                       ),
                       Positioned(
                         bottom: -3,
