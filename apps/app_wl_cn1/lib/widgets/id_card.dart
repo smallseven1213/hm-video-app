@@ -71,6 +71,7 @@ class IDCardContentState extends State<IDCardContent> {
               image: DecorationImage(
                 image: AssetImage('assets/images/user/share-center.png'),
                 repeat: ImageRepeat.repeatY,
+                fit: BoxFit.fitWidth,
               ),
             ),
             child: Column(

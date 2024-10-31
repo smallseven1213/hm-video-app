@@ -309,7 +309,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.actor.containVideos}I18n.numberOfVideos',
+                                                    '${data.actor.containVideos}${I18n.numberOfVideos}',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),

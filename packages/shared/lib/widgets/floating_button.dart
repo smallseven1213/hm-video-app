@@ -42,7 +42,7 @@ class _FloatingButtonState extends State<FloatingButton> {
       setState(() {
         _screenSize = MediaQuery.of(context).size;
         _position = Offset(
-          _screenSize.width - 85,
+          _screenSize.width > 800 ? 800 - 85 : _screenSize.width - 85,
           _screenSize.height - 250,
         );
       });

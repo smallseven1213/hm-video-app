@@ -6,7 +6,7 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Wed, 30 Oct 2024 11:31:46 +08:00
+// Generated at: Thu, 31 Oct 2024 15:16:25 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
@@ -788,4 +788,7 @@ class I18n {
   // nickname
   static String get nicknameMustBeBetween6And40Characters =>
       'nickname_must_be_between_6_and_40_characters'.tr();
+
+  // recommended
+  static String get recommendedServices => 'recommended_services'.tr();
 }

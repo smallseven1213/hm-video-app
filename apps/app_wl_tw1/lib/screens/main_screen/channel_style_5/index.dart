@@ -351,7 +351,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.supplier.containVideos}I18n.numberOfVideos',
+                                                    '${data.supplier.containVideos}${I18n.numberOfVideos}',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),
