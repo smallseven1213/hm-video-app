@@ -1,4 +1,3 @@
-import '../utils/datetime_formatter.dart';
 import 'product.dart';
 import 'payment_type.dart';
 
@@ -27,7 +26,7 @@ class Order {
       paymentType: json['payment_type'] != null
           ? PaymentType.fromJson(json['payment_type'])
           : PaymentType(),
-      createdAt: formatDateTime(json['created_at']),
+      createdAt: json['created_at'],
       product: json['product'] != null
           ? Product.fromJson(json['product'])
           : Product(),

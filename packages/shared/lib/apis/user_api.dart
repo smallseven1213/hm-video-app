@@ -479,7 +479,7 @@ class UserApi {
     }
 
     await fetcher(
-        url: '$apiHost/public/users/user/avatar',
+        url: '$apiHost/api/v1/user/modify-avatar',
         method: 'PUT',
         body: {
           'photoName': sid,

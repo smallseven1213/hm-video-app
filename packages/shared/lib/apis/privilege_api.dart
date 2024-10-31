@@ -24,8 +24,8 @@ class PrivilegeApi {
     int limit = 100,
   }) async {
     var res = await fetcher(
-        url:
-            '$apiPrefix?page=$page&limit=$limit&userId=$userId');
+        url: '$apiPrefix?page=$page&limit=$limit&userId=$userId',
+        timezone: '+8');
     if (res.data['code'] != '00') {
       return [];
     }
