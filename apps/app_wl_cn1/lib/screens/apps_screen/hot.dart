@@ -22,18 +22,18 @@ class HotWidget extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            int start = index * 4; // 每一行開始的索引
-            int end = min(start + 4, items.length); // 每一行結束的索引
+            int start = index * 5; // 每一行開始的索引
+            int end = min(start + 5, items.length); // 每一行結束的索引
             return Padding(
               padding: EdgeInsets.only(
-                  bottom: index == (items.length ~/ 4) - 1 ? 10 : 0),
+                  bottom: index == (items.length ~/ 5) - 1 ? 10 : 0),
               child: SizedBox(
                 height: 90,
                 child: Row(
                   mainAxisAlignment:
                       MainAxisAlignment.spaceEvenly, // 每一行物件之間的間距
                   children: List.generate(
-                    4, // 生成五個物件，包括占位符
+                    5, // 生成五個物件，包括占位符
                     (i) {
                       int itemIndex = start + i; // 計算當前物件的索引
                       if (itemIndex < end) {
@@ -76,7 +76,7 @@ class HotWidget extends StatelessWidget {
               ),
             );
           },
-          childCount: (items.length / 4).ceil(), // 每一行4個物件，因此總行數為物件數除以4然後向上取整
+          childCount: (items.length / 5).ceil(), // 每一行5個物件，因此總行數為物件數除以5然後向上取整
         ),
       ),
     );
