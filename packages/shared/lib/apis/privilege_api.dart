@@ -18,14 +18,8 @@ class PrivilegeApi {
   String get apiHost => _systemConfigController.apiHost.value!;
   String get apiPrefix => '$apiHost/api/v1/user/privileges';
 
-  Future<List<UserPrivilegeRecord>> getManyBy({
-    required String userId,
-    int page = 1,
-    int limit = 100,
-  }) async {
-    var res = await fetcher(
-        url: '$apiPrefix?page=$page&limit=$limit&userId=$userId',
-        timezone: '+8');
+  Future<List<UserPrivilegeRecord>> getManyBy() async {
+    var res = await fetcher(url: apiPrefix, timezone: '+8');
     if (res.data['code'] != '00') {
       return [];
     }
