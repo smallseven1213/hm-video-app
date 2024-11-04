@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/video_ads_controller.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -96,7 +98,10 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   void _handleAutoPlay() {
-    if (autoPlay) {
+    final VideoAdsController controller = Get.find<VideoAdsController>();
+    List<BannerPhoto> playerPositionAds =
+        controller.videoAds.value.playerPositions ?? [];
+    if (playerPositionAds.isEmpty && autoPlay) {
       play();
     }
   }

@@ -195,7 +195,8 @@ class _PlayingAdState extends State<PlayingAd> {
                         padding: const EdgeInsets.only(bottom: 5),
                         width: 20,
                         height: 16,
-                        child: Image.asset('assets/images/recommend.png'),
+                        child: Image.asset(
+                            'packages/shared/assets/images/recommend.png'),
                       ),
                       IconButton(
                         padding: const EdgeInsets.only(left: 5, bottom: 5),
