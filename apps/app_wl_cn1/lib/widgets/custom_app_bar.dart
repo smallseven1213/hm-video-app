@@ -11,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.bottom,
     this.actions, // 新增actions參數
+    this.leadingWidth,
   }) : super(key: key);
 
   final String? title;
@@ -19,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions; // 定義actions列表
   final PreferredSizeWidget? bottom;
   final Widget? leadingWidget;
+  final double? leadingWidth;
 
   @override
   Size get preferredSize {
@@ -31,6 +33,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       centerTitle: true,
+      titleSpacing: 0,
+      leadingWidth: leadingWidth ?? 56,
       leading: leadingWidget ??
           (Navigator.canPop(context)
               ? GestureDetector(
