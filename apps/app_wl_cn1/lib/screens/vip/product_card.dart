@@ -57,7 +57,7 @@ class ProductCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          product.description ?? '',
+                          product.subTitle ?? '',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
@@ -105,7 +105,7 @@ class ProductCard extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               child: Text(
-                                '${product.vipDays}${I18n.daysVipFreeVideoAccess}',
+                                product.description ?? '',
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 11,

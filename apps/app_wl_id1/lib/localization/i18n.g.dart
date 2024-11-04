@@ -6,12 +6,12 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Wed, 04 Sep 2024 15:03:56 +08:00
+// Generated at: Fri, 01 Nov 2024 16:09:28 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
     Locale('zh', 'TW'),
-    Locale('zn', 'CN'),
+    Locale('zh', 'CN'),
     Locale('vi', 'VN'),
     Locale('ja', 'JP'),
     Locale('id', 'ID')
@@ -659,4 +659,139 @@ class I18n {
 
   // post
   static String get post => 'post'.tr();
+
+  // coin
+  static String get coinWallet => 'coin_wallet'.tr();
+
+  // purchase
+  static String get purchaseRecord => 'purchase_record'.tr();
+
+  // privilege
+  static String get privilegeRecord => 'privilege_record'.tr();
+
+  // deposit
+  static String get depositRecord => 'deposit_record'.tr();
+
+  // confirm
+  static String get confirmDelete => 'confirm_delete'.tr();
+  static String get confirmDeleteSelected => 'confirm_delete_selected'.tr();
+
+  // serial
+  static String get serialNumberExchange => 'serial_number_exchange'.tr();
+
+  // enter
+  static String get enterSerialNumber => 'enter_serial_number'.tr();
+
+  // exchange
+  static String get exchange => 'exchange'.tr();
+
+  // video
+  static String get videoRecommended => 'video_recommended'.tr();
+
+  // redeem
+  static String get redeemRecord => 'redeem_record'.tr();
+  static String get redeemName => 'redeem_name'.tr();
+  static String get redeemTime => 'redeem_time'.tr();
+
+  // watch
+  static String get watchVideo => 'watch_video'.tr();
+
+  // payment
+  static String get paymentConfirmation => 'payment_confirmation'.tr();
+
+  // order
+  static String get orderCreatedPaymentPending =>
+      'order_created_payment_pending'.tr();
+
+  // signup
+  static String get signup => 'signup'.tr();
+
+  // warm
+  static String get warmHint => 'warm_hint'.tr();
+
+  // completed
+  static String get completed => 'completed'.tr();
+
+  // pending
+  static String get pending => 'pending'.tr();
+
+  // all
+  static String get all => 'all'.tr();
+
+  // failed
+  static String get failed => 'failed'.tr();
+
+  // product
+  static String get productNameOrPaymentType =>
+      'product_name_or_payment_type'.tr();
+
+  // amount
+  static String get amount => 'amount'.tr();
+
+  // order
+  static String get orderTime => 'order_time'.tr();
+  static String get orderNumber => 'order_number'.tr();
+
+  // payment
+  static String get paymentError => 'payment_error'.tr();
+
+  // selected
+  static String get selected => 'selected'.tr();
+
+  // please
+  static String get pleaseSelectPaymentMethod =>
+      'please_select_payment_method'.tr();
+
+  // no
+  static String get noAvailablePaymentMethod =>
+      'no_available_payment_method'.tr();
+
+  // valid
+  static String get valid => 'valid'.tr();
+
+  // expired
+  static String get expired => 'expired'.tr();
+
+  // start
+  static String get startTime => 'start_time'.tr();
+
+  // valid
+  static String get validPeriod => 'valid_period'.tr();
+
+  // enter
+  static String get enter => 'enter'.tr();
+
+  // vip
+  static String get vipMember => 'vip_member'.tr();
+
+  // valid
+  static String get validUntil => 'valid_until'.tr();
+
+  // limited
+  static String get limitedTimeOffer => 'limited_time_offer'.tr();
+
+  // days
+  static String get daysVipFreeVideoAccess => 'days_vip_free_video_access'.tr();
+
+  // original
+  static String get originalPrice => 'original_price'.tr();
+
+  // show
+  static String get showOnlyValid => 'show_only_valid'.tr();
+
+  // watch
+  static String get watchAll => 'watch_all'.tr();
+
+  // current
+  static String get currentBalance => 'current_balance'.tr();
+
+  // nickname
+  static String get nicknameMustBeBetween6And40Characters =>
+      'nickname_must_be_between_6_and_40_characters'.tr();
+
+  // recommended
+  static String get recommendedServices => 'recommended_services'.tr();
+
+  // unknown
+  static String get unknown => 'unknown'.tr();
 }

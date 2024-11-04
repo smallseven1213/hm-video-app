@@ -15,15 +15,17 @@ class HomeAppsScreen extends StatelessWidget {
       canPop: false, // HC: 煩死，勿動!!
       child: Scaffold(
         appBar: CustomAppBar(
-            titleWidget: Obx(
-          () => Text(
-            bottomNavigatorController.activeTitle.value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
+          leadingWidget: Container(),
+          titleWidget: Obx(
+            () => Text(
+              bottomNavigatorController.activeTitle.value,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+              ),
             ),
           ),
-        )),
+        ),
         body: const AppsScreen(),
       ),
     );

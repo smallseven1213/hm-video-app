@@ -259,6 +259,9 @@ class OrderRecordState extends State<OrderRecord> {
                           },
                           itemBuilder: (context, index) {
                             final record = filteredRecords[index];
+                            var productName = record.product != null
+                                ? record.product!.name
+                                : I18n.unknown;
                             return Container(
                               padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                               child: Row(
@@ -271,7 +274,7 @@ class OrderRecordState extends State<OrderRecord> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        '${record.product!.name}/${record.paymentType!.name}',
+                                        '$productName/${record.paymentType!.name}',
                                         style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,

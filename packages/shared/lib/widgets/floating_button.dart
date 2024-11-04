@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -124,9 +125,16 @@ class _FloatingButtonState extends State<FloatingButton> {
   bool _shouldShowFab() {
     final isActiveKeyExists =
         _bottomNavigatorController.activeKey.value.isNotEmpty;
-    final isHomePage = isActiveKeyExists &&
-        _bottomNavigatorController
-            .isHome(_bottomNavigatorController.activeKey.value);
+    final activeKey = _bottomNavigatorController.activeKey.value;
+
+    // 如果当前页面是游戏或 iframe 页面，则不显示悬浮按钮
+    if (activeKey.contains(HomeNavigatorPathes.game) ||
+        activeKey.contains(HomeNavigatorPathes.iframe)) {
+      return false;
+    }
+
+    final isHomePage =
+        isActiveKeyExists && _bottomNavigatorController.isHome(activeKey);
     final hasFabLink = _bottomNavigatorController.fabLink.isNotEmpty;
 
     final isNotH5PromotionDownload =
@@ -134,7 +142,7 @@ class _FloatingButtonState extends State<FloatingButton> {
     final isH5PromotionDownloadOnWeb =
         widget.type == NavigationType.h5PromotionDownload && kIsWeb;
 
-    return (isHomePage && hasFabLink) &&
+    return (hasFabLink) &&
         (isNotH5PromotionDownload || isH5PromotionDownloadOnWeb);
   }
 

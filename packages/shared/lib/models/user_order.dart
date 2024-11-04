@@ -27,9 +27,9 @@ class Order {
           ? PaymentType.fromJson(json['payment_type'])
           : PaymentType(),
       createdAt: json['created_at'],
-      product: json['product'] != null
+      product: (json['product'] is Map<String, dynamic>)
           ? Product.fromJson(json['product'])
-          : Product(),
+          : null,
     );
   }
 }

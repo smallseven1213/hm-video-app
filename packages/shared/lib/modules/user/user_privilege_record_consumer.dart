@@ -29,9 +29,14 @@ class ProductPageState extends State<UserPrivilegeRecordConsumer> {
   @override
   void initState() {
     super.initState();
-    userPrivilegeController = Get.put(
-        UserPrivilegeController(userId: widget.userId),
-        tag: 'privilege-record-${widget.userId}');
+    if (!Get.isRegistered<UserPrivilegeController>()) {
+      userPrivilegeController = Get.put(UserPrivilegeController(),
+          tag: 'privilege-record-${widget.userId}');
+    } else {
+      userPrivilegeController = Get.find<UserPrivilegeController>(
+          tag: 'privilege-record-${widget.userId}');
+    }
+    userPrivilegeController.fetchData();
   }
 
   @override
