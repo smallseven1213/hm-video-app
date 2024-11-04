@@ -44,7 +44,8 @@ class BannersView extends StatefulWidget {
 class BannersViewState extends State<BannersView> {
   int _current = 0;
   List<Widget> bannerSliders = [];
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
 
   @override
   void initState() {
