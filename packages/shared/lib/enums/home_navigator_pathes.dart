@@ -7,4 +7,5 @@ class HomeNavigatorPathes {
   static const String coin = '/coin';
   static const String vip = '/vip';
   static const String live = '/live';
+  static const String iframe = '/iframe';
 }
