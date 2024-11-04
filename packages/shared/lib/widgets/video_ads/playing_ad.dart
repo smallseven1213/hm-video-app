@@ -9,41 +9,11 @@ import 'package:shared/widgets/sid_image.dart';
 
 import '../../localization/shared_localization_delegate.dart';
 
-Widget getChipWidgets(List strings) {
-  // filter 掉空的字串
-  final filteredStrings = strings.where((element) => element != '').toList();
-  if (strings.isEmpty || filteredStrings.isEmpty) {
-    return const SizedBox();
-  }
-  return Container(
-    height: 14,
-    padding: const EdgeInsets.only(bottom: 2),
-    child: Wrap(
-      alignment: WrapAlignment.start,
-      spacing: 4,
-      children: filteredStrings
-          .map(
-            (item) => Container(
-              padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 2),
-              color: const Color(0xFFF2F2F2),
-              child: Text(
-                item,
-                style: const TextStyle(
-                  color: Color(0xFF979797),
-                  fontSize: 7,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-    ),
-  );
-}
-
 class PlayingAd extends StatefulWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final Color? backgroundColor;
   final Color? buttonColor;
+
   const PlayingAd({
     Key? key,
     required this.videoPlayerInfo,
@@ -75,6 +45,7 @@ class _PlayingAdState extends State<PlayingAd> {
     List stopConfig =
         bannerParamConfig.length < 3 ? [30, 60, 180] : bannerParamConfig;
     if (startTimer) return;
+
     _timer = Timer(Duration(seconds: stopConfig[0]), () {
       setState(() {
         adShow = true;
@@ -87,6 +58,7 @@ class _PlayingAdState extends State<PlayingAd> {
         });
       });
     });
+
     setState(() {
       startTimer = true;
     });
@@ -137,17 +109,13 @@ class _PlayingAdState extends State<PlayingAd> {
     super.dispose();
   }
 
-  bool isColorDark(Color color) {
-    // 計算顏色的亮度
-    double luminance = color.computeLuminance();
-    // 如果亮度小於或等於0.5，則認為是深色，否則是淺色
-    return luminance <= 0.5;
-  }
+  bool isColorDark(Color color) => color.computeLuminance() <= 0.5;
 
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     final size = MediaQuery.of(context).size;
+
     if (widget.videoPlayerInfo.videoPlayerController?.value.isPlaying ==
         false) {
       return const SizedBox.shrink();
@@ -161,6 +129,9 @@ class _PlayingAdState extends State<PlayingAd> {
 
       final BannerPhoto currentAd = playingAd[adIndex];
       final String url = currentAd.url ?? '';
+      final Color backgroundColor = widget.backgroundColor ?? Colors.blue;
+      final Color buttonColor = widget.buttonColor ?? Colors.blue;
+      final bool isDarkButtonColor = isColorDark(buttonColor);
 
       return Positioned(
         width: 85,
@@ -176,12 +147,10 @@ class _PlayingAdState extends State<PlayingAd> {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: const Alignment(0.8, 1),
-                  colors: <Color>[
-                    widget.backgroundColor ?? Colors.white,
-                    widget.backgroundColor != null
-                        ? widget.backgroundColor!.withOpacity(0.8)
-                        : const Color.fromRGBO(255, 255, 255, 0.8),
-                  ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                  colors: [
+                    backgroundColor,
+                    backgroundColor.withOpacity(0.8),
+                  ],
                   tileMode: TileMode.mirror,
                 ),
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -204,11 +173,8 @@ class _PlayingAdState extends State<PlayingAd> {
                         icon: Icon(
                           Icons.close,
                           size: 14,
-                          color: widget.backgroundColor != null
-                              ? isColorDark(widget.buttonColor!)
-                                  ? Colors.white
-                                  : Colors.black
-                              : Colors.black,
+                          color:
+                              isDarkButtonColor ? Colors.white : Colors.black,
                         ),
                         onPressed: closeAd,
                       ),
@@ -217,12 +183,10 @@ class _PlayingAdState extends State<PlayingAd> {
                   Container(
                     height: 48,
                     width: 48,
-                    decoration: const BoxDecoration(),
                     padding: const EdgeInsets.only(bottom: 4),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8.0),
-                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
                       child: SidImage(
                         key: ValueKey(currentAd.logoSid),
                         sid: currentAd.logoSid ?? '',
@@ -240,11 +204,8 @@ class _PlayingAdState extends State<PlayingAd> {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: widget.backgroundColor != null
-                              ? isColorDark(widget.buttonColor!)
-                                  ? Colors.white
-                                  : Colors.black
-                              : Colors.black,
+                          color:
+                              isDarkButtonColor ? Colors.white : Colors.black,
                         ),
                       ),
                     ),
@@ -257,24 +218,19 @@ class _PlayingAdState extends State<PlayingAd> {
                         style: TextStyle(
                           fontSize: 8,
                           overflow: TextOverflow.ellipsis,
-                          color: widget.backgroundColor != null
-                              ? isColorDark(widget.buttonColor!)
-                                  ? Colors.white
-                                  : Colors.black
-                              : Colors.black,
+                          color:
+                              isDarkButtonColor ? Colors.white : Colors.black,
                         ),
                       ),
                     ),
                   ),
-                  // getChipWidgets(currentAd.tags ?? []),
                   Container(
                     height: 20,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius:
                           const BorderRadius.all(Radius.circular(4.0)),
-                      color: widget.buttonColor ??
-                          const Color.fromRGBO(254, 44, 85, 1),
+                      color: buttonColor,
                     ),
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Center(
@@ -283,11 +239,8 @@ class _PlayingAdState extends State<PlayingAd> {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: widget.buttonColor != null
-                              ? isColorDark(widget.buttonColor!)
-                                  ? Colors.white
-                                  : Colors.black
-                              : Colors.white,
+                          color:
+                              isDarkButtonColor ? Colors.white : Colors.black,
                         ),
                       ),
                     ),

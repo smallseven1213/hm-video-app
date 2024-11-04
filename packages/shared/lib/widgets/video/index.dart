@@ -248,7 +248,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                 PauseAd(videoPlayerInfo: videoPlayerInfo),
                 PlayingAd(
                   videoPlayerInfo: videoPlayerInfo,
-                  backgroundColor: Colors.white30,
+                  backgroundColor: Colors.white10,
                   buttonColor: widget.themeColor,
                 ),
               ],
