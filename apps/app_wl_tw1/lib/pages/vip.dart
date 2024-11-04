@@ -8,8 +8,25 @@ import '../screens/vip/tab_section.dart';
 import '../widgets/avatar.dart';
 import '../widgets/custom_app_bar.dart';
 
-class VipPage extends StatelessWidget {
+class VipPage extends StatefulWidget {
   const VipPage({super.key});
+
+  @override
+  VipPageState createState() => VipPageState();
+}
+
+class VipPageState extends State<VipPage> {
+  late UserController userController;
+
+  @override
+  void initState() {
+    super.initState();
+    userController = Get.find<UserController>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.fetchUserInfo();
+      userController.fetchUserInfoV2();
+    });
+  }
 
   Widget _buildUserInfo() {
     return Container(
@@ -96,7 +113,6 @@ class VipPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserController userController = Get.find<UserController>();
     return Scaffold(
       backgroundColor: const Color(0xff0f1320),
       appBar: CustomAppBar(title: I18n.vipMember),
