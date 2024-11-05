@@ -19,7 +19,7 @@ class Carousel extends StatefulWidget {
 class CarouselState extends State<Carousel> {
   var index = 0;
 
-  CarouselController controller = CarouselController();
+  CarouselSliderController controller = CarouselSliderController();
   void indexChanged(idx) {
     setState(() {
       index = idx;

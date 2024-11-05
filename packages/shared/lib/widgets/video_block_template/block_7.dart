@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart' hide CarouselController;
+import 'package:flutter/material.dart' hide CarouselSliderController;
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
@@ -34,7 +34,8 @@ class Block7Widget extends StatefulWidget {
 
 class Block7WidgetState extends State<Block7Widget> {
   String? backgroundPhotoSid;
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
 
   // override initial
   @override

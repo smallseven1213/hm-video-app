@@ -10,7 +10,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 final GlobalKey _globalKey = GlobalKey();
@@ -41,7 +41,7 @@ Future<void> _captureAndSaveScreenshot() async {
     await file.writeAsBytes(pngBytes);
 
     // 保存到相冊
-    final result = await ImageGallerySaver.saveFile(file.path);
+    final result = await ImageGallerySaverPlus.saveFile(file.path);
     logger.i('File saved: $result');
 
     // 顯示保存成功提示
