@@ -20,7 +20,7 @@ class AdsApi {
       Get.find<SystemConfigController>();
 
   String get apiPrefix =>
-      "${_systemConfigController.apiHost.value!}/public/ads-apps";
+      "${_systemConfigController.apiHost.value!}/api/v1";
 
   Future<List<Ads>> getManyBy({
     int page = 1,
@@ -28,7 +28,7 @@ class AdsApi {
   }) async {
     var value = await fetcher(
         url:
-            '$apiPrefix/ads-app/list?page=$page&limit=$limit&isRecommend=false');
+            '$apiPrefix/ads-app?page=$page&limit=$limit&isRecommend=false');
     var res = (value.data as Map<String, dynamic>);
 
     if (res['code'] != '00') {
@@ -44,7 +44,7 @@ class AdsApi {
   }) async {
     var value = await fetcher(
         url:
-            '$apiPrefix/ads-app/list?page=$page&limit=$limit&isRecommend=true');
+            '$apiPrefix/ads-app?page=$page&limit=$limit&isRecommend=true');
     var res = (value.data as Map<String, dynamic>);
 
     if (res['code'] != '00') {
@@ -57,7 +57,7 @@ class AdsApi {
   Future<void> addBannerClickRecord(int adsAppId) async {
     if (adsAppId == 0) return;
     fetcher(
-        url: '$apiPrefix/ads-app/adsAppClickRecord',
+        url: '$apiPrefix/user/ads-app-click',
         method: 'POST',
         body: {'adsAppId': adsAppId});
   }

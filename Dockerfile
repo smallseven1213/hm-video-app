@@ -1,6 +1,6 @@
 # Builder stage
-# FROM cirrusci/flutter:3.7.5 AS builder
-FROM asia-east2-docker.pkg.dev/wgp-project-337610/base-images/flutter:3.22.1 AS builder
+# FROM ghcr.io/cirruslabs/flutter AS builder                                                # origin image
+FROM asia-east2-docker.pkg.dev/wgp-project-337610/base-images/flutter:3.24.4 AS builder
 ARG env
 ENV ENV=${env}
 ARG scope

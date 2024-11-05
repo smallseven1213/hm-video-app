@@ -18,6 +18,7 @@ class BottomNavigatorController extends GetxController {
   final fabLink = <Navigation>[].obs;
   final displayFab = true.obs;
   final activeTitle = ''.obs;
+  final isVisible = true.obs;
 
   @override
   void onInit() {
@@ -81,5 +82,9 @@ class BottomNavigatorController extends GetxController {
   // 確認是否為首頁
   bool isHome(String key) {
     return key == navigatorItems.first.path;
+  }
+
+  void changeVisible() {
+    isVisible.value = !isVisible.value;
   }
 }

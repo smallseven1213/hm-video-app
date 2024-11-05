@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:scan/scan.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/models/color_keys.dart';
@@ -107,36 +107,54 @@ class ListMenuState extends State<ListMenu> {
     }
   }
 
-  imgFromGallery(context) async {
-    XFile? image = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
+  Future<void> imgFromGallery(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
     if (image != null) {
-      String? str = await Scan.parse(image.path);
-      var res = await authApi.loginByCode(str ?? '');
-      if (res != null) {
-        // do login
-        Get.find<AuthController>().setToken(res.data?['token']);
-        showConfirmDialog(
-          context: context,
-          title: '提示',
-          message: '登入成功',
-          showCancelButton: false,
-          onConfirm: () {
-            Navigator.of(context).pop();
-          },
-        );
+      final Uint8List imageBytes = await image.readAsBytes();
+      final MobileScannerController controller = MobileScannerController();
+      final BarcodeCapture? barcodeCapture =
+          await controller.analyzeImage(imageBytes as String);
+
+      if (barcodeCapture != null && barcodeCapture.barcodes.isNotEmpty) {
+        final String? qrCode = barcodeCapture.barcodes.first.rawValue;
+        if (qrCode != null) {
+          var res = await authApi.loginByCode(qrCode);
+          if (res != null) {
+            // 执行登录操作
+            Get.find<AuthController>().setToken(res.data?['token']);
+            showConfirmDialog(
+              context: context,
+              title: I18n.hintMessage,
+              message: I18n.loginSuccess,
+              showCancelButton: false,
+              onConfirm: () {
+                Navigator.of(context).pop();
+              },
+            );
+          } else {
+            showConfirmDialog(
+              context: context,
+              title: I18n.hintMessage,
+              message: I18n.loginFailedUserDoesNotExist,
+              showCancelButton: false,
+              onConfirm: () {
+                Navigator.of(context).pop();
+              },
+            );
+          }
+        } else {
+          // 处理未能解析的情况
+          print('未能解析二维码');
+        }
       } else {
-        showConfirmDialog(
-          context: context,
-          title: '提示',
-          message: '登入失敗，用戶不存在。',
-          showCancelButton: false,
-          onConfirm: () {
-            Navigator.of(context).pop();
-          },
-        );
+        // 处理未能解析的情况
+        print('未能解析二维码');
       }
+    } else {
+      // 处理未选择图片的情况
+      print('未选择图片');
     }
   }
 
