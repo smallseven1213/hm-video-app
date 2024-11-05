@@ -108,6 +108,7 @@ const Map<String, String> zhCnStrings = {
   'withdrawal_amount': '提款金额',
   'application_time': '申请时间',
   'update_time': '更新时间',
+  'audit_remark': '审核备注',
   'reviewing': '审核中',
   'bank_card': '银行卡',
   'bank_card_idr': '银行卡',

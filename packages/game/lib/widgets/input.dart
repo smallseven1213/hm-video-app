@@ -17,6 +17,7 @@ class GameInput extends StatefulWidget {
     this.inputFormatters,
     this.focusNode,
     this.onClear,
+    this.suffix,
   }) : super(key: key);
 
   final String label;
@@ -31,6 +32,7 @@ class GameInput extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
   final Function()? onClear;
+  final String? suffix;
 
   @override
   GameInputState createState() => GameInputState();
@@ -91,6 +93,17 @@ class GameInputState extends State<GameInput> {
                 focusNode: widget.focusNode,
               ),
             ),
+            if (widget.suffix != null)
+              Positioned(
+                right: 0,
+                child: Text(
+                  widget.suffix!,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: gameLobbyPrimaryTextColor,
+                  ),
+                ),
+              ),
             isPassword
                 ? Container(
                     width: 16,

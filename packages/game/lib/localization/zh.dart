@@ -108,6 +108,7 @@ const Map<String, String> zhTwStrings = {
   'withdrawal_amount': '提款金額',
   'application_time': '申請時間',
   'update_time': '更新時間',
+  'audit_remark': '審核備註',
   'reviewing': '審核中',
   'bank_card': '銀行卡',
   'bank_card_idr': '銀行卡',

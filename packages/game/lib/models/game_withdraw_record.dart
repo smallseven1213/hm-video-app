@@ -6,6 +6,7 @@ class WithdrawalRecord {
   final String? applyAmount;
   final String? auditDate;
   final String? updatedAt;
+  final String? auditRemark;
 
   WithdrawalRecord(
     this.id,
@@ -15,6 +16,7 @@ class WithdrawalRecord {
     this.applyAmount,
     this.auditDate,
     this.updatedAt,
+    this.auditRemark,
   );
 
   factory WithdrawalRecord.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class WithdrawalRecord {
       json['applyAmount'], // 提款金額
       json['auditDate'], // 申請時間
       json['updatedAt'], // 更新時間
+      json['auditRemark'], // 審核備註
     );
   }
 }
