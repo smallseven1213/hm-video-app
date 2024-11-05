@@ -22,12 +22,6 @@ final startDateQuery = {
   4: formattedDate.format(midnight.subtract(const Duration(days: 30))),
 };
 
-const withdrawStatus = {
-  'REVIEWING': 1,
-  'FAILED_TO_WITHDRAW': 2,
-  'COMPLETED': 3,
-};
-
 final logger = Logger();
 
 class StatusLabel extends StatelessWidget {
@@ -48,7 +42,7 @@ class StatusLabel extends StatelessWidget {
     if (type == 0) return const SizedBox();
     return Container(
       height: 28,
-      width: 110,
+      width: 90,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -67,7 +61,6 @@ class StatusLabel extends StatelessWidget {
                 : status[type] == localizations.translate('failed_to_withdraw')
                     ? withdrawalFelid
                     : withdrawalSuccess,
-            fontSize: 14,
           ),
         ),
       ),
@@ -189,7 +182,6 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
     Map<int, String> remittanceType = {
       1: localizations.translate('bank_card'),
       2: 'USDT',
-      3: localizations.translate('bank_card'),
     };
 
     return Scaffold(
@@ -373,9 +365,8 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                                 localizations.translate('withdrawal_account'),
                             value: item.account),
                         RowItem(
-                          title: localizations.translate('withdrawal_amount'),
-                          value: item.applyAmount,
-                        ),
+                            title: localizations.translate('withdrawal_amount'),
+                            value: item.applyAmount),
                         RowItem(
                           title: localizations.translate('application_time'),
                           value: parseDateTime(item.auditDate),
@@ -384,11 +375,6 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                           title: localizations.translate('update_time'),
                           value: parseDateTime(item.updatedAt),
                         ),
-                        if (item.status == withdrawStatus['FAILED_TO_WITHDRAW'])
-                          RowItem(
-                            title: localizations.translate('audit_remark'),
-                            value: item.auditRemark,
-                          ),
                       ],
                     ),
                   ),
