@@ -380,6 +380,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
                                         focusNode: focusNode,
+                                        suffix:
+                                            localizations.translate('dollar'),
                                         onClear: () {
                                           amountController.clear();
                                           setState(() {

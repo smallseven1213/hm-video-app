@@ -1,8 +1,10 @@
 // ignore: unnecessary_import
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
 import '../../localization/game_localization_delegate.dart';
 
 void showConfirmDialog({
@@ -142,7 +144,7 @@ void showConfirmDialog({
                                         .translate('confirm'),
                                 style: TextStyle(
                                     color: gamePrimaryButtonTextColor,
-                                    fontSize: 16),
+                                    fontSize: 14),
                               ),
                             ),
                           ),
