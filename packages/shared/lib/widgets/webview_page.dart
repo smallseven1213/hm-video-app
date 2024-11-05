@@ -49,7 +49,7 @@ class WebViewPageState extends State<WebViewPage> {
   void dispose() {
     final currentWebview = _controller.value;
     if (currentWebview != null) {
-      currentWebview.loadUrl('about:blank');
+      currentWebview.loadHtmlString('about:blank');
     }
     super.dispose();
   }

@@ -22,45 +22,45 @@ class H5WebviewShared extends StatefulWidget {
 }
 
 class H5WebviewSharedState extends State<H5WebviewShared> {
-  final _controller = ValueNotifier<WebViewController?>(null);
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url == widget.initialUrl) {
+              return NavigationDecision.navigate;
+            } else {
+              if (widget.openInNewWindow == true) {
+                Uri url = Uri.parse(request.url);
+                launchUrl(url);
+                return NavigationDecision.prevent;
+              } else {
+                return NavigationDecision.navigate;
+              }
+            }
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.initialUrl));
+  }
 
   @override
   Widget build(BuildContext context) {
     logger.i('initialUrl in H5WebviewShared: ${widget.initialUrl}');
     return PopScope(
       canPop: false,
-      child: WebView(
-        initialUrl: widget.initialUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.value = webViewController;
-        },
-        navigationDelegate: (NavigationRequest request) {
-          // 检查是否是初始 URL
-          if (request.url == widget.initialUrl) {
-            return NavigationDecision.navigate;
-          } else {
-            if (widget.openInNewWindow == true) {
-              // 在新窗口打开链接
-              Uri url = Uri.parse(request.url);
-              launchUrl(url);
-              return NavigationDecision.prevent;
-            } else {
-              // 在当前 WebView 中打开链接
-              return NavigationDecision.navigate;
-            }
-          }
-        },
-      ),
+      child: WebViewWidget(controller: _controller),
     );
   }
 
   @override
   void dispose() {
-    final currentWebview = _controller.value;
-    if (currentWebview != null) {
-      currentWebview.loadUrl('about:blank');
-    }
+    _controller.loadRequest(Uri.parse('about:blank'));
     super.dispose();
   }
 }
