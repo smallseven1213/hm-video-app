@@ -66,11 +66,13 @@ class CircleTextItem extends StatelessWidget {
               ),
             )),
       ),
-      Text(text,
-          style: TextStyle(
-            fontSize: 12,
-            color: AppColors.colors[ColorKeys.textPrimary],
-          )),
+      Expanded(
+        child: Text(text,
+            style: TextStyle(
+              fontSize: 12,
+              color: AppColors.colors[ColorKeys.textPrimary],
+            )),
+      ),
     ]);
   }
 }

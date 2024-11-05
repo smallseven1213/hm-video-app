@@ -5,12 +5,14 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
+import 'package:shared/controllers/apps_controller.dart';
 
 import 'package:app_wl_cn1/screens/main_screen/block_header.dart';
 import 'package:app_wl_cn1/widgets/sliver_vod_list.dart';
 
 import '../../../localization/i18n.dart';
 import '../../../widgets/list_no_more.dart';
+import '../../apps_screen/hot.dart';
 import 'video_actor.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
@@ -33,9 +35,17 @@ class NestedTabBarView extends StatefulWidget {
 
 class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
+  late final AppsController appsController;
   @override
   void initState() {
+    appsController = Get.find<AppsController>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    appsController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,6 +96,14 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               SliverToBoxAdapter(
                 child: VideoActor(actors: widget.videoDetail.actors),
               ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 16, right: 8, left: 8, bottom: 8),
+                child: BlockHeader(text: I18n.popularRecommendation),
+              ),
+            ),
+            HotWidget(items: appsController.hot.value),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(top: 16, right: 8, left: 8),
