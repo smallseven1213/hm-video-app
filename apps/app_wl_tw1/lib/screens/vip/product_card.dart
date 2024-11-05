@@ -22,10 +22,12 @@ class ProductCard extends StatelessWidget {
         child: InkWell(
           onTap: () => showCustomModalBottomSheet(
             context,
-            child: PaymentList(
-              productId: product.id ?? 0,
-              amount: product.discount ?? 0,
-              name: product.name,
+            child: SafeArea(
+              child: PaymentList(
+                productId: product.id ?? 0,
+                amount: product.discount ?? 0,
+                name: product.name,
+              ),
             ),
           ),
           borderRadius: BorderRadius.circular(12),
@@ -55,7 +57,7 @@ class ProductCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          product.description ?? '',
+                          product.subTitle ?? '',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
@@ -103,7 +105,7 @@ class ProductCard extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(15)),
                               ),
                               child: Text(
-                                '${product.vipDays}${I18n.daysVipFreeVideoAccess}',
+                                product.description ?? '',
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 11,

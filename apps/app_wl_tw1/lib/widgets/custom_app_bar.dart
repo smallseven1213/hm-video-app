@@ -7,6 +7,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     this.title = '',
     this.titleWidget,
+    this.leadingWidget,
     this.backgroundColor,
     this.bottom,
     this.actions, // 新增actions參數
@@ -17,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? backgroundColor;
   final List<Widget>? actions; // 定義actions列表
   final PreferredSizeWidget? bottom;
+  final Widget? leadingWidget;
 
   @override
   Size get preferredSize {
@@ -29,25 +31,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       centerTitle: true,
-      leading: Navigator.canPop(context)
-          ? GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Container(
-                height: 56.0,
-                width: 56.0,
-                color: Colors.transparent,
-                child: Center(
-                  child: Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 16,
-                    color: AppColors.colors[ColorKeys.buttonTextPrimary],
+      leading: leadingWidget ??
+          (Navigator.canPop(context)
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    height: 56.0,
+                    width: 56.0,
+                    color: Colors.transparent,
+                    child: Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 16,
+                        color: AppColors.colors[ColorKeys.buttonTextPrimary],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            )
-          : Container(),
+                )
+              : Container()),
       backgroundColor: backgroundColor ?? AppColors.colors[ColorKeys.primary],
       title: titleWidget ?? Text(title!, style: const TextStyle(fontSize: 15)),
       bottom: bottom,

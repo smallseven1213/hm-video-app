@@ -65,6 +65,12 @@ class UserScreenState extends State<UserScreen> {
                   height: 10,
                 ),
               ),
+              SliverToBoxAdapter(
+                child: Header(
+                  text: I18n.recommendedServices,
+                  isNormalFontWeight: true,
+                ),
+              ),
               const GridMenu(),
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -83,7 +89,10 @@ class UserScreenState extends State<UserScreen> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Header(text: I18n.moreServices),
+                child: Header(
+                  text: I18n.moreServices,
+                  isNormalFontWeight: true,
+                ),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(

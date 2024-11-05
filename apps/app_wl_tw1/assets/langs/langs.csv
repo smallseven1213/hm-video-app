@@ -2,114 +2,114 @@ key,en_US,zh_TW,zh_CN,vi_VN,ja_JP,id_ID
 title,TT Application,TT 應用程式,TT 应用程式,Ứng dụng TT,TTアプリケーション,Pusat Aplikasi
 app_center,Applications,應用中心,应用中心,Ứng dụng,アプリケーション,Pusat Aplikasi
 sort,Sort,排序,排序,Sắp xếp,分類する,Urutan
-video,Video,視頻,視頻,Video,ビデオ,Video
-popularity,Popularity,人氣,人氣,Sự phổ biến,人気,Popularitas
-recommended,Recommended,熱門推薦,熱門推薦,Đề xuất phổ biến,おすすめです。,Rekomendasi Populer
+video,Video,視頻,视频,Video,ビデオ,Video
+popularity,Popularity,人氣,人气,Sự phổ biến,人気,Popularitas
+recommended,Recommended,熱門推薦,热门推荐,Đề xuất phổ biến,おすすめです。,Rekomendasi Populer
 everbody_playing,Playing,大家都在玩,大家都在玩,Mọi người đều đang chơi,遊んでいる,Semua orang sedang bermain
-filter,Filter,篩選,篩選,Lọc,フィルター,Filter
-long_video,Videos,長視頻,長視頻,Video dài,ビデオ,Videos
-short_video,Reels,短視頻,短視頻,Video ngắn,リールズ,Short
-member_login,Login,會員登入,會員登入,Đăng nhập thành viên,ログイン,Login Anggota
-account_password_login,Login,帳號密碼登入,帳號密碼登入,Đăng nhập tài khoản và mật khẩu,ログイン,Login dengan akun dan kata sandi
-account,Account,帳號,帳號,Tài khoản,アカウント,Akun
-please_enter_your_account_number,Please enter your account number,請輸入帳號,請輸入帳號,Vui lòng nhập tài khoản,アカウント番号を入力してください。,Silakan masukkan akun
-password,Password,密碼,密碼,Mật khẩu,パスワード,Kata sandi
-please_enter_your_password,Please enter your password,請輸入密碼,請輸入密碼,Vui lòng nhập mật khẩu,パスワードを入力してください。,Silakan masukkan kata sandi
-no_account_yet,No account yet.,還沒有帳號,還沒有帳號,Chưa có tài khoản,まだアカウントがありません。,Tidak ada akun
-login_with_phone_number,Login with phone number,手機號登入,手機號登入,Đăng nhập bằng số điện thoại di động,電話番号でログイン,Masuk dengan nomor ponsel
+filter,Filter,篩選,筛选,Lọc,フィルター,Filter
+long_video,Videos,長視頻,长视频,Video dài,ビデオ,Videos
+short_video,Reels,短視頻,短视频,Video ngắn,リールズ,Short
+member_login,Login,會員登入,会员登入,Đăng nhập thành viên,ログイン,Login Anggota
+account_password_login,Login,帳號密碼登入,帐号密码登入,Đăng nhập tài khoản và mật khẩu,ログイン,Login dengan akun dan kata sandi
+account,Account,帳號,帐号,Tài khoản,アカウント,Akun
+please_enter_your_account_number,Please enter your account number,請輸入帳號,请输入帐号,Vui lòng nhập tài khoản,アカウント番号を入力してください。,Silakan masukkan akun
+password,Password,密碼,密码,Mật khẩu,パスワード,Kata sandi
+please_enter_your_password,Please enter your password,請輸入密碼,请输入密码,Vui lòng nhập mật khẩu,パスワードを入力してください。,Silakan masukkan kata sandi
+no_account_yet,No account yet.,還沒有帳號,还没有帐号,Chưa có tài khoản,まだアカウントがありません。,Tidak ada akun
+login_with_phone_number,Login with phone number,手機號登入,手机号登入,Đăng nhập bằng số điện thoại di động,電話番号でログイン,Masuk dengan nomor ponsel
 newest,Newest,最新,最新,Mới nhất,最新の,Terbaru
-hottest,Hottest,最熱,最熱,Rất nóng,最も暑い,Terpopuler
-register,Register,會員註冊,會員註冊,Đăng ký thành viên,登録する,Daftar
-account_password_registration,Account Password Registration,帳號密碼註冊,帳號密碼註冊,Đăng ký tài khoản và mật khẩu,アカウントパスワード登録,Pendaftaran akun dan kata sandi
-verify_password,Verify Password,驗證密碼,驗證密碼,Xác minh mật khẩu,パスワードを確認してください。,Verifikasi kata sandi
-please_enter_the_verification_password,Please enter the verification password,請輸入驗證密碼,請輸入驗證密碼,Vui lòng nhập mật khẩu xác nhận,認証パスワードを入力してください。,Silakan masukkan kata sandi verifikasi
+hottest,Hottest,最熱,最热,Rất nóng,最も暑い,Terpopuler
+register,Register,會員註冊,会员注册,Đăng ký thành viên,登録する,Daftar
+account_password_registration,Account Password Registration,帳號密碼註冊,帐号密码注册,Đăng ký tài khoản và mật khẩu,アカウントパスワード登録,Pendaftaran akun dan kata sandi
+verify_password,Verify Password,驗證密碼,验证密码,Xác minh mật khẩu,パスワードを確認してください。,Verifikasi kata sandi
+please_enter_the_verification_password,Please enter the verification password,請輸入驗證密碼,请输入验证密码,Vui lòng nhập mật khẩu xác nhận,認証パスワードを入力してください。,Silakan masukkan kata sandi verifikasi
 search_for,Search,搜索,搜索,Tìm kiếm,検索,Cari
-promotional_card_has_been_successfully_saved,Successfully saved.,已成功保存推廣卡,已成功保存推廣卡,Đã lưu thành công thẻ quảng cáo,プロモーションカードが正常に保存されました。,Kartu promosi telah berhasil disimpan
-promotional_share,Promotional Share,推廣分享,推廣分享,Phổ biến chia sẻ,プロモーションシェア,Promosi berbagi
-promotion_record,Promotion Record,推廣紀錄,推廣紀錄,Ghi chép quảng bá,昇進記録,Catatan Promosi
-count_person_promotion,people promote,人推廣,人推廣,Mọi người quảng bá,人々が宣伝します,Orang-orang mempromosikan
-promoted,Promoted,已推廣,已推廣,Đã được quảng bá,昇進しました。,Sudah dipromosikan
-invitation_code,Invitation Code,邀請碼,邀請碼,Mã mời,招待コード,Kode undangan
-copy_and_share,Copy & Share,複製分享,複製分享,Chia sẻ sao chép,コピー＆シェア,Salin berbagi
-successfully_copied,Successfully copied.,複製成功,複製成功,Sao chép thành công,正常にコピーしました。,Berhasil disalin
-screen_short_share,Screen Shots Share,截圖分享,截圖分享,Chia sẻ ảnh chụp màn hình,スクリーンショット共有,Bagikan tangkapan layar
-same_tag,Same Tag,同標籤,同標籤,Cùng nhãn hiệu,同じタグ,Dengan tag
-no_related_video_and_guess_you_like,"No any related videos, Guess you'll like..,",找不到相關影片，猜您也會喜歡,找不到相關影片，猜您也會喜歡,Không có video liên quan,関連する動画はありません,Tidak ada video terkait
-download_now,Download Now,立刻下載,立刻下載,Tải xuống ngay,ダウンロードする,Unduh sekarang
+promotional_card_has_been_successfully_saved,Successfully saved.,已成功保存推廣卡,已成功保存推广卡,Đã lưu thành công thẻ quảng cáo,プロモーションカードが正常に保存されました。,Kartu promosi telah berhasil disimpan
+promotional_share,Promotional Share,推廣分享,推广分享,Phổ biến chia sẻ,プロモーションシェア,Promosi berbagi
+promotion_record,Promotion Record,推廣紀錄,推广纪录,Ghi chép quảng bá,昇進記録,Catatan Promosi
+count_person_promotion,people promote,人推廣,人推广,Mọi người quảng bá,人々が宣伝します,Orang-orang mempromosikan
+promoted,Promoted,已推廣,已推广,Đã được quảng bá,昇進しました。,Sudah dipromosikan
+invitation_code,Invitation Code,邀請碼,邀请码,Mã mời,招待コード,Kode undangan
+copy_and_share,Copy & Share,複製分享,复制分享,Chia sẻ sao chép,コピー＆シェア,Salin berbagi
+successfully_copied,Successfully copied.,複製成功,复制成功,Sao chép thành công,正常にコピーしました。,Berhasil disalin
+screen_short_share,Screen Shots Share,截圖分享,截图分享,Chia sẻ ảnh chụp màn hình,スクリーンショット共有,Bagikan tangkapan layar
+same_tag,Same Tag,同標籤,同标签,Cùng nhãn hiệu,同じタグ,Dengan tag
+no_related_video_and_guess_you_like,"No any related videos, Guess you'll like..,",找不到相關影片，猜您也會喜歡,找不到相关影片，猜您也会喜欢,Không có video liên quan,関連する動画はありません,Tidak ada video terkait
+download_now,Download Now,立刻下載,立刻下载,Tải xuống ngay,ダウンロードする,Unduh sekarang
 id_card,ID Card,身份卡,身份卡,Thẻ nhận dạng,IDカード,Kartu Identitas
-online_customer_service,Online Customer Service,在線客服,在線客服,Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服,オンラインカスタマーサービス,Layanan Pelanggan Online
+online_customer_service,Online Customer Service,在線客服,在线客服,Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服. Dịch: Dịch văn bản sau sang tiếng Việt (vi_VN). Văn bản: 在線客服,オンラインカスタマーサービス,Layanan Pelanggan Online
 more,More,更多,更多,Thêm nữa,もっと,Lebih banyak
-discover,Discover,探索更多內容,探索更多內容,Khám phá nhiều nội dung hơn,発見する,Jelajahi konten lebih lanjut
-input_abnormal,Input Abnormal,輸入異常,輸入異常,Lỗi nhập,入力異常,Masukan tidak normal
-please_reload,Please reload,請重新加載,請重新加載,Vui lòng tải lại,リロードしてください。,Silakan muat ulang
-actor,Actor,演員,演員,Diễn viên,俳優,Aktor
-browse_history,History,我的足跡,我的足跡,Lịch sử,歴史,Sejarah
-like_playlist,Favorites,我的喜歡,我的喜歡,yêu thích,お気に入り,Favorit
+discover,Discover,探索更多內容,探索更多内容,Khám phá nhiều nội dung hơn,発見する,Jelajahi konten lebih lanjut
+input_abnormal,Input Abnormal,輸入異常,输入异常,Lỗi nhập,入力異常,Masukan tidak normal
+please_reload,Please reload,請重新加載,请重新加载,Vui lòng tải lại,リロードしてください。,Silakan muat ulang
+actor,Actor,演員,演员,Diễn viên,俳優,Aktor
+browse_history,History,我的足跡,我的足迹,Lịch sử,歴史,Sejarah
+like_playlist,Favorites,我的喜歡,我的喜欢,yêu thích,お気に入り,Favorit
 collect_playlist,Collection,我的收藏,我的收藏,Bộ sưu tập,コレクション,Koleksi
-count_likes,Likes,個讚數,個讚數,Số lượt thích,いいね,Jumlah suka
-member_id,Member ID,用戶ID,用戶ID,ID người dùng,メンバーID,ID Pengguna
-member_center,Member center,會員中心,會員中心,Trung tâm thành viên,メンバーセンター,Pusat Keanggotaan
-search_record,Search record,搜索紀錄,搜索紀錄,Lịch sử tìm kiếm,検索記録,Catatan pencarian
-search_recommendation,Search Recommendation,搜索推薦,搜索推薦,Tìm kiếm đề xuất,検索推奨,Rekomendasi pencarian
-popular_recommendation,Popular Recommendation,熱門推薦,熱門推薦,Đề xuất phổ biến,人気のおすすめ,Rekomendasi Populer
-coming_soon,Coming soon,精彩即將呈現,精彩即將呈現,Sắp tới sẽ có những điều thú vị,近日公開,Keseruan segera hadir
-upgrade_to_vip_for_unlimited_movie,Open VIP for unlimited movie,開通 VIP 無限看片,開通 VIP 無限看片,Mở VIP để xem phim vô hạn,無制限の映画鑑賞のためのVIPを開放してください。,Buka VIP untuk film tanpa batas
-upgrade_now,Upgrade Now,立即升級,立即升級,Nâng cấp ngay,アップグレードする,Tingkatkan sekarang
-not_enough,Not enough,看不過癮,看不過癮,Không thể thỏa mãn được,足りません。,Tidak puas melihatnya
-unlock_now,Unlock Now,立即解鎖,立即解鎖,Mở khóa ngay lập tức,今すぐ解除,Buka kunci sekarang
-screen_is_locked,Screen is locked,螢幕已鎖定,螢幕已鎖定,Màn hình đã bị khóa,画面がロックされています。,Layar telah terkunci
-screen_is_unlocked,Screen is unlocked,螢幕已解鎖,螢幕已解鎖,Màn hình đã được mở khóa,画面がロック解除されました。,Layar telah terbuka kunci
-same_actor,Same actor,同演員,同演員,Cùng diễn viên,同じ俳優。,Aktor yang sama
-highlights,Highlights,選集,選集,Tuyển tập,ハイライト,Kompilasi
-insufficient_gold_balance,Insufficient balance,金幣餘額不足,金幣餘額不足,Số dư không đủ,残高不足,Saldo tidak mencukupi
-purchase_failed,Purchase Failed,購買失敗,購買失敗,Mua hàng thất bại,購入に失敗しました。,Pembelian gagal
-go_to_top_up_now_for_full_exp,Go to Top Up now to get the full experience!,請立即前往充值已獲得最完整的體驗,請立即前往充值已獲得最完整的體驗,Vui lòng điền ngay để nạp tiền để có trải nghiệm tốt nhất,フルエクスペリエンスを得るために、今すぐトップアップへ行ってください！,Pergi ke Top Up sekarang
+count_likes,Likes,個讚數,个赞数,Số lượt thích,いいね,Jumlah suka
+member_id,Member ID,用戶ID,用户ID,ID người dùng,メンバーID,ID Pengguna
+member_center,Member center,會員中心,会员中心,Trung tâm thành viên,メンバーセンター,Pusat Keanggotaan
+search_record,Search record,搜索紀錄,搜索纪录,Lịch sử tìm kiếm,検索記録,Catatan pencarian
+search_recommendation,Search Recommendation,搜索推薦,搜索推荐,Tìm kiếm đề xuất,検索推奨,Rekomendasi pencarian
+popular_recommendation,Popular Recommendation,熱門推薦,热门推荐,Đề xuất phổ biến,人気のおすすめ,Rekomendasi Populer
+coming_soon,Coming soon,精彩即將呈現,精彩即将呈现,Sắp tới sẽ có những điều thú vị,近日公開,Keseruan segera hadir
+upgrade_to_vip_for_unlimited_movie,Open VIP for unlimited movie,開通 VIP 無限看片,开通 VIP 无限看片,Mở VIP để xem phim vô hạn,無制限の映画鑑賞のためのVIPを開放してください。,Buka VIP untuk film tanpa batas
+upgrade_now,Upgrade Now,立即升級,立即升级,Nâng cấp ngay,アップグレードする,Tingkatkan sekarang
+not_enough,Not enough,看不過癮,看不过瘾,Không thể thỏa mãn được,足りません。,Tidak puas melihatnya
+unlock_now,Unlock Now,立即解鎖,立即解锁,Mở khóa ngay lập tức,今すぐ解除,Buka kunci sekarang
+screen_is_locked,Screen is locked,螢幕已鎖定,萤幕已锁定,Màn hình đã bị khóa,画面がロックされています。,Layar telah terkunci
+screen_is_unlocked,Screen is unlocked,螢幕已解鎖,萤幕已解锁,Màn hình đã được mở khóa,画面がロック解除されました。,Layar telah terbuka kunci
+same_actor,Same actor,同演員,同演员,Cùng diễn viên,同じ俳優。,Aktor yang sama
+highlights,Highlights,選集,选集,Tuyển tập,ハイライト,Kompilasi
+insufficient_gold_balance,Insufficient balance,金幣餘額不足,金币余额不足,Số dư không đủ,残高不足,Saldo tidak mencukupi
+purchase_failed,Purchase Failed,購買失敗,购买失败,Mua hàng thất bại,購入に失敗しました。,Pembelian gagal
+go_to_top_up_now_for_full_exp,Go to Top Up now to get the full experience!,請立即前往充值已獲得最完整的體驗,请立即前往充值已获得最完整的体验,Vui lòng điền ngay để nạp tiền để có trải nghiệm tốt nhất,フルエクスペリエンスを得るために、今すぐトップアップへ行ってください！,Pergi ke Top Up sekarang
 go_to_top_up,Go to Top Up,前往充值,前往充值,Đi đến nạp tiền,チャージに行く,Pergi untuk isi ulang
-confirm,Confirm,確認,確認,Xác nhận,確認してください。,Konfirmasi
+confirm,Confirm,確認,确认,Xác nhận,確認してください。,Konfirmasi
 cancel,Cancel,取消,取消,Hủy bỏ,キャンセル,Batal
-press_like_it_if_you_like_it,Favorites,喜歡就點讚,喜歡就點讚,yêu thích,お気に入り,Favorit
+press_like_it_if_you_like_it,Favorites,喜歡就點讚,喜欢就点赞,yêu thích,お気に入り,Favorit
 add_to_favorites,Collection,添加到收藏,添加到收藏,Bộ sưu tập,コレクション,Koleksi
-this_movie_is_available_for_purchase,This movie is available for purchase.,試看結束，此影片需付費購買,試看結束，此影片需付費購買,"Sau khi xem xong, bạn cần phải mua để xem tiếp video này",試用期間終了。この映画は購入可能です。,Video ini memerlukan pembelian untuk diakses
-price,Price,價格,價格,Giá cả,価格,Harga
-coins,Coins,金幣,金幣,Tiền vàng,コイン,Koin Emas
-your_current_coins,Your current coins,您目前擁有的金幣,您目前擁有的金幣,Số tiền xu bạn hiện đang sở hữu,あなたの現在のコイン。,Anda saat ini memiliki koin emas
-pay_to_watch,Unlock Now,付費觀看,付費觀看,Mở khóa ngay,今すぐ解除する,Buka sekarang
-end_of_Trial_upgrade_to_full_version,"End of Trial, Upgrade to Full Version",試看結束，升級觀看完整版,試看結束，升級觀看完整版,"Khi kết thúc thử nghiệm, hãy nâng cấp để xem phiên bản đầy đủ",試用期間の終了、完全版へのアップグレード。,Tingkatkan untuk menonton versi lengkap
-length_of_film,Length,片長,片長,Thời lượng phim,長さ,Durasi film
-unlocked_for_full_playback,View after unlocking,解鎖後可完整播放,解鎖後可完整播放,Xem sau khi mở khóa,解除後に視聴する,Lihat setelah membuka kunci
-upgrade_now_for_unlock,Unlock Now,立即升級解鎖,立即升級解鎖,Mở khóa ngay,今すぐ解除する,Buka sekarang
-count_gold_coins_to_unlock,coins to unlock,金幣解鎖,金幣解鎖,Mở khóa bằng vàng,解除するためのコイン,Koin Membuka Kunci
-enter_now,Enter,立即進入,立即進入,Nhập,入る ,Masuk
-count_down,wait..,倒數,倒數,Đếm ngược,待って,Hitung mundur
-forgot_password,Forgot password,忘記密碼,忘記密碼,Quên mật khẩu,パスワードを忘れた,Lupa kata sandi
-contact_customer_service,Contact Customer Service,請聯繫客服人員,請聯繫客服人員,Vui lòng liên hệ với nhân viên dịch vụ khách hàng,顧客サービスに連絡してください。,Silakan hubungi layanan pelanggan
-retrieve_password,Retrieve Password,找回密碼,找回密碼,Lấy lại mật khẩu,パスワードを取得,Mengambil kembali kata sandi
-forgot,Forgot?,忘記了?,忘記了?,Quên rồi à?,忘れた？,Lupa?
-for_account_retrieval,"For account retrieval, please keep it in a safe place.",用於找回帳號，請妥善保存，請勿洩露,用於找回帳號，請妥善保存，請勿洩露,"Được sử dụng để khôi phục tài khoản, vui lòng lưu trữ cẩn thận, không tiết lộ",アカウントの回復のため、安全な場所に保管してください。そして、それを他人に教えないでください。,"Untuk pengambilan akun, harap simpan di tempat yang aman"
+this_movie_is_available_for_purchase,This movie is available for purchase.,試看結束，此影片需付費購買,试看结束，此影片需付费购买,"Sau khi xem xong, bạn cần phải mua để xem tiếp video này",試用期間終了。この映画は購入可能です。,Video ini memerlukan pembelian untuk diakses
+price,Price,價格,价格,Giá cả,価格,Harga
+coins,Coins,金幣,金币,Tiền vàng,コイン,Koin Emas
+your_current_coins,Your current coins,您目前擁有的金幣,您目前拥有的金币,Số tiền xu bạn hiện đang sở hữu,あなたの現在のコイン。,Anda saat ini memiliki koin emas
+pay_to_watch,Unlock Now,付費觀看,付费观看,Mở khóa ngay,今すぐ解除する,Buka sekarang
+end_of_Trial_upgrade_to_full_version,"End of Trial, Upgrade to Full Version",試看結束，升級觀看完整版,试看结束，升级观看完整版,"Khi kết thúc thử nghiệm, hãy nâng cấp để xem phiên bản đầy đủ",試用期間の終了、完全版へのアップグレード。,Tingkatkan untuk menonton versi lengkap
+length_of_film,Length,片長,片长,Thời lượng phim,長さ,Durasi film
+unlocked_for_full_playback,View after unlocking,解鎖後可完整播放,解锁后可完整播放,Xem sau khi mở khóa,解除後に視聴する,Lihat setelah membuka kunci
+upgrade_now_for_unlock,Unlock Now,立即升級解鎖,立即升级解锁,Mở khóa ngay,今すぐ解除する,Buka sekarang
+count_gold_coins_to_unlock,coins to unlock,金幣解鎖,金币解锁,Mở khóa bằng vàng,解除するためのコイン,Koin Membuka Kunci
+enter_now,Enter,立即進入,立即进入,Nhập,入る ,Masuk
+count_down,wait..,倒數,倒数,Đếm ngược,待って,Hitung mundur
+forgot_password,Forgot password,忘記密碼,忘记密码,Quên mật khẩu,パスワードを忘れた,Lupa kata sandi
+contact_customer_service,Contact Customer Service,請聯繫客服人員,请联系客服人员,Vui lòng liên hệ với nhân viên dịch vụ khách hàng,顧客サービスに連絡してください。,Silakan hubungi layanan pelanggan
+retrieve_password,Retrieve Password,找回密碼,找回密码,Lấy lại mật khẩu,パスワードを取得,Mengambil kembali kata sandi
+forgot,Forgot?,忘記了?,忘记了?,Quên rồi à?,忘れた？,Lupa?
+for_account_retrieval,"For account retrieval, please keep it in a safe place.",用於找回帳號，請妥善保存，請勿洩露,用于找回帐号，请妥善保存，请勿泄露,"Được sử dụng để khôi phục tài khoản, vui lòng lưu trữ cẩn thận, không tiết lộ",アカウントの回復のため、安全な場所に保管してください。そして、それを他人に教えないでください。,"Untuk pengambilan akun, harap simpan di tempat yang aman"
 identity_card_has_been_successfully_saved,Identity card has been successfully saved,已成功保存身份卡,已成功保存身份卡,Đã lưu thẻ nhận dạng thành công,証明書が正常に保存されました。,Kartu identitas berhasil disimpan
-please_save_the_screenshot,Please save the screenshot,請截圖保存,請截圖保存,Vui lòng chụp ảnh màn hình và lưu lại,スクリーンショットを保存してください。,Simpan tangkapan layar
+please_save_the_screenshot,Please save the screenshot,請截圖保存,请截图保存,Vui lòng chụp ảnh màn hình và lưu lại,スクリーンショットを保存してください。,Simpan tangkapan layar
 official_website,official website,官方地址：,官方地址：,Địa chỉ chính thức,公式ウェブサイト,Alamat resmi
-the_top_is_down,You've scrolled all the way down,頂到底了,頂到底了,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
+the_top_is_down,You've scrolled all the way down,頂到底了,顶到底了,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
 its_too_deep_maam,You've scrolled all the way down,太深了客倌,太深了客倌,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
-take_your_time_dont_be_so_picky,You've scrolled all the way down,慢慢看，別這麼挑,慢慢看，別這麼挑,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
-ive_reached_the_center_of_my_heart,You've scrolled all the way down,花心已抵達,花心已抵達,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
-im_sure_your_are_the_same_kind_of_me,You've scrolled all the way down,確認過眼神，您是同道中人,確認過眼神，您是同道中人,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
-select_all,Select All,全選,全選,Chọn tất cả,全て選択,Pilih Semua
-delete,Delete,刪除,刪除,Xóa bỏ,削除,Hapus
-there_is_nothing_here,There is nothing here,這裡什麼都沒有,這裡什麼都沒有,Ở đây không có gì cả,ここには何もありません。,Tidak ada apa-apa di sini
-loading,Loading,讀取中,讀取中,Đang tải,ローディング,Sedang memuat
-entry_window,Entry,進入櫥窗,進入櫥窗,Nhập khẩu,エントリー,Entri
-username,Username,用戶名稱,用戶名稱,Tên người dùng,ユーザー名,Nama pengguna
-its_a_big_file,Loading,檔案很大，你忍一下,檔案很大，你忍一下,đang tải,ローディング,pemuatan
-its_not_ready_yet,Loading,還沒準備好，你先悠著來,還沒準備好，你先悠著來,đang tải,ローディング,pemuatan
-its_about_to_happen,Loading,精彩即將呈現,精彩即將呈現,đang tải,ローディング,pemuatan
-we_are_trying_to_load_t,Loading,努力加載中,努力加載中,đang tải,ローディング,pemuatan
-let_the_file_load_for_a_while,Loading,讓檔案載一會兒,讓檔案載一會兒,đang tải,ローディング,pemuatan
+take_your_time_dont_be_so_picky,You've scrolled all the way down,慢慢看，別這麼挑,慢慢看，别这么挑,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
+ive_reached_the_center_of_my_heart,You've scrolled all the way down,花心已抵達,花心已抵达,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
+im_sure_your_are_the_same_kind_of_me,You've scrolled all the way down,確認過眼神，您是同道中人,确认过眼神，您是同道中人,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
+select_all,Select All,全選,全选,Chọn tất cả,全て選択,Pilih Semua
+delete,Delete,刪除,删除,Xóa bỏ,削除,Hapus
+there_is_nothing_here,There is nothing here,這裡什麼都沒有,这里什么都没有,Ở đây không có gì cả,ここには何もありません。,Tidak ada apa-apa di sini
+loading,Loading,讀取中,读取中,Đang tải,ローディング,Sedang memuat
+entry_window,Entry,進入櫥窗,进入橱窗,Nhập khẩu,エントリー,Entri
+username,Username,用戶名稱,用户名称,Tên người dùng,ユーザー名,Nama pengguna
+its_a_big_file,Loading,檔案很大，你忍一下,档案很大，你忍一下,đang tải,ローディング,pemuatan
+its_not_ready_yet,Loading,還沒準備好，你先悠著來,还没准备好，你先悠着来,đang tải,ローディング,pemuatan
+its_about_to_happen,Loading,精彩即將呈現,精彩即将呈现,đang tải,ローディング,pemuatan
+we_are_trying_to_load_t,Loading,努力加載中,努力加载中,đang tải,ローディング,pemuatan
+let_the_file_load_for_a_while,Loading,讓檔案載一會兒,让档案载一会儿,đang tải,ローディング,pemuatan
 its_worth_wating_for_the_good_stuff,Loading,美好事物，值得等待,美好事物，值得等待,đang tải,ローディング,pemuatan
-trying_to_move_bricks,Loading,拼命搬磚中,拼命搬磚中,đang tải,ローディング,pemuatan
+trying_to_move_bricks,Loading,拼命搬磚中,拼命搬砖中,đang tải,ローディング,pemuatan
 loading_now,Loading,正在加載,正在加载,đang tải,ローディング,pemuatan
-all_female_actors,All girls,全部女優,全部女優,đang tải,ローディング,pemuatan
-login,Login,登入,登入,Đăng nhập,ログイン,Masuk
+all_female_actors,All girls,全部女優,全部女优,đang tải,ローディング,pemuatan
+login,Login,登入,登录,Đăng nhập,ログイン,Masuk
 confirm_action,Confirm,確定,确定,Xác nhận,確認,Pastikan
 same_type,Same type,同類型,同类型,Cùng loại,同じタイプ,Sejenis
 immediate_download,Download now,立即下載,立即下载,Tải ngay,直ちにダウンロード,Unduh sekarang
@@ -131,12 +131,12 @@ like_button,Like,點讚,点赞,Thích,いいね,Menyukai
 more_options,More >,更多 >,更多 >,Nhiều hơn >,もっと見る >,Lebih banyak >
 follow_status,Follow,關注,关注,Theo dõi,注目,Perhatian
 account_credentials,Account credentials,帳號憑證,帐号凭证,Thông tin tài khoản,アカウント認証,Kredensial akun
-edit_translation,Edit,編輯,Edit,Chỉnh sửa,編集,Sunting
+edit_translation,Edit,編輯,编辑,Chỉnh sửa,編集,Sunting
 input_name,Enter name,輸入名稱,输入名称,Nhập tên,名称を入力してください。,Masukkan nama
-please_enter_nickname,Please enter a nickname,請輸入暱稱,请输入暱称,Vui lòng nhập biệt danh,ニックネームを入力してください。,Silakan masukkan nama panggilan
+please_enter_nickname,Please enter a nickname,請輸入暱稱,请输入昵称,Vui lòng nhập biệt danh,ニックネームを入力してください。,Silakan masukkan nama panggilan
 edit_error,Edit error,修改錯誤,修改错误,Lỗi khi chỉnh sửa,誤りを修正する,Mengedit kesalahan
-modify_nickname,Edit nickname,修改暱稱,修改暱称,Chỉnh sửa biệt danh,ニックネームを変更する,Ubah nama panggilan
-new_nickname,New nickname,新暱稱,新暱称,Biệt danh mới,新しいニックネーム,Nama panggilan baru
+modify_nickname,Edit nickname,修改暱稱,修改昵称,Chỉnh sửa biệt danh,ニックネームを変更する,Ubah nama panggilan
+new_nickname,New nickname,新暱稱,新昵称,Biệt danh mới,新しいニックネーム,Nama panggilan baru
 setup_completed,Setup complete,設置完成,设置完成,Cài đặt hoàn tất,設定完了,Pengaturan selesai
 all_creators,All UP hosts,全部UP主,全部UP主,Tất cả các chủ nhà UP,全てのUP主,Semua Kreator
 account_length_6_to_12_letters_numbers,The account is 6-12 alphanumeric characters,帳號為6-12位字母及數字,帐号为6-12位字母及数字,Tài khoản gồm 6-12 ký tự chữ và số,アカウントは6～12文字の英数字です。,Akun harus terdiri dari 6-12 huruf dan angka
@@ -152,7 +152,7 @@ system_notification,System notification,系統通知,系统通知,Thông báo h�
 password_saved_successfully,Password saved successfully,已成功保存密碼,已成功保存密码,Lưu mật khẩu thành công,パスワードが正常に保存されました。,Kata sandi telah berhasil disimpan
 password_error,Incorrect password,密碼錯誤,密码错误,Mật khẩu không đúng,パスワードが間違っています。,Kata sandi salah
 original_password_incorrect,Incorrect original password,原密碼錯誤,原密码错误,Mật khẩu gốc không đúng,原パスワードが間違っています。,Kata sandi lama salah
-modify_password,Change password,修改密碼,修改密碼,Thay đổi mật khẩu,パスワードを変更する,Ubah Kata Sandi
+modify_password,Change password,修改密碼,修改密码,Thay đổi mật khẩu,パスワードを変更する,Ubah Kata Sandi
 original_password,Original password,原密碼,原密码,Mật khẩu gốc,原密碼的日文翻譯是「元のパスワード」。,Kata Sandi Lama
 enter_original_password,Please enter the original password,請輸入原密碼,请输入原密码,Vui lòng nhập mật khẩu gốc,元のパスワードを入力してください。,Silakan masukkan kata sandi asli
 new_password,New password,新密碼,新密码,Mật khẩu mới,新しいパスワード,Kata Sandi Baru
@@ -215,19 +215,19 @@ coins_unlock,coins unlock,金幣解鎖,金币解锁,Mở khóa bằng xu,コイ�
 unlock_now,Unlock now,立即解鎖,立即解锁,Mở khóa ngay,今すぐ解除,Buka sekarang
 post,post,貼文,帖子,Bài đăng,投稿,Postingan
 coin_wallet,Coins,金幣錢包,金币钱包,,,
-purchase_record,,購買記錄,购买记录,,,
-privilege_record,,特權紀錄,特权纪录,,,
-deposit_record,,存款記錄,存款记录,,,
-confirm_delete,,是否刪除,是否删除,,,
-confirm_delete_selected,,是否刪除勾選項目,是否删除勾选项目,,,
-serial_number_exchange,,序號兌換,序号兑换,,,
-enter_serial_number,,請輸入序號,请输入序号,,,
-exchange,,兌換,兑换,,,
+purchase_record,Purchase,購買記錄,购买记录,,,
+privilege_record,Privilege,特權紀錄,特权纪录,,,
+deposit_record,Orders,存款記錄,存款记录,,,
+confirm_delete,Confirm Delete,是否刪除,是否删除,,,
+confirm_delete_selected,Confirm Delete Selected,是否刪除勾選項目,是否删除勾选项目,,,
+serial_number_exchange,SN exchange,序號兌換,序号兑换,,,
+enter_serial_number,Enter Serial Number,請輸入序號,请输入序号,,,
+exchange,Exchange,兌換,兑换,,,
 video_recommended,,推薦,推荐,,,
 redeem_record,,兌換記錄,兑换记录,,,
 redeem_name,,兌換名稱,兑换名称,,,
 redeem_time,,兌換時間,兑换时间,,,
-watch_video,,觀看視頻,观看视频,,,
+watch_video,Watch Video,觀看視頻,观看视频,,,
 payment_confirmation,,支付確認,支付确认,,,
 order_created_payment_pending,,訂單已建立，付款確認中...,订单已建立，付款确认中...,,,
 signup,,註冊,注册,,,
@@ -246,15 +246,17 @@ please_select_payment_method,,請選擇支付方式,请选择支付方式,,,
 no_available_payment_method,,無可用支付方式,无可用支付方式,,,
 valid,,有效,有效,,,
 expired,,失效,失效,,,
-start_time,,開始時間：,开始时间：,,,
+start_time,Start Time,開始時間：,开始时间：,,,
 valid_period,,有效時間：,有效时间：,,,
 enter,Enter,進入,进入,Nhập,入る ,Masuk
-vip_member,,VIP會員,VIP会员,,,
+vip_member,VIP,VIP會員,VIP会员,,,
 valid_until,,效期至：,效期至：,,,
 limited_time_offer,,限時特價,限时特价,,,
 days_vip_free_video_access,,天VIP 視頻免費看,天VIP 视频免费看,,,
 original_price,,原價： $,原价： $,,,
 show_only_valid,,只顯示有效,只显示有效,,,
-watch_all,,觀看全部,,,,
-current_balance,,當前餘額,,,,
-nickname_must_be_between_6_and_40_characters,,暱稱必須在6到40個字元之間,,,,
+watch_all,,觀看全部,观看全部,,,
+current_balance,,當前餘額,当前余额,,,
+nickname_must_be_between_6_and_40_characters,,暱稱必須在6到40個字元之間,昵称必须在6到40个字元之间,,,
+recommended_services,,推薦服務,推荐服务,,,
+unknown,unknown,未知,未知,,,

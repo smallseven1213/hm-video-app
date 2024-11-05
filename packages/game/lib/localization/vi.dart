@@ -119,6 +119,7 @@ const Map<String, String> viVnStrings = {
   "withdrawal_amount": "Số tiền Rút",
   "application_time": "Thời gian Ứng dụng",
   "update_time": "Thời gian Cập nhật",
+  "audit_remark": "Ghi chú Kiểm toán",
   "reviewing": "Đang xem xét",
   "bank_card": "Thẻ Ngân hàng",
   'bank_card_idr': 'Thẻ Ngân hàng',

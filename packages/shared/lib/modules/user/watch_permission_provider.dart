@@ -9,12 +9,12 @@ final logger = Logger();
 
 class WatchPermissionProvider extends StatefulWidget {
   final Widget Function(bool canWatch) child;
-  final void Function() showConfirmDialog;
+  final void Function()? showConfirmDialog;
 
   const WatchPermissionProvider({
     Key? key,
     required this.child,
-    required this.showConfirmDialog,
+    this.showConfirmDialog,
   }) : super(key: key);
 
   @override
@@ -39,7 +39,9 @@ class WatchPermissionProviderState extends State<WatchPermissionProvider> {
   void _showLoginDialog(BuildContext context) {
     if (!_dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        widget.showConfirmDialog();
+        if (widget.showConfirmDialog != null) {
+          widget.showConfirmDialog!();
+        }
         setState(() {
           _dialogShown = true;
         });

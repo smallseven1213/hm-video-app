@@ -66,6 +66,7 @@ class GridMenuState extends State<GridMenu> {
             },
           );
         }).toList();
+
         return SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
@@ -92,7 +93,7 @@ class GridMenuState extends State<GridMenu> {
                         item.name,
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.colors[ColorKeys.textPrimary],
+                          color: AppColors.colors[ColorKeys.menuActiveColor],
                         ),
                       ),
                     ],

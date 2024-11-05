@@ -88,7 +88,7 @@ class UserInfo extends StatelessWidget {
                                   return Text(
                                     info.nickname ?? '',
                                     style: const TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -136,7 +136,6 @@ class UserInfo extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
                               ),
                             );
                           },
@@ -148,26 +147,23 @@ class UserInfo extends StatelessWidget {
               ),
               UserInfoConsumer(child: ((info, isVIP, isGuest, isLoading) {
                 if (isGuest) {
-                  return Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        MyRouteDelegate.of(context).push(AppRoutes.login);
-                      },
-                      child: Text(
-                        I18n.login,
-                        style: const TextStyle(
-                          color: Color(0xffFFC700),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: Color(0xffFF7A00),
-                              offset: Offset(0, 0),
-                              blurRadius: 5,
-                            ),
-                          ],
-                        ),
+                  return GestureDetector(
+                    onTap: () {
+                      MyRouteDelegate.of(context).push(AppRoutes.login);
+                    },
+                    child: Text(
+                      I18n.login,
+                      style: const TextStyle(
+                        color: Color(0xffFFC700),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
+                            color: Color(0xffFF7A00),
+                            offset: Offset(0, 0),
+                            blurRadius: 5,
+                          ),
+                        ],
                       ),
                     ),
                   );

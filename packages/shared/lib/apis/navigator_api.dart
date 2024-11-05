@@ -22,8 +22,7 @@ class NavigatorApi {
 
   Future<List<Navigation>> getNavigations(int type) async {
     try {
-      var res = await fetcher(
-          url: '$apiHost/public/navigations/navigation?type=$type');
+      var res = await fetcher(url: '$apiHost/api/v1/navigation?type=$type');
       if (res.data['code'] != '00') {
         return [];
       }

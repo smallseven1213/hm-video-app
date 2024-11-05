@@ -1,10 +1,12 @@
 import 'package:app_wl_id1/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:app_wl_id1/config/colors.dart';
 
 class GridMenuItem {
   final String name;
@@ -82,14 +84,15 @@ class GridMenuState extends State<GridMenu> {
                     children: [
                       SidImage(
                         sid: item.icon,
-                        width: 30,
-                        height: 30,
+                        width: 50,
+                        height: 50,
                       ),
                       const SizedBox(height: 5),
                       Text(
                         item.name,
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.white),
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/modules/user/watch_permission_provider.dart';
+import 'package:shared/widgets/video_ads/index.dart';
 import 'package:video_player/video_player.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
@@ -237,7 +239,18 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                     toggleFullscreen(fullScreen: status);
                   },
                   isVerticalDragEnabled: widget.isVerticalDragEnabled,
-                )
+                ),
+                WatchPermissionProvider(
+                  child: (canWatch) => canWatch
+                      ? PlayerPositionAd(videoPlayerInfo: videoPlayerInfo)
+                      : const SizedBox.shrink(),
+                ),
+                PauseAd(videoPlayerInfo: videoPlayerInfo),
+                PlayingAd(
+                  videoPlayerInfo: videoPlayerInfo,
+                  backgroundColor: Colors.white10,
+                  buttonColor: widget.themeColor,
+                ),
               ],
             ),
           );
