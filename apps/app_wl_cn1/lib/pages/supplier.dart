@@ -33,7 +33,7 @@ class _SupplierPageState extends State<SupplierPage>
   late ScrollController _parentScrollController;
   late final SupplierShortController shortVideoController;
   late final SupplierVideoController supplierVideoController;
-  late final ChannelPostController postController;
+  //late final ChannelPostController postController;
 
   late TabController _tabController;
 
@@ -41,25 +41,24 @@ class _SupplierPageState extends State<SupplierPage>
   void initState() {
     super.initState();
     _parentScrollController = ScrollController();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 2);
     shortVideoController = SupplierShortController(
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
         supplierId: widget.id, scrollController: _parentScrollController);
-    postController = ChannelPostController(
-        supplierId: widget.id, scrollController: _parentScrollController);
+    // postController = ChannelPostController(
+    //     supplierId: widget.id, scrollController: _parentScrollController);
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
         if (_tabController.index == 0) {
-          postController.reset();
-          postController.loadMoreData();
-        } else if (_tabController.index == 1) {
+          // postController.reset();
+          // postController.loadMoreData();
           shortVideoController.reset();
           shortVideoController.loadMoreData();
-        } else {
+        } else if (_tabController.index == 1) {
           supplierVideoController.reset();
           supplierVideoController.loadMoreData();
         }
@@ -73,7 +72,7 @@ class _SupplierPageState extends State<SupplierPage>
     _parentScrollController.dispose();
     shortVideoController.dispose();
     supplierVideoController.dispose();
-    postController.dispose();
+    //postController.dispose();
     super.dispose();
   }
 
@@ -107,28 +106,28 @@ class _SupplierPageState extends State<SupplierPage>
               controller: _tabController,
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
               children: [
-                NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollInfo) {
-                    if (scrollInfo is ScrollEndNotification &&
-                        scrollInfo.metrics.pixels ==
-                            scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 0) {
-                      postController.loadMoreData();
-                    }
-                    return false;
-                  },
-                  child: Obx(() => SliverPostGrid(
-                        posts: postController.postList.value,
-                        displayLoading: postController.displayLoading.value,
-                        displayNoMoreData:
-                            postController.displayNoMoreData.value,
-                        isListEmpty: postController.isListEmpty.value,
-                        isError: postController.isError.value,
-                        onReload: postController.pullToRefresh,
-                        onScrollEnd: postController.loadMoreData,
-                        displaySupplierInfo: false,
-                      )),
-                ),
+                // NotificationListener<ScrollNotification>(
+                //   onNotification: (ScrollNotification scrollInfo) {
+                //     if (scrollInfo is ScrollEndNotification &&
+                //         scrollInfo.metrics.pixels ==
+                //             scrollInfo.metrics.maxScrollExtent &&
+                //         _tabController.index == 0) {
+                //       postController.loadMoreData();
+                //     }
+                //     return false;
+                //   },
+                //   child: Obx(() => SliverPostGrid(
+                //         posts: postController.postList.value,
+                //         displayLoading: postController.displayLoading.value,
+                //         displayNoMoreData:
+                //             postController.displayNoMoreData.value,
+                //         isListEmpty: postController.isListEmpty.value,
+                //         isError: postController.isError.value,
+                //         onReload: postController.pullToRefresh,
+                //         onScrollEnd: postController.loadMoreData,
+                //         displaySupplierInfo: false,
+                //       )),
+                // ),
                 NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollInfo) {
                     if (scrollInfo is ScrollEndNotification &&
@@ -194,7 +193,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: [I18n.post, I18n.shortVideo, I18n.longVideo],
+      tabs: [I18n.shortVideo, I18n.longVideo],
     );
   }
 

@@ -70,7 +70,8 @@ unlinked_spec.ds
 **/android/gradlew
 **/android/gradlew.bat
 **/android/gradle/caches/
-**/android/gradle/wrapper/dists/
+**/android/gradle/wrapper/
+**/android/gradle/**/*.profile
 **/android/local.properties
 **/android/gradle/kotlin-profile/*.profile
 **/android/**/GeneratedPluginRegistrant.java

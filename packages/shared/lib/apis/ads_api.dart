@@ -57,7 +57,7 @@ class AdsApi {
   Future<void> addBannerClickRecord(int adsAppId) async {
     if (adsAppId == 0) return;
     fetcher(
-        url: '$apiPrefix/ads-app/adsAppClickRecord',
+        url: '$apiPrefix/user/ads-app-click',
         method: 'POST',
         body: {'adsAppId': adsAppId});
   }
