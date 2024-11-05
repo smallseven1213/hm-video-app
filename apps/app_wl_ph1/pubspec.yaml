@@ -62,10 +62,9 @@ dependencies:
   permission_handler: ^10.2.0
   shimmer: ^3.0.0
   wakelock_plus: ^1.2.5
-  android_id: ^0.2.0
+  android_id: ^0.4.0
   image_picker: ^1.1.2
-  qr_code_scanner: ^1.0.1
-  scan: ^1.6.0
+  qr_code_scanner_plus: ^2.0.6
   uuid: ^3.0.7
   pull_to_refresh: ^2.0.0
   easy_localization: ^3.0.2
@@ -74,6 +73,7 @@ dependencies:
       url: https://github.com/smallseven1213/easy_localization_generator.git
       ref: main
   dio: ^5.2.1+1
+  mobile_scanner: ^6.0.2
 
 dev_dependencies:
   flutter_test:

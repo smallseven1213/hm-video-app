@@ -3,7 +3,7 @@ import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 import 'package:app_wl_id1/config/colors.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:shared/apis/auth_api.dart';

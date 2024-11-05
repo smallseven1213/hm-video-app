@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:scan/scan.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/models/color_keys.dart';
@@ -53,13 +53,13 @@ class ListMenuState extends State<ListMenu> {
             children: <Widget>[
               ListTile(
                   leading: const Icon(Icons.photo_library),
-                  title:  Text(I18n.albumSelection),
+                  title: Text(I18n.albumSelection),
                   onTap: () {
                     imgFromGallery(context);
                   }),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title:  Text(I18n.takePhoto),
+                title: Text(I18n.takePhoto),
                 onTap: () async {
                   Navigator.of(context).pop();
                   Permission.camera.request().then((PermissionStatus status) {
@@ -69,7 +69,7 @@ class ListMenuState extends State<ListMenu> {
               ),
               ListTile(
                 leading: const Icon(Icons.cancel),
-                title:  Text(I18n.cancel),
+                title: Text(I18n.cancel),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
@@ -92,14 +92,14 @@ class ListMenuState extends State<ListMenu> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title:  Text(I18n.insufficientPermissions),
-            content:  Text(I18n.allowCameraAccess),
+            title: Text(I18n.insufficientPermissions),
+            content: Text(I18n.allowCameraAccess),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child:  Text(I18n.confirmAction),
+                child: Text(I18n.confirmAction),
               ),
             ],
           );
@@ -108,36 +108,54 @@ class ListMenuState extends State<ListMenu> {
     }
   }
 
-  imgFromGallery(context) async {
-    XFile? image = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
+  Future<void> imgFromGallery(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
     if (image != null) {
-      String? str = await Scan.parse(image.path);
-      var res = await authApi.loginByCode(str ?? '');
-      if (res != null) {
-        // do login
-        Get.find<AuthController>().setToken(res.data?['token']);
-        showConfirmDialog(
-          context: context,
-          title: I18n.hintMessage,
-          message: I18n.loginSuccess,
-          showCancelButton: false,
-          onConfirm: () {
-            Navigator.of(context).pop();
-          },
-        );
+      final Uint8List imageBytes = await image.readAsBytes();
+      final MobileScannerController controller = MobileScannerController();
+      final BarcodeCapture? barcodeCapture =
+          await controller.analyzeImage(imageBytes as String);
+
+      if (barcodeCapture != null && barcodeCapture.barcodes.isNotEmpty) {
+        final String? qrCode = barcodeCapture.barcodes.first.rawValue;
+        if (qrCode != null) {
+          var res = await authApi.loginByCode(qrCode);
+          if (res != null) {
+            // 执行登录操作
+            Get.find<AuthController>().setToken(res.data?['token']);
+            showConfirmDialog(
+              context: context,
+              title: I18n.hintMessage,
+              message: I18n.loginSuccess,
+              showCancelButton: false,
+              onConfirm: () {
+                Navigator.of(context).pop();
+              },
+            );
+          } else {
+            showConfirmDialog(
+              context: context,
+              title: I18n.hintMessage,
+              message: I18n.loginFailedUserDoesNotExist,
+              showCancelButton: false,
+              onConfirm: () {
+                Navigator.of(context).pop();
+              },
+            );
+          }
+        } else {
+          // 处理未能解析的情况
+          print('未能解析二维码');
+        }
       } else {
-        showConfirmDialog(
-          context: context,
-          title: I18n.hintMessage,
-          message: I18n.loginFailedUserDoesNotExist,
-          showCancelButton: false,
-          onConfirm: () {
-            Navigator.of(context).pop();
-          },
-        );
+        // 处理未能解析的情况
+        print('未能解析二维码');
       }
+    } else {
+      // 处理未选择图片的情况
+      print('未选择图片');
     }
   }
 
