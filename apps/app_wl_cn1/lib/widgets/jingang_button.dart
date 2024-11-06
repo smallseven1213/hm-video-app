@@ -23,7 +23,6 @@ class JingangButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool hasBorder = outerFrame == OuterFrame.border.value;
     bool isRounded = outerFrameStyle == OuterFrameStyle.circle.index;
-    final Size size = MediaQuery.sizeOf(context);
 
     return JingangLinkButton(
       item: item,

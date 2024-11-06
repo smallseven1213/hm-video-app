@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -23,7 +24,9 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
   void initState() {
     super.initState();
     bottomNavigatorController = Get.find<BottomNavigatorController>();
-    _topFabLinkData = bottomNavigatorController.fabLink[0];
+    if (bottomNavigatorController.fabLink.isNotEmpty) {
+      _topFabLinkData = bottomNavigatorController.fabLink[0];
+    }
   }
 
   void _hideFab() {
@@ -70,7 +73,8 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
           leadingWidth: 0,
           leadingWidget: Container(),
           titleWidget: Obx(() {
-            return bottomNavigatorController.isVisible.value
+            return bottomNavigatorController.isVisible.value &&
+                    _topFabLinkData != null && kIsWeb
                 ? InkWell(
                     onTap: () => _handleFabPress(_topFabLinkData!.path!),
                     child: SizedBox(

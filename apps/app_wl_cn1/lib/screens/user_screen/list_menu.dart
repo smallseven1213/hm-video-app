@@ -46,17 +46,30 @@ class ListMenuState extends State<ListMenu> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Wrap(
+          return SafeArea(
+              child: Wrap(
             children: <Widget>[
               ListTile(
-                  leading: const Icon(Icons.photo_library),
-                  title: Text(I18n.albumSelection),
+                  leading: const Icon(
+                    Icons.photo_library,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    I18n.albumSelection,
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   onTap: () {
                     imgFromGallery(context);
                   }),
               ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: Text(I18n.takePhoto),
+                leading: const Icon(
+                  Icons.photo_camera,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  I18n.takePhoto,
+                  style: const TextStyle(color: Colors.white),
+                ),
                 onTap: () async {
                   Navigator.of(context).pop();
                   Permission.camera.request().then((PermissionStatus status) {
@@ -65,14 +78,20 @@ class ListMenuState extends State<ListMenu> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.cancel),
-                title: Text(I18n.cancel),
+                leading: const Icon(
+                  Icons.cancel,
+                  color: Colors.white,
+                ),
+                title: Text(
+                  I18n.cancel,
+                  style: const TextStyle(color: Colors.white),
+                ),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
               ),
             ],
-          );
+          ));
         });
   }
 
@@ -110,11 +129,9 @@ class ListMenuState extends State<ListMenu> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      final Uint8List imageBytes = await image.readAsBytes();
       final MobileScannerController controller = MobileScannerController();
       final BarcodeCapture? barcodeCapture =
-          await controller.analyzeImage(imageBytes as String);
-
+          await controller.analyzeImage(image.path);
       if (barcodeCapture != null && barcodeCapture.barcodes.isNotEmpty) {
         final String? qrCode = barcodeCapture.barcodes.first.rawValue;
         if (qrCode != null) {
