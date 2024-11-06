@@ -23,7 +23,9 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
   void initState() {
     super.initState();
     bottomNavigatorController = Get.find<BottomNavigatorController>();
-    _topFabLinkData = bottomNavigatorController.fabLink[0];
+    if (bottomNavigatorController.fabLink.isNotEmpty) {
+      _topFabLinkData = bottomNavigatorController.fabLink[0];
+    }
   }
 
   void _hideFab() {
