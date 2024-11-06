@@ -72,7 +72,8 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
           leadingWidth: 0,
           leadingWidget: Container(),
           titleWidget: Obx(() {
-            return bottomNavigatorController.isVisible.value
+            return bottomNavigatorController.isVisible.value &&
+                    _topFabLinkData != null
                 ? InkWell(
                     onTap: () => _handleFabPress(_topFabLinkData!.path!),
                     child: SizedBox(
