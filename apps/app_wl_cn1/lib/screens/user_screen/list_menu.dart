@@ -129,11 +129,9 @@ class ListMenuState extends State<ListMenu> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      final Uint8List imageBytes = await image.readAsBytes();
       final MobileScannerController controller = MobileScannerController();
       final BarcodeCapture? barcodeCapture =
-          await controller.analyzeImage(imageBytes as String);
-
+          await controller.analyzeImage(image.path);
       if (barcodeCapture != null && barcodeCapture.barcodes.isNotEmpty) {
         final String? qrCode = barcodeCapture.barcodes.first.rawValue;
         if (qrCode != null) {
