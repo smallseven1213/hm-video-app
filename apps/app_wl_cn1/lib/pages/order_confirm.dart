@@ -48,7 +48,8 @@ class _OrderConfirmPageState extends State<OrderConfirmPage> {
               text: isOrderPathVisited ? I18n.watchVideo : I18n.goToDeposit,
               onPressed: () async {
                 if (!isOrderPathVisited) {
-                  await launchUrl(Uri.parse(widget.paymentLink));
+                  await launchUrl(Uri.parse(widget.paymentLink),
+                      webOnlyWindowName: '_blank');
                   setState(() {
                     isOrderPathVisited = true;
                   });
