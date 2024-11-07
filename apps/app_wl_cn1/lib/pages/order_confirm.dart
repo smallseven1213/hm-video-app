@@ -3,16 +3,24 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../config/colors.dart';
 import '../localization/i18n.dart';
 import '../widgets/button.dart';
 import '../widgets/custom_app_bar.dart';
 
-class OrderConfirmPage extends StatelessWidget {
-  const OrderConfirmPage({super.key});
+class OrderConfirmPage extends StatefulWidget {
+  final String paymentLink;
+
+  const OrderConfirmPage({super.key, required this.paymentLink});
+
+  @override
+  _OrderConfirmPageState createState() => _OrderConfirmPageState();
+}
+
+class _OrderConfirmPageState extends State<OrderConfirmPage> {
+  bool isOrderPathVisited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +45,23 @@ class OrderConfirmPage extends StatelessWidget {
               ),
             ),
             Button(
-              text: I18n.watchVideo,
-              onPressed: () => {
-                MyRouteDelegate.of(context).pushAndRemoveUntil(
-                  AppRoutes.home,
-                  hasTransition: false,
-                  args: {'defaultScreenKey': HomeNavigatorPathes.layout1},
-                ),
-                bottomNavigatorController.changeKey(HomeNavigatorPathes.layout1)
+              text: isOrderPathVisited ? I18n.watchVideo : I18n.goToDeposit,
+              onPressed: () async {
+                if (!isOrderPathVisited) {
+                  await launchUrl(Uri.parse(widget.paymentLink),
+                      webOnlyWindowName: '_blank');
+                  setState(() {
+                    isOrderPathVisited = true;
+                  });
+                } else {
+                  MyRouteDelegate.of(context).pushAndRemoveUntil(
+                    AppRoutes.home,
+                    hasTransition: false,
+                    args: {'defaultScreenKey': HomeNavigatorPathes.layout1},
+                  );
+                  bottomNavigatorController
+                      .changeKey(HomeNavigatorPathes.layout1);
+                }
               },
             ),
             const SizedBox(height: 30),
@@ -77,6 +94,7 @@ class OrderConfirmPage extends StatelessWidget {
                       height: 1.5,
                     ),
                   ),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),
