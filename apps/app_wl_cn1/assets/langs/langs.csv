@@ -260,3 +260,6 @@ current_balance,Current Balance,當前餘額,当前余额,Số Dư Hiện tại,
 nickname_must_be_between_6_and_40_characters,Nickname must be 6-40 characters,暱稱必須在6到40個字元之間,昵称必须在6到40个字元之间,Biệt danh phải có từ 6-40 ký tự,ニックネームは6〜40文字である必要があります,Nama panggilan harus 6-40 karakter
 recommended_services,Recommended,推薦服務,推荐服务,Được Đề xuất,おすすめ,Direkomendasikan
 unknown,unknown,未知,未知,Không xác định,不明,Tidak Diketahui
+selling_price,,售價,售价,,,
+special_offer,,特價,特价,,,
+go_to_deposit,,前往支付,前往支付,,,

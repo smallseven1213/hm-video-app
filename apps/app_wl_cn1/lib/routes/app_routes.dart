@@ -112,5 +112,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         id: args['id'] as int,
       ),
   AppRoutes.orderConfirm: (context, args) =>
-      const order_confirm_page.OrderConfirmPage(),
+      order_confirm_page.OrderConfirmPage(
+        paymentLink: args['paymentLink'] as String,
+      ),
 };

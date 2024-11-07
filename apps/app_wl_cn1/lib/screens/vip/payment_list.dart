@@ -56,9 +56,11 @@ class PaymentListState extends State<PaymentList> {
     if (res.isNotEmpty && res['code'] == '00') {
       var paymentLink = res['data']['paymentLink'];
       if (paymentLink.startsWith('http')) {
-        await launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
-        // Navigator.pop(context);
-        MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
+        // await launchUrl(
+        //     Uri.parse(paymentLink),
+        //     webOnlyWindowName: '_blank');
+        MyRouteDelegate.of(context)
+            .push(AppRoutes.orderConfirm, args: {'paymentLink': paymentLink});
       }
     } else {
       _showErrorDialog(context, I18n.paymentError, res['message']);
