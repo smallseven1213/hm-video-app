@@ -19,16 +19,6 @@ class CoinPage extends StatefulWidget {
 
 class CoinPageState extends State<CoinPage>
     with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   Widget _buildUserInfo() {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),

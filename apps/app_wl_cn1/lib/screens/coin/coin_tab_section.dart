@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../localization/i18n.dart';
 import '../../widgets/tab_bar.dart';
+import 'coin_product_list.dart';
 
 class CoinTabSection extends StatefulWidget {
   const CoinTabSection({super.key});
@@ -53,7 +54,7 @@ class CoinTabSectionState extends State<CoinTabSection>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: const [],
+            children: const [CoinProductList(), SizedBox(), SizedBox()],
           ),
         ),
       ],
