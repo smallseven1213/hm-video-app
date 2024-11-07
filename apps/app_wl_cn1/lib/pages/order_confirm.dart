@@ -25,7 +25,7 @@ class OrderConfirmPage extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.fromLTRB(0,60,0,30),
+              padding: EdgeInsets.fromLTRB(0, 60, 0, 30),
               child:
                   Image(image: AssetImage('assets/images/icon-prosessing.png')),
             ),
@@ -59,7 +59,7 @@ class OrderConfirmPage extends StatelessWidget {
                 children: [
                   Text(
                     I18n.warmHint,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -67,18 +67,14 @@ class OrderConfirmPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '1.溫馨提示內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
+                    '- 跳转后请及时付款，超时支付无法到账，需要重新发起。\n'
+                    '- 每天发起支付不可超过5次，连续发起且未支付，当前账号将会加入黑名单\n'
+                    '- 支付通道在夜间较忙碌，为保证您的体验，尽量选择白天支付\n'
+                    '- 当选择支付方式无法支付时，请切换不同支付方式尝试',
                     style: TextStyle(
                       color: Colors.grey[400],
                       fontSize: 14,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '2.溫馨提示內容文字區塊，營運端提供內容文案。營運端提供內容文案。可放超連結。',
-                    style: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: 14,
+                      height: 1.5,
                     ),
                   ),
                 ],
