@@ -59,6 +59,7 @@ class PaymentListState extends State<PaymentList> {
         // await launchUrl(
         //     Uri.parse(paymentLink),
         //     webOnlyWindowName: '_blank');
+        Navigator.of(context).pop();
         MyRouteDelegate.of(context)
             .push(AppRoutes.orderConfirm, args: {'paymentLink': paymentLink});
       }
