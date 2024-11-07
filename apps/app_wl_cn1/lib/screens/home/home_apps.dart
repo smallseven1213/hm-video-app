@@ -5,7 +5,7 @@ import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/utils/handle_url.dart';
-
+import 'package:shared/utils/platform_utils.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../apps_screen/index.dart';
 
@@ -19,14 +19,23 @@ class HomeAppsScreen extends StatefulWidget {
 class HomeAppsScreenState extends State<HomeAppsScreen> {
   late BottomNavigatorController bottomNavigatorController;
   Navigation? _topFabLinkData;
+  final bool _isStandalone = isInStandaloneMode();
 
   @override
   void initState() {
     super.initState();
     bottomNavigatorController = Get.find<BottomNavigatorController>();
+
     if (bottomNavigatorController.fabLink.isNotEmpty) {
       _topFabLinkData = bottomNavigatorController.fabLink[0];
     }
+    ever(bottomNavigatorController.fabLink, (_) {
+      if (bottomNavigatorController.fabLink.isNotEmpty) {
+        setState(() {
+          _topFabLinkData = bottomNavigatorController.fabLink[0];
+        });
+      }
+    });
   }
 
   void _hideFab() {
@@ -74,7 +83,9 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
           leadingWidget: Container(),
           titleWidget: Obx(() {
             return bottomNavigatorController.isVisible.value &&
-                    _topFabLinkData != null && kIsWeb
+                    _topFabLinkData != null &&
+                    kIsWeb &&
+                    !_isStandalone
                 ? InkWell(
                     onTap: () => _handleFabPress(_topFabLinkData!.path!),
                     child: SizedBox(

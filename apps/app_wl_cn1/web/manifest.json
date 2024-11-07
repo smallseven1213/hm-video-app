@@ -1,11 +1,11 @@
 {
-    "name": "夜色传媒",
-    "short_name": "夜色传媒",
+    "name": "色区",
+    "short_name": "色区",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "夜色传媒 打开你的影音新世界",
+    "description": "色区 打开你的影音新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
