@@ -8,8 +8,6 @@ import 'package:hive/hive.dart';
 import 'package:shared/apis/image_api.dart';
 import 'package:shared/utils/sid_image_result_decode.dart';
 import 'package:shared/widgets/fade_in_effect.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:get/get.dart';
 
 class SidImage extends StatefulWidget {
   final String sid;
@@ -42,7 +40,6 @@ class SidImageState extends State<SidImage> {
   Uint8List? image;
   late double _width;
   late double _height;
-  late BottomNavigatorController bottomNavigatorController;
 
   @override
   void initState() {
@@ -50,14 +47,12 @@ class SidImageState extends State<SidImage> {
     _width = widget.width ?? 200;
     _height = widget.height ?? 200;
     getImage();
-    bottomNavigatorController = Get.find<BottomNavigatorController>();
   }
 
   Future<Uint8List?> _decodeImage(Uint8List file) async {
     final codec = await instantiateImageCodec(file);
     final frame = await codec.getNextFrame();
     final aspectRatio = frame.image.width / frame.image.height;
-    bottomNavigatorController.onAspectRatioCalculated(aspectRatio);
 
     if (widget.width == null && widget.height == null) {
       // 如果宽度和高度都没有提供，使用默认值
