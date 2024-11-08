@@ -44,7 +44,7 @@ class VipPageState extends State<VipPage> {
                     info.nickname,
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

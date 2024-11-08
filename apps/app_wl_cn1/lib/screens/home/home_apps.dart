@@ -1,11 +1,11 @@
+import 'package:app_wl_cn1/screens/home/fab_banner.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:shared/widgets/sid_image.dart';
-import 'package:shared/models/navigation.dart';
+
 import 'package:shared/utils/handle_url.dart';
-import 'package:shared/utils/platform_utils.dart';
+
 import '../../widgets/custom_app_bar.dart';
 import '../apps_screen/index.dart';
 
@@ -17,55 +17,13 @@ class HomeAppsScreen extends StatefulWidget {
 }
 
 class HomeAppsScreenState extends State<HomeAppsScreen> {
-  late BottomNavigatorController bottomNavigatorController;
-  Navigation? _topFabLinkData;
-  final bool _isStandalone = isInStandaloneMode();
+  final BottomNavigatorController bottomNavigatorController =
+      Get.find<BottomNavigatorController>();
 
   @override
   void initState() {
     super.initState();
-    bottomNavigatorController = Get.find<BottomNavigatorController>();
-
-    if (bottomNavigatorController.fabLink.isNotEmpty) {
-      _topFabLinkData = bottomNavigatorController.fabLink[0];
-    }
-    ever(bottomNavigatorController.fabLink, (_) {
-      if (bottomNavigatorController.fabLink.isNotEmpty) {
-        setState(() {
-          _topFabLinkData = bottomNavigatorController.fabLink[0];
-        });
-      }
-    });
   }
-
-  void _hideFab() {
-    bottomNavigatorController.changeVisible();
-  }
-
-  void _handleFabPress(String path) {
-    final parsedUrl = Uri.parse(path);
-
-    if (_isHttpUrl(path)) {
-      handleHttpUrl(path);
-    } else if (_hasDepositType(parsedUrl)) {
-      handleGameDepositType(context, path);
-    } else if (_hasDefaultScreenKey(parsedUrl)) {
-      handleDefaultScreenKey(context, path);
-    } else {
-      handlePathWithId(context, path);
-    }
-  }
-
-  bool _hasDepositType(Uri parsedUrl) =>
-      parsedUrl.queryParameters.containsKey('depositType');
-
-  bool _hasDefaultScreenKey(Uri parsedUrl) =>
-      parsedUrl.queryParameters.containsKey('defaultScreenKey');
-
-  bool _isHttpUrl(String path) =>
-      path.startsWith('http://') ||
-      path.startsWith('https://') ||
-      path.startsWith('*');
 
   @override
   void dispose() {
@@ -77,61 +35,29 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false, // HC: 煩死，勿動!!
-      child: Scaffold(
-        appBar: CustomAppBar(
-          leadingWidth: 0,
-          leadingWidget: Container(),
-          titleWidget: Obx(() {
-            return bottomNavigatorController.isVisible.value &&
-                    _topFabLinkData != null &&
-                    kIsWeb &&
-                    !_isStandalone
-                ? InkWell(
-                    onTap: () => _handleFabPress(_topFabLinkData!.path!),
-                    child: SizedBox(
-                      height: 56,
-                      child: Stack(
-                        children: [
-                          SizedBox.expand(
-                            child: SidImage(
-                              key: ValueKey(_topFabLinkData!.id),
-                              sid: _topFabLinkData!.clickEffect!,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: GestureDetector(
-                              onTap: _hideFab,
-                              child: Container(
-                                padding: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white60,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  size: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : Text(
-                    bottomNavigatorController.activeTitle.value,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  );
-          }),
-        ),
-        body: const AppsScreen(),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: CustomAppBar(
+              leadingWidth: 0,
+              leadingWidget: Container(),
+              titleWidget: Text(
+                bottomNavigatorController.activeTitle.value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+            body: const AppsScreen(),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: FabBanner(),
+          ),
+        ],
       ),
     );
   }
