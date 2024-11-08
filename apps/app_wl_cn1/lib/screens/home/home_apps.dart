@@ -88,8 +88,8 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
                     !_isStandalone
                 ? InkWell(
                     onTap: () => _handleFabPress(_topFabLinkData!.path!),
-                    child: SizedBox(
-                      height: 56,
+                    child: AspectRatio(
+                      aspectRatio: 8 / 1,
                       child: Stack(
                         children: [
                           SizedBox.expand(
