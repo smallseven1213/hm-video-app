@@ -86,42 +86,42 @@ class HomeAppsScreenState extends State<HomeAppsScreen> {
                     _topFabLinkData != null &&
                     kIsWeb &&
                     !_isStandalone
-                ? InkWell(
-                    onTap: () => _handleFabPress(_topFabLinkData!.path!),
-                    child: AspectRatio(
-                      aspectRatio: 8 / 1,
-                      child: Stack(
-                        children: [
-                          SizedBox.expand(
-                            child: SidImage(
-                              key: ValueKey(_topFabLinkData!.id),
-                              sid: _topFabLinkData!.clickEffect!,
-                              fit: BoxFit.cover,
-                            ),
+                ? Stack(children: [
+                    InkWell(
+                      onTap: () => _handleFabPress(_topFabLinkData!.path!),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: AspectRatio(
+                          aspectRatio:
+                              bottomNavigatorController.imageAspectRatio.value,
+                          child: SidImage(
+                            key: ValueKey(_topFabLinkData!.id),
+                            sid: _topFabLinkData!.clickEffect!,
+                            fit: BoxFit.contain,
                           ),
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: GestureDetector(
-                              onTap: _hideFab,
-                              child: Container(
-                                padding: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white60,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.close,
-                                  size: 12,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  )
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: GestureDetector(
+                        onTap: _hideFab,
+                        child: Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: const BoxDecoration(
+                            color: Colors.white60,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            size: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ])
                 : Text(
                     bottomNavigatorController.activeTitle.value,
                     style: const TextStyle(

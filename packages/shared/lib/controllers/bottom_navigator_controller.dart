@@ -19,6 +19,7 @@ class BottomNavigatorController extends GetxController {
   final displayFab = true.obs;
   final activeTitle = ''.obs;
   final isVisible = true.obs;
+  final RxDouble imageAspectRatio = 0.0.obs;
 
   @override
   void onInit() {
@@ -86,5 +87,9 @@ class BottomNavigatorController extends GetxController {
 
   void changeVisible() {
     isVisible.value = !isVisible.value;
+  }
+
+  void onAspectRatioCalculated(double aspectRatio) {
+    imageAspectRatio.value = aspectRatio;
   }
 }
