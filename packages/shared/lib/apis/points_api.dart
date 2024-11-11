@@ -33,10 +33,9 @@ class PointApi {
   }
 
   Future<List<UserPurchaseRecord>> getPoints(
-      {int limit = 100, int page = 1}) async {
-    var url =
-        '$apiHost/public/points/purchase-record/list?page=$page&limit=$limit';
-    var value = await fetcher(url: url);
+      {int limit = 15, int page = 1}) async {
+    var url = '$apiHost/api/v1/user/purchased-records?page=$page&limit=$limit';
+    var value = await fetcher(url: url, timezone: '+8');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return [];
