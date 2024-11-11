@@ -16,7 +16,7 @@ dependencies:
     path: ../../packages/live_core
   navigator: ^1.1.1
   get: ^4.6.6
-  video_player: ^2.8.1
+  video_player: ^2.9.2
   carousel_slider: ^5.0.0
   flutter_keyboard_visibility: ^6.0.0
   clipboard: ^0.1.3
