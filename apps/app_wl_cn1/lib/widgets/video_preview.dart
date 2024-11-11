@@ -106,7 +106,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     bool? displayVideoFavoriteTimes = true,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
-    bool? showChargeType = false,
+    bool? displayChargeType = false,
   }) : super(
           key: key,
           id: id,
@@ -133,7 +133,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           displayVideoFavoriteTimes: displayVideoFavoriteTimes,
           displayVideoTimes: displayVideoTimes,
           displayViewTimes: displayViewTimes,
-          showChargeType: showChargeType,
+          displayChargeType: displayChargeType,
         );
 
   @override
@@ -196,8 +196,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     ),
                   )),
             ),
-            if (showChargeType == true && detail != null)
-              Positioned(left: 5, top: 5, child: showChargeTypeBlock()),
+            if (displayChargeType == true && detail != null)
+              Positioned(left: 5, top: 5, child: displayChargeTypeBlock()),
             if (hasInfoView == true)
               Positioned(
                   left: 0,
@@ -302,7 +302,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     );
   }
 
-  Widget showChargeTypeBlock() {
+  Widget displayChargeTypeBlock() {
     Color colors = Colors.red.withOpacity(0.0);
     String text = '';
     switch (detail!.chargeType) {
