@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
@@ -89,6 +90,14 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     ovpController = Get.find<ObservableVideoPlayerController>(tag: widget.tag);
     ovpController.videoPlayerController?.addListener(() {
       if (mounted && ovpController.videoPlayerController!.value.isInitialized) {
+        // Configure scope with tag "video_info"
+        Sentry.configureScope((scope) {
+          scope.setTag('category', 'video_info');
+        });
+
+        // Capture the entire videoPlayerController value as a readable string
+        Sentry.captureMessage(
+            ovpController.videoPlayerController!.value.toString());
         setState(() {
           videoAction = ovpController.videoAction.value;
           isReady = ovpController.isReady.value;
