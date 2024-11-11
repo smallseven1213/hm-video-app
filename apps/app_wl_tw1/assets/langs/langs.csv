@@ -51,7 +51,7 @@ member_id,Member ID,用戶ID,用户ID,ID người dùng,メンバーID,ID Penggu
 member_center,Member center,會員中心,会员中心,Trung tâm thành viên,メンバーセンター,Pusat Keanggotaan
 search_record,Search record,搜索紀錄,搜索纪录,Lịch sử tìm kiếm,検索記録,Catatan pencarian
 search_recommendation,Search Recommendation,搜索推薦,搜索推荐,Tìm kiếm đề xuất,検索推奨,Rekomendasi pencarian
-popular_recommendation,Popular Recommendation,熱門推薦,热门推荐,Đề xuất phổ biến,人気のおすすめ,Rekomendasi Populer
+popular_recommendation,Popular Recommendation,熱門推薦,推荐应用,Đề xuất phổ biến,人気のおすすめ,Rekomendasi Populer
 coming_soon,Coming soon,精彩即將呈現,精彩即将呈现,Sắp tới sẽ có những điều thú vị,近日公開,Keseruan segera hadir
 upgrade_to_vip_for_unlimited_movie,Open VIP for unlimited movie,開通 VIP 無限看片,开通 VIP 无限看片,Mở VIP để xem phim vô hạn,無制限の映画鑑賞のためのVIPを開放してください。,Buka VIP untuk film tanpa batas
 upgrade_now,Upgrade Now,立即升級,立即升级,Nâng cấp ngay,アップグレードする,Tingkatkan sekarang
@@ -214,49 +214,52 @@ want_to_watch,Want to watch，,看不過癮，,看不过瘾，,Muốn xem,見た
 coins_unlock,coins unlock,金幣解鎖,金币解锁,Mở khóa bằng xu,コインで解除,Koin buka
 unlock_now,Unlock now,立即解鎖,立即解锁,Mở khóa ngay,今すぐ解除,Buka sekarang
 post,post,貼文,帖子,Bài đăng,投稿,Postingan
-coin_wallet,Coins,金幣錢包,金币钱包,,,
-purchase_record,Purchase,購買記錄,购买记录,,,
-privilege_record,Privilege,特權紀錄,特权纪录,,,
-deposit_record,Orders,存款記錄,存款记录,,,
-confirm_delete,Confirm Delete,是否刪除,是否删除,,,
-confirm_delete_selected,Confirm Delete Selected,是否刪除勾選項目,是否删除勾选项目,,,
-serial_number_exchange,SN exchange,序號兌換,序号兑换,,,
-enter_serial_number,Enter Serial Number,請輸入序號,请输入序号,,,
-exchange,Exchange,兌換,兑换,,,
-video_recommended,,推薦,推荐,,,
-redeem_record,,兌換記錄,兑换记录,,,
-redeem_name,,兌換名稱,兑换名称,,,
-redeem_time,,兌換時間,兑换时间,,,
-watch_video,Watch Video,觀看視頻,观看视频,,,
-payment_confirmation,,支付確認,支付确认,,,
-order_created_payment_pending,,訂單已建立，付款確認中...,订单已建立，付款确认中...,,,
-signup,,註冊,注册,,,
-warm_hint,,溫馨提示,温馨提示,,,
-completed,,已完成,已完成,,,
-pending,,確認中,确认中,,,
-all,,全部,全部,,,
-failed,,失敗,失败,,,
+coin_wallet,Coins,金幣錢包,金币钱包,Xu,コイン,Koin
+purchase_record,Purchase,購買記錄,购买记录,Mua hàng,購入,Pembelian
+privilege_record,Privilege,特權紀錄,特权纪录,Đặc quyền,特権,Hak Istimewa
+deposit_record,Orders,存款記錄,存款记录,Đơn hàng,注文,Pesanan
+confirm_delete,Confirm Delete,是否刪除,是否删除,Xác nhận Xóa,削除を確認,Konfirmasi Hapus
+confirm_delete_selected,Confirm Delete Selected,是否刪除勾選項目,是否删除勾选项目,Xác nhận Xóa đã chọn,選択した項目の削除を確認,Konfirmasi Hapus yang Dipilih
+serial_number_exchange,SN exchange,序號兌換,序号兑换,Đổi số SN,シリアル番号交換,Penukaran SN
+enter_serial_number,Enter Serial Number,請輸入序號,请输入序号,Nhập Số Seri,シリアル番号を入力,Masukkan Nomor Seri
+exchange,Exchange,兌換,兑换,Đổi,交換,Tukar
+video_recommended,Recommended,推薦,推荐视频,Đề xuất,おすすめ,Direkomendasikan
+redeem_record,Record,兌換記錄,兑换记录,Ghi chép,記録,Catatan
+redeem_name,Name,兌換名稱,兑换名称,Tên,名前,Nama
+redeem_time,Time,兌換時間,兑换时间,Thời gian,時間,Waktu
+watch_video,Watch Video,觀看視頻,观看视频,Xem Video,ビデオを見る,Tonton Video
+payment_confirmation,Payment Confirmation,支付確認,支付确认,Xác nhận Thanh toán,支払い確認,Konfirmasi Pembayaran
+order_created_payment_pending,Order pending confirmation…,訂單已建立，付款確認中...,订单已建立，付款确认中...,Đơn hàng đang chờ xác nhận…,注文は確認待ち…,Pesanan menunggu konfirmasi…
+signup,Sign Up,註冊,注册,Đăng ký,サインアップ,Daftar
+warm_hint,Hint,溫馨提示,温馨提示,Gợi ý,ヒント,Petunjuk
+completed,Completed,已完成,已完成,Hoàn tất,完了,Selesai
+pending,Pending,確認中,确认中,Đang chờ xử lý,保留中,Menunggu
+all,All,全部,全部,Tất cả,すべて,Semua
+failed,Failed,失敗,失败,Thất bại,失敗,Gagal
 product_name_or_payment_type,,購買商品名稱/支付類型,购买商品名称/支付类型,,,
-amount,,金額：,金额：,,,
-order_time,,訂單時間：,订单时间：,,,
-order_number,,訂單編號：,订单编号：,,,
-payment_error,,付款錯誤,付款错误,,,
-selected,,已選擇,已选择,,,
-please_select_payment_method,,請選擇支付方式,请选择支付方式,,,
-no_available_payment_method,,無可用支付方式,无可用支付方式,,,
-valid,,有效,有效,,,
-expired,,失效,失效,,,
-start_time,Start Time,開始時間：,开始时间：,,,
-valid_period,,有效時間：,有效时间：,,,
-enter,Enter,進入,进入,Nhập,入る ,Masuk
-vip_member,VIP,VIP會員,VIP会员,,,
-valid_until,,效期至：,效期至：,,,
-limited_time_offer,,限時特價,限时特价,,,
+amount,Amount,金額：,金额：,Số tiền,金額,Jumlah
+order_time,Time,訂單時間：,订单时间：,Thời gian,時間,Waktu
+order_number,Number,訂單編號：,订单编号：,Số thứ tự,番号,Nomor
+payment_error,Payment Error,付款錯誤,付款错误,Lỗi Thanh toán,支払いエラー,Kesalahan Pembayaran
+selected,Selected,已選擇,已选择,Đã chọn,選択済み,Terpilih
+please_select_payment_method,Select Payment Method,請選擇支付方式,请选择支付方式,Chọn Phương thức Thanh toán,支払い方法を選択,Pilih Metode Pembayaran
+no_available_payment_method,No Available Payment Method,無可用支付方式,无可用支付方式,Không có Phương thức Thanh toán khả dụng,利用可能な支払い方法がありません,Tidak Ada Metode Pembayaran Tersedia
+valid,Valid,有效,有效,Hợp lệ,有効,Berlaku
+expired,Expired,失效,失效,Hết hạn,期限切れ,Kedaluwarsa
+start_time,Start Time,開始時間：,开始时间：,Thời gian Bắt đầu,開始時間,Waktu Mulai
+valid_period,Valid Period,有效時間：,有效时间：,Thời gian Hiệu lực,有効期間,Masa Berlaku
+enter,Enter,進入,进入,Nhập,入力,Masukkan
+vip_member,VIP,VIP會員,VIP会员,VIP,VIP,VIP
+valid_until,Until,效期至：,效期至：,Đến,まで,Hingga
+limited_time_offer,Limited-Time,限時特價,限时特价,Ưu đãi có thời hạn,期間限定,Waktu Terbatas
 days_vip_free_video_access,,天VIP 視頻免費看,天VIP 视频免费看,,,
-original_price,,原價： $,原价： $,,,
-show_only_valid,,只顯示有效,只显示有效,,,
-watch_all,,觀看全部,观看全部,,,
-current_balance,,當前餘額,当前余额,,,
-nickname_must_be_between_6_and_40_characters,,暱稱必須在6到40個字元之間,昵称必须在6到40个字元之间,,,
-recommended_services,,推薦服務,推荐服务,,,
-unknown,unknown,未知,未知,,,
+original_price,Original Price,原價： $,原价： $,Giá Gốc,元の価格,Harga Asli
+show_only_valid,Only Valid,只顯示有效,只显示有效,Chỉ Hiển thị Hợp lệ,有効なもののみ,Hanya Berlaku
+watch_all,Watch All,觀看全部,观看全部,Xem Tất cả,すべてを見る,Tonton Semua
+current_balance,Current Balance,當前餘額,当前余额,Số Dư Hiện tại,現在の残高,Saldo Saat Ini
+nickname_must_be_between_6_and_40_characters,Nickname must be 6-40 characters,暱稱必須在6到40個字元之間,昵称必须在6到40个字元之间,Biệt danh phải có từ 6-40 ký tự,ニックネームは6〜40文字である必要があります,Nama panggilan harus 6-40 karakter
+recommended_services,Recommended,推薦服務,推荐服务,Được Đề xuất,おすすめ,Direkomendasikan
+unknown,unknown,未知,未知,Không xác định,不明,Tidak Diketahui
+selling_price,,售價,售价,,,
+special_offer,,特價,特价,,,
+go_to_deposit,,前往支付,前往支付,,,

@@ -1,11 +1,14 @@
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
-import 'package:app_wl_tw1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
 import '../localization/i18n.dart';
+import '../widgets/avatar.dart';
+import '../screens/user_screen/balance.dart';
+import '../screens/coin/coin_tab_section.dart';
 
 class CoinPage extends StatefulWidget {
   const CoinPage({Key? key}) : super(key: key);
@@ -16,18 +19,41 @@ class CoinPage extends StatefulWidget {
 
 class CoinPageState extends State<CoinPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: 4);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  Widget _buildUserInfo() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 2),
+      child: UserInfoV2Consumer(
+        child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+          return Row(
+            children: [
+              Avatar(),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    info.nickname,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'ID: ${info.uid}',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -56,31 +82,18 @@ class CoinPageState extends State<CoinPage>
         );
       },
       child: Scaffold(
+        backgroundColor: const Color(0xff0f1320),
         appBar: CustomAppBar(
           title: I18n.coinWallet,
         ),
         body: Column(
           children: [
-            // const UserInfo(),
-            // const UserBalance(),
-            TabBarWidget(
-              controller: _tabController,
-              tabs: [I18n.coin, I18n.purchaseRecord, I18n.privilegeRecord, I18n.depositRecord],
+            _buildUserInfo(),
+            Container(
+              padding: const EdgeInsets.only(right: 16, left: 16, bottom: 20),
+              child: const UserBalance(),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    // CoinProducts(),
-                    // PurchaseRecord(),
-                    // PrivilegeRecord(),
-                    // OrderRecord(),
-                  ],
-                ),
-              ),
-            ),
+            const Expanded(child: CoinTabSection()),
           ],
         ),
       ),
