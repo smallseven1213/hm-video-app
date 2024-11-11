@@ -28,12 +28,13 @@ class DepositPaymentItems extends StatefulWidget {
 }
 
 class _DepositPaymentItemsState extends State<DepositPaymentItems> {
-  String _paymentActiveIndex = '100';
+  String _paymentActiveIndex = '';
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
   final gameWithdrawController = Get.put(GameWithdrawController());
   FocusNode focusNode = FocusNode();
+  List<String> paymentListLabel = [];
 
   @override
   void initState() {
@@ -51,6 +52,11 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   void setInitFormValue() {
     if (widget.paymentList.isNotEmpty) {
+      paymentListLabel = widget.paymentList
+          .map((e) => e.label[0])
+          .toList(); // 取出paymentList中的label[0]
+      _paymentActiveIndex =
+          widget.paymentList.first.label[0]; // 將第一筆資料的label[0]指定為初始選定的index
       amountController.text = widget.paymentList
           .firstWhere((element) => element.label[0] == _paymentActiveIndex)
           .minAmount;
@@ -89,17 +95,17 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   List paymentListItem = [
     {
+      "id": 99,
+      "name": "TransferBank",
+      "code": "99",
+      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
+    },
+    {
       "id": 100,
       "name": "MobileDeposit",
       "code": "100",
       "icon":
           "packages/game/assets/images/game_deposit/icon-mobiledeposit.webp",
-    },
-    {
-      "id": 99,
-      "name": "TransferBank",
-      "code": "99",
-      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
     },
   ];
 
@@ -150,7 +156,13 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             // ======支付方式======
             DepositPaymentTypeListWidget(
               paymentActiveIndex: _paymentActiveIndex.toLowerCase(),
-              paymentListItem: paymentListItem,
+              paymentListItem: paymentListItem
+                  .where(
+                      (element) => paymentListLabel.contains(element['code']))
+                  .toList() // paymentListItem篩選掉不在paymentListLabel中的資料
+                ..sort((a, b) => paymentListLabel
+                    .indexOf(a['code'])
+                    .compareTo(paymentListLabel.indexOf(b['code']))),
               handlePaymentIndexChanged: paymentIndexChanged,
             ),
             SizedBox(
