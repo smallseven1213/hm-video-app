@@ -21,13 +21,6 @@ class CoinTabSectionState extends State<CoinTabSection>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 3);
-
-    // 監聽tab滑動
-    _tabController.animation!.addListener(() {
-      if (_tabController.animation!.value % 1 != 0) {
-        // 如果動畫值不是整數，表示滑動正在進行中
-      }
-    });
   }
 
   @override
