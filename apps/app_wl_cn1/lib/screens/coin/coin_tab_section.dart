@@ -4,6 +4,7 @@ import '../../localization/i18n.dart';
 import '../../widgets/tab_bar.dart';
 import 'coin_product_list.dart';
 import 'coin_purchase_record.dart';
+import 'coin_order_record.dart';
 
 class CoinTabSection extends StatefulWidget {
   const CoinTabSection({super.key});
@@ -58,7 +59,7 @@ class CoinTabSectionState extends State<CoinTabSection>
             children: const [
               CoinProductList(),
               CoinPurchaseRecord(),
-              SizedBox()
+              CoinOrderRecord()
             ],
           ),
         ),
