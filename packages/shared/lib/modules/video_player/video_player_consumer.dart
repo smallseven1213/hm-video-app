@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
@@ -89,6 +90,38 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     ovpController = Get.find<ObservableVideoPlayerController>(tag: widget.tag);
     ovpController.videoPlayerController?.addListener(() {
       if (mounted && ovpController.videoPlayerController!.value.isInitialized) {
+        Sentry.configureScope((scope) {
+          scope.setTag('category', 'video_info'); // Set the custom tag
+        });
+        Sentry.captureEvent(
+          SentryEvent(
+            message: SentryMessage({
+              'videoAction': ovpController.videoAction.value,
+              'isReady': ovpController.isReady.value,
+              'inBuffering':
+                  ovpController.videoPlayerController!.value.isBuffering,
+              'isPlaying': ovpController.videoPlayerController!.value.isPlaying,
+              'videoDurationString': ovpController
+                  .videoPlayerController!.value.duration
+                  .toString()
+                  .split('.')
+                  .first,
+              'videoDuration': ovpController
+                  .videoPlayerController!.value.duration.inSeconds
+                  .toInt(),
+              'videoPositionString': ovpController
+                  .videoPlayerController!.value.position
+                  .toString()
+                  .split('.')
+                  .first,
+              'videoPosition': ovpController
+                  .videoPlayerController!.value.position.inSeconds
+                  .toInt(),
+              'videoSize': ovpController.videoPlayerController!.value.size,
+              'volume': ovpController.videoPlayerController!.value.volume,
+            }.toString()),
+          ),
+        );
         setState(() {
           videoAction = ovpController.videoAction.value;
           isReady = ovpController.isReady.value;
