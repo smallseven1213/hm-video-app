@@ -34,6 +34,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final String? publisherName;
   final Function()? onTap;
   final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
+  final bool? showChargeType;
 
   const BaseVideoPreviewWidget({
     Key? key,
@@ -64,6 +65,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
     this.displaySupplier = true,
     this.displayPublisher = false,
     this.publisherName,
+    this.showChargeType = false,
   }) : super(key: key);
 
   void onVideoTap(BuildContext context) {
