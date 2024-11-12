@@ -37,6 +37,8 @@ import '../controllers/video_ads_controller.dart';
 import '../controllers/video_short_ads_controller.dart';
 import '../enums/list_editor_category.dart';
 import '../enums/play_record_type.dart';
+import '../controllers/user_video_purchase_record_controller.dart';
+import '../controllers/user_short_purchase_record_controller.dart';
 
 void setupDependencies() async {
   Get.put(RouteController());
@@ -80,6 +82,10 @@ void setupDependencies() async {
   Get.lazyPut<UserVodCollectionController>(() => UserVodCollectionController());
   Get.lazyPut<UserShortCollectionController>(
       () => UserShortCollectionController());
+  Get.lazyPut<UserVodPurchaseRecordController>(
+      () => UserVodPurchaseRecordController());
+  Get.lazyPut<UserShortPurchaseRecordController>(
+      () => UserShortPurchaseRecordController());
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
   Get.lazyPut<FilterVideoScreenController>(() => FilterVideoScreenController());
   Get.lazyPut<FilterShortScreenController>(() => FilterShortScreenController());
@@ -99,5 +105,4 @@ void setupDependencies() async {
       () => GamePlatformConfigController());
   Get.lazyPut<GameAreaController>(() => GameAreaController());
   Get.lazyPut<PostLikeController>(() => PostLikeController());
-
 }
