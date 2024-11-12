@@ -41,4 +41,5 @@ class AppRoutes {
   static const String live = '/live';
   static const String tagGames = '/tag_games';
   static const String post = '/post';
+  static const String purchaseRecord = '/purchase_record';
 }

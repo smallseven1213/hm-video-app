@@ -260,6 +260,21 @@ class UserApi {
           '$apiHost/public/users/user/favoriteRecord?videoId=${videoId.join(',')}',
       method: 'DELETE');
 
+  // 獲得視頻購買紀錄清單
+  Future<BlockVod> getVideoPurchaseRecord({int? film = 1}) async {
+    var res =
+        await fetcher(url: '$apiHost/api/v1/user/purchased-videos?film=$film');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
+  }
+
   // 演員喜愛紀錄清單
   Future<List<Actor>> getFavoriteActor() async {
     var res = await fetcher(
