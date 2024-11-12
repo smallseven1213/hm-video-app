@@ -36,6 +36,7 @@ import '../pages/coin.dart' as coin_page;
 import '../pages/redemption.dart' as redemption_page;
 import '../pages/post.dart' as post_page;
 import '../pages/order_confirm.dart' as order_confirm_page;
+import '../pages/purchase_record.dart' as purchase_record_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -113,4 +114,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.orderConfirm: (context, args) =>
       const order_confirm_page.OrderConfirmPage(),
+  AppRoutes.purchaseRecord: (context, args) =>
+      const purchase_record_page.PurchaseRecordPage(),
 };

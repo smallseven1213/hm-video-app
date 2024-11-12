@@ -156,6 +156,7 @@ class VodsState extends State<Vods> {
                     film: vodController!.film.value,
                     displayVideoFavoriteTimes: false,
                     displayCoverVertical: vodController!.film.value == 2,
+                    displayChargeType: true,
                   ),
                 ),
               ),

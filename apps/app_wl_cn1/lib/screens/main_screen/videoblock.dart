@@ -49,6 +49,7 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       film: film,
       blockId: block.id,
       hasTags: false,
+      displayChargeType: true,
     );
   }
 
