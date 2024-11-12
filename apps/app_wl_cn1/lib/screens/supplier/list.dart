@@ -54,32 +54,35 @@ class SupplierVods extends StatelessWidget {
                   (BuildContext context, int index) {
                     var vod = videos[index];
                     return VideoPreviewWidget(
-                        id: id,
-                        onOverrideRedirectTap: (id) {
-                          MyRouteDelegate.of(context).push(
-                            AppRoutes.shorts,
-                            args: {
-                              'type': ShortsType.supplier,
-                              'videoId': vod.id,
-                              'id': id
-                            },
-                          );
-                        },
-                        film: 2,
-                        hasRadius: false,
-                        hasTitle: false,
-                        hasTags: false,
-                        imageRatio: gridRatio,
-                        displayVideoTimes: false,
-                        displayViewTimes: false,
-                        displayCoverVertical: true,
-                        coverVertical: vod.coverVertical!,
-                        coverHorizontal: vod.coverHorizontal!,
-                        timeLength: vod.timeLength!,
-                        tags: vod.tags!,
-                        title: vod.title,
-                        videoViewTimes: vod.videoViewTimes!,
-                        videoFavoriteTimes: vod.videoFavoriteTimes!);
+                      id: id,
+                      onOverrideRedirectTap: (id) {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.shorts,
+                          args: {
+                            'type': ShortsType.supplier,
+                            'videoId': vod.id,
+                            'id': id
+                          },
+                        );
+                      },
+                      film: 2,
+                      hasRadius: false,
+                      hasTitle: false,
+                      hasTags: false,
+                      imageRatio: gridRatio,
+                      displayVideoTimes: false,
+                      displayViewTimes: false,
+                      displayCoverVertical: true,
+                      coverVertical: vod.coverVertical!,
+                      coverHorizontal: vod.coverHorizontal!,
+                      timeLength: vod.timeLength!,
+                      tags: vod.tags!,
+                      title: vod.title,
+                      videoViewTimes: vod.videoViewTimes!,
+                      videoFavoriteTimes: vod.videoFavoriteTimes!,
+                      detail: vod,
+                      displayChargeType: true,
+                    );
                   },
                   childCount: videos.length,
                 ),

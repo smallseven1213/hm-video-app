@@ -58,13 +58,12 @@ class FabBanner extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () => handleFabPress(context, fabLinkData.path ?? ''),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 60,
+                  child: AspectRatio(
+                    aspectRatio: 375 / 48,
                     child: SidImage(
                       key: ValueKey(fabLinkData.id),
                       sid: fabLinkData.clickEffect!,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

@@ -158,6 +158,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                               displayVideoFavoriteTimes: false,
                               videoFavoriteTimes:
                                   firstVideo.videoFavoriteTimes!,
+                              detail: firstVideo,
+                              displayChargeType: true,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -175,6 +177,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                                     displayVideoFavoriteTimes: false,
                                     videoFavoriteTimes:
                                         secondVideo.videoFavoriteTimes!,
+                                    detail: secondVideo,
+                                    displayChargeType: true,
                                   )
                                 : const SizedBox(),
                           ),
