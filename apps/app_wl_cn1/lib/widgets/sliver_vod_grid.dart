@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/vod.dart';
 
 import 'no_data.dart';
 import 'sliver_video_preview_skelton_list.dart';
@@ -7,7 +8,7 @@ import 'video_preview.dart';
 
 class SliverVodGrid extends StatefulWidget {
   final int? film;
-  final List videos;
+  final List<Vod> videos;
   final bool displayNoMoreData;
   final bool isListEmpty;
   final bool displayLoading;
@@ -101,6 +102,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
                               displayViewTimes: widget.displayViewTimes,
                               onOverrideRedirectTap:
                                   widget.onOverrideRedirectTap,
+                              displayChargeType: true,
+                              detail: firstVideo,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -128,6 +131,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                       displayViewTimes: widget.displayViewTimes,
                                       onOverrideRedirectTap:
                                           widget.onOverrideRedirectTap,
+                                      displayChargeType: true,
+                                      detail: secondVideo,
                                     )
                                   : const SizedBox.shrink()),
                         ],

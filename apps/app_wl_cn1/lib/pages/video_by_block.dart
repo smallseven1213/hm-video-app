@@ -141,6 +141,8 @@ class SliverBlockWidget extends StatelessWidget {
                         displayViewTimes: film == 1,
                         displayCoverVertical: film == 2,
                         videoFavoriteTimes: vods[index * 2].videoFavoriteTimes!,
+                        displayChargeType: true,
+                        detail: vods[index * 2],
                       ),
                     ),
                     const SizedBox(
@@ -165,6 +167,8 @@ class SliverBlockWidget extends StatelessWidget {
                               displayCoverVertical: film == 2,
                               videoFavoriteTimes:
                                   vods[index * 2 + 1].videoFavoriteTimes!,
+                              displayChargeType: true,
+                              detail: vods[index * 2 + 1],
                             ),
                           )
                         : const Expanded(

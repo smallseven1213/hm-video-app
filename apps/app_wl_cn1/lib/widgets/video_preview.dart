@@ -11,7 +11,7 @@ import 'package:shared/widgets/video_collection_times.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
-
+import '../../localization/i18n.dart';
 import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {
@@ -106,6 +106,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     bool? displayVideoFavoriteTimes = true,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
+    bool? displayChargeType = false,
   }) : super(
           key: key,
           id: id,
@@ -132,6 +133,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           displayVideoFavoriteTimes: displayVideoFavoriteTimes,
           displayVideoTimes: displayVideoTimes,
           displayViewTimes: displayViewTimes,
+          displayChargeType: displayChargeType,
         );
 
   @override
@@ -194,6 +196,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     ),
                   )),
             ),
+            if (displayChargeType == true && detail != null)
+              Positioned(left: 5, top: 5, child: displayChargeTypeBlock()),
             if (hasInfoView == true)
               Positioned(
                   left: 0,
@@ -295,6 +299,43 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         // The rest of your UI logic
         // ...
       ],
+    );
+  }
+
+  Widget displayChargeTypeBlock() {
+    Color colors = Colors.red.withOpacity(0.0);
+    String text = '';
+    switch (detail!.chargeType) {
+      case 1:
+        colors = Colors.blue.withOpacity(0.5);
+        text = I18n.free;
+        break;
+      case 2:
+        colors = Colors.yellow.withOpacity(0.5);
+        text = I18n.coin;
+        break;
+      case 3:
+        colors = Colors.orange.withOpacity(0.5);
+        text = I18n.vip;
+        break;
+    }
+    return Container(
+      width: 40,
+      height: 20,
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      decoration: BoxDecoration(
+        color: colors,
+        borderRadius: BorderRadius.circular(5),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+        ),
+      ),
     );
   }
 }
