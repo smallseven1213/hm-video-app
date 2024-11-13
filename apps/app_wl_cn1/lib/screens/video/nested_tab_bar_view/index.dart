@@ -43,12 +43,6 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   }
 
   @override
-  void dispose() {
-    appsController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
