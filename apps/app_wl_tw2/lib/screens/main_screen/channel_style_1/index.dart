@@ -23,6 +23,7 @@ import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
 import '../videoblock.dart';
+import '../channel_jingang_area_title.dart';
 
 final logger = Logger();
 
@@ -171,14 +172,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
                           ChannelBanners(
                             channelId: widget.channelId,
                           ),
-                          if (channelData.jingang!.title != '')
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Header(
-                                    text: channelData.jingang!.title ?? ''),
-                              ),
-                            ),
+                          ChannelJingangAreaTitle(
+                            channelId: widget.channelId,
+                          ),
                           ChannelJingangArea(
                             channelId: widget.channelId,
                           ),
