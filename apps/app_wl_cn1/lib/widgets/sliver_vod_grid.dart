@@ -96,8 +96,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                               videoViewTimes: firstVideo.videoViewTimes!,
                               videoFavoriteTimes:
                                   firstVideo.videoFavoriteTimes!,
-                              displayVideoFavoriteTimes:
-                                  widget.displayVideoFavoriteTimes,
+                              displayVideoFavoriteTimes: false,
                               displayVideoTimes: widget.displayVideoTimes,
                               displayViewTimes: widget.displayViewTimes,
                               onOverrideRedirectTap:
@@ -124,8 +123,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                           secondVideo.videoViewTimes!,
                                       videoFavoriteTimes:
                                           secondVideo.videoFavoriteTimes!,
-                                      displayVideoFavoriteTimes:
-                                          widget.displayVideoFavoriteTimes,
+                                      displayVideoFavoriteTimes: false,
                                       displayVideoTimes:
                                           widget.displayVideoTimes,
                                       displayViewTimes: widget.displayViewTimes,
