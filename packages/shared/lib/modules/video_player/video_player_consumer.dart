@@ -90,38 +90,38 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     ovpController = Get.find<ObservableVideoPlayerController>(tag: widget.tag);
     ovpController.videoPlayerController?.addListener(() {
       if (mounted && ovpController.videoPlayerController!.value.isInitialized) {
-        // Configure scope with tag "video_info"
-        Sentry.configureScope((scope) {
-          scope.setTag('category', 'video_info');
-        });
+        // // Configure scope with tag "video_info"
+        // Sentry.configureScope((scope) {
+        //   scope.setTag('category', 'video_info');
+        // });
 
-        // Capture the entire videoPlayerController value as a readable string
-        Sentry.captureMessage(
-            ovpController.videoPlayerController!.value.toString());
-        setState(() {
-          videoAction = ovpController.videoAction.value;
-          isReady = ovpController.isReady.value;
-          inBuffering = ovpController.videoPlayerController!.value.isBuffering;
-          isPlaying = ovpController.videoPlayerController!.value.isPlaying;
-          videoDurationString = ovpController
-              .videoPlayerController!.value.duration
-              .toString()
-              .split('.')
-              .first;
-          videoDuration = ovpController
-              .videoPlayerController!.value.duration.inSeconds
-              .toInt();
-          videoPositionString = ovpController
-              .videoPlayerController!.value.position
-              .toString()
-              .split('.')
-              .first;
-          videoPosition = ovpController
-              .videoPlayerController!.value.position.inSeconds
-              .toInt();
-          videoSize = ovpController.videoPlayerController!.value.size;
-          volume = ovpController.videoPlayerController!.value.volume;
-        });
+        // // Capture the entire videoPlayerController value as a readable string
+        // Sentry.captureMessage(
+        //     ovpController.videoPlayerController!.value.toString());
+        // setState(() {
+        //   videoAction = ovpController.videoAction.value;
+        //   isReady = ovpController.isReady.value;
+        //   inBuffering = ovpController.videoPlayerController!.value.isBuffering;
+        //   isPlaying = ovpController.videoPlayerController!.value.isPlaying;
+        //   videoDurationString = ovpController
+        //       .videoPlayerController!.value.duration
+        //       .toString()
+        //       .split('.')
+        //       .first;
+        //   videoDuration = ovpController
+        //       .videoPlayerController!.value.duration.inSeconds
+        //       .toInt();
+        //   videoPositionString = ovpController
+        //       .videoPlayerController!.value.position
+        //       .toString()
+        //       .split('.')
+        //       .first;
+        //   videoPosition = ovpController
+        //       .videoPlayerController!.value.position.inSeconds
+        //       .toInt();
+        //   videoSize = ovpController.videoPlayerController!.value.size;
+        //   volume = ovpController.videoPlayerController!.value.volume;
+        // });
 
         if (ovpController.videoPlayerController!.value.duration ==
             ovpController.videoPlayerController!.value.position) {
