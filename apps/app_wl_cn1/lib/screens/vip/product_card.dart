@@ -20,21 +20,16 @@ class ProductCard extends StatelessWidget {
       // 加入 Center 確保置中
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8), // 移除 horizontal margin
-        child: kIsWeb
-            ? Container(
-                // 使用 Container 而不是 SizedBox 以添加 clipBehavior
-                width: 290,
-                height: 150,
-                clipBehavior: Clip.antiAlias, // 添加裁切效果
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: _buildCard(context, isLimited),
-              )
-            : AspectRatio(
-                aspectRatio: 290 / 150,
-                child: _buildCard(context, isLimited),
-              ),
+        child: Container(
+          // 使用 Container 而不是 SizedBox 以添加 clipBehavior
+          width: 290,
+          height: 150,
+          clipBehavior: Clip.antiAlias, // 添加裁切效果
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: _buildCard(context, isLimited),
+        ),
       ),
     );
   }
