@@ -72,8 +72,9 @@ class CoinProductCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             // 圖片
-            Expanded(
-              child: Center(
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: SidImage(
                   sid: product.photoSid!,
                   fit: BoxFit.contain,
