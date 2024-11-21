@@ -61,7 +61,7 @@ class UserApi {
       }
 
       fetcher(
-        url: '$apiHost/public/users/user/userLoginRecord',
+        url: '$apiHost/api/v1/user/login-record',
         method: 'POST',
         body: {
           'device': _systemConfigController.userDevice.value,
@@ -82,7 +82,7 @@ class UserApi {
     if (box.read('entered') == null) {
       try {
         fetcher(
-          url: '$apiHost/public/users/user/userEventRecord/enterHall',
+          url: '$apiHost/api/v1/user/event-record/enter-hall',
           method: 'POST',
           body: {
             'version': _systemConfigController.version.value,
@@ -191,7 +191,7 @@ class UserApi {
       body: {'videoId': vodId});
 
   Future<void> addFavoritSupplier(int supplierId) => fetcher(
-      url: '$apiHost/public/users/user/supplierFollowRecord',
+      url: '$apiHost/api/v1/user/follow-supplier',
       method: 'POST',
       body: {'supplierId': supplierId});
 
@@ -201,13 +201,12 @@ class UserApi {
       method: 'DELETE');
 
   Future<void> deleteActorFavorite(List<int> vodId) => fetcher(
-      url:
-          '$apiHost/public/users/user/actorCollectRecord?actorId=${vodId.join(',')}',
+      url: '$apiHost/api/v1/user/collect-actor?actorId=${vodId.join(',')}',
       method: 'DELETE');
 
   Future<void> deleteSupplierFavorite(List<int> supplierId) => fetcher(
       url:
-          '$apiHost/public/users/user/supplierFollowRecord?supplierId=${supplierId.join(',')}',
+          '$apiHost/api/v1/user/follow-supplier?supplierId=${supplierId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻喜愛紀錄清單
@@ -226,13 +225,12 @@ class UserApi {
   }
 
   Future<void> addFavoriteActor(int actorId) => fetcher(
-      url: '$apiHost/public/users/user/actorCollectRecord',
+      url: '$apiHost/api/v1/user/collect-actor',
       method: 'POST',
       body: {'actorId': actorId});
 
   Future<void> deleteFavoriteActor(List<int> actorId) => fetcher(
-      url:
-          '$apiHost/public/users/user/actorCollectRecord?videoId=${actorId.join(',')}',
+      url: '$apiHost/api/v1/user/collect-actor?videoId=${actorId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻收藏紀錄清單
@@ -278,7 +276,7 @@ class UserApi {
   // 演員喜愛紀錄清單
   Future<List<Actor>> getFavoriteActor() async {
     var res = await fetcher(
-        url: '$apiHost/public/users/user/actorCollectRecord',
+        url: '$apiHost/api/v1/user/collect-actor',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
@@ -292,7 +290,7 @@ class UserApi {
   // UP主(供應商)喜愛紀錄清單
   Future<List<Supplier>> getFavoriteSupplier() async {
     var res = await fetcher(
-        url: '$apiHost/public/users/user/supplierFollowRecord',
+        url: '$apiHost/api/v1/user/follow-supplier',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
@@ -313,17 +311,16 @@ class UserApi {
       body: {'tagId': tagId});
 
   Future<void> deleteSupplierFollowRecord(int supplierId) => fetcher(
-      url:
-          '$apiHost/public/users/user/supplierFollowRecord?supplierId=$supplierId',
+      url: '$apiHost/api/v1/user/follow-supplier?supplierId=$supplierId',
       method: 'DELETE');
 
   Future<void> addSupplierFollowRecord(int supplierId) => fetcher(
-      url: '$apiHost/public/users/user/supplierFollowRecord',
+      url: '$apiHost/api/v1/user/follow-supplier',
       method: 'POST',
       body: {'supplierId': supplierId});
 
   Future<void> addUserEventRecord(String version) => fetcher(
-      url: '$apiHost/public/users/user/userEventRecord/enterHall',
+      url: '$apiHost/api/v1/user/event-record/enter-hall',
       method: 'POST',
       body: {'version': version});
 

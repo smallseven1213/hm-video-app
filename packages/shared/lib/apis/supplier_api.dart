@@ -24,7 +24,7 @@ class SupplierApi {
 
   // Get suppliers/supplier/?id=20 By id
   Future<Supplier> getOneSupplier(int id) async {
-    var res = await fetcher(url: '$apiPrefix/supplier/?id=$id');
+    var res = await fetcher(url: '$apiHost/api/v1/supplier/detail?id=$id');
     if (res.data['code'] != '00') {
       return Supplier();
     }
@@ -70,7 +70,7 @@ class SupplierApi {
       {int page = 1, int limit = 10}) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/supplier/popular-supplier-channel?page=$page&limit=$limit');
+            '$apiHost/api/v1/video/popular-supplier-videos?page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -94,7 +94,7 @@ class SupplierApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/supplier/list?page=$page&limit=$limit&name=$name&sortBy=$sortBy&isRecommend=$isRecommend');
+            '$apiHost/api/v1/supplier?page=$page&limit=$limit&name=$name&sortBy=$sortBy&isRecommend=$isRecommend');
 
     if (res.data['code'] != '00') {
       return [];

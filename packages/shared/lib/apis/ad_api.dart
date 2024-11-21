@@ -25,8 +25,7 @@ class AdApi {
 
   Future<ChannelBanner> getBannersByChannel(int channelId) async {
     var res = await fetcher(
-        url:
-            '$apiHost/public/banners/banner/channelBanner?channelId=$channelId');
+        url: '$apiHost/api/v1/banner/channel-banners?channelId=$channelId');
     if (res.data['code'] != '00') {
       return ChannelBanner(
         [],

@@ -56,7 +56,7 @@ class AuthApi {
     }
 
     var response = await fetcher(
-      url: '$apiHost/public/auth/auth/guest/register',
+      url: '$apiHost/api/v1/guest/register',
       method: 'POST',
       body: {
         'registerDeviceType': _systemConfigController.userDevice.value,

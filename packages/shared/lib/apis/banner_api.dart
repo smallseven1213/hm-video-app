@@ -17,15 +17,15 @@ class BannerApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/banners';
+  String get apiPrefix => '$apiHost/api/v1';
 
   // 取得banner by id
   Future<List<BannerPhoto>> getBannerById({
     required int positionId,
   }) async {
     try {
-      var response = await fetcher(
-          url: '$apiPrefix/banner/position?positionId=$positionId');
+      var response =
+          await fetcher(url: '$apiPrefix/banner?positionId=$positionId');
       var res = (response.data as Map<String, dynamic>);
       if (res['code'] != '00') {
         return [];
@@ -50,7 +50,7 @@ class BannerApi {
     if (bannerId == 0) {
       throw Exception('bannerId is 0');
     }
-    fetcher(url: '$apiPrefix/banner/bannerClickRecord', method: 'POST', body: {
+    fetcher(url: '$apiHost/api/v1/user/banner-click', method: 'POST', body: {
       'bannerId': bannerId,
     });
   }

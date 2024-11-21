@@ -24,10 +24,10 @@ class ChannelApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/channels';
 
   Future<List<SlimChannel>> getManyByLayout(int layoutId) async {
-    var res = await fetcher(url: '$apiPrefix/channel/v2/list?layout=$layoutId');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/channel/list?layout=$layoutId');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -52,7 +52,8 @@ class ChannelApi {
       }
     }
     var res = await fetcher(
-        url: '$apiHost/api/v1/channel/info?channelId=$channelId&device=$deviceId');
+        url:
+            '$apiHost/api/v1/channel/info?channelId=$channelId&device=$deviceId');
     if (res.data['code'] != '00') {
       return ChannelSharedData();
     }
@@ -64,8 +65,10 @@ class ChannelApi {
         tags: Tags.fromJson(res.data['data']['tagAreas']),
         blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
             .map((e) => Blocks.fromJson(e))),
-        gameBlocks: res.data['data']['gameBlocks'] != null ? List.from((res.data['data']['gameBlocks'] as List<dynamic>)
-            .map((e) => Game.fromJson(e))) : [],
+        gameBlocks: res.data['data']['gameBlocks'] != null
+            ? List.from((res.data['data']['gameBlocks'] as List<dynamic>)
+                .map((e) => Game.fromJson(e)))
+            : [],
       );
       return channelSharedData;
     } catch (e) {
