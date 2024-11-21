@@ -61,7 +61,7 @@ class UserApi {
       }
 
       fetcher(
-        url: '$apiHost/public/users/user/userLoginRecord',
+        url: '$apiHost/api/v1/user/login-record',
         method: 'POST',
         body: {
           'device': _systemConfigController.userDevice.value,
@@ -82,7 +82,7 @@ class UserApi {
     if (box.read('entered') == null) {
       try {
         fetcher(
-          url: '$apiHost/public/users/user/userEventRecord/enterHall',
+          url: '$apiHost/api/v1/user/event-record/enter-hall',
           method: 'POST',
           body: {
             'version': _systemConfigController.version.value,
@@ -323,7 +323,7 @@ class UserApi {
       body: {'supplierId': supplierId});
 
   Future<void> addUserEventRecord(String version) => fetcher(
-      url: '$apiHost/public/users/user/userEventRecord/enterHall',
+      url: '$apiHost/api/v1/user/event-record/enter-hall',
       method: 'POST',
       body: {'version': version});
 

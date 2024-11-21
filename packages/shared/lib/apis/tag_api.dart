@@ -80,8 +80,8 @@ class TagApi {
   }
 
   Future<List<Tag>> getPopular({int page = 1, int limit = 100}) async {
-    var value =
-        await fetcher(url: '$apiPrefix/tag/popular?page=$page&limit=$limit');
+    var value = await fetcher(
+        url: '$apiHost/api/v1/tag/popular?page=$page&limit=$limit');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return [];

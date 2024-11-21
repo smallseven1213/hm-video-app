@@ -49,8 +49,7 @@ class NoticeApi {
 
   // 彈窗公告
   Future<Map?> getBounce() async =>
-      await fetcher(url: '$apiHost/public/banners/banner/v2/bounceData')
-          .then((res) {
+      await fetcher(url: '$apiHost/api/v1/banner/bounce-data').then((res) {
         if (res.data['code'] != '00') {
           return null;
         }

@@ -286,8 +286,7 @@ class VodApi {
   }
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
-    var res = await fetcher(
-        url: '$apiHost/api/v1/video/short-detail?id=$id');
+    var res = await fetcher(url: '$apiHost/api/v1/video/short-detail?id=$id');
     if (res.data['code'] != '00') {
       return ShortVideoDetail.fromJson({});
     }
@@ -295,8 +294,8 @@ class VodApi {
   }
 
   Future<Vod> getById(int videoId) async {
-    var res = await fetcher(
-        url: '$apiHost/api/v1/video/short-detail?id=$videoId');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/video/short-detail?id=$videoId');
 
     try {
       return Vod.fromJson(res.data['data']);
@@ -383,7 +382,7 @@ class VodApi {
     String? excludeId,
     String? tagId,
   }) async {
-    String url = '$apiHost/public/tags/tag/views';
+    String url = '$apiHost/api/v1/video/tag-random-videos';
     List<String> queryParams = [];
 
     if (excludeId != null) {
