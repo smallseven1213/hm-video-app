@@ -255,7 +255,8 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
       {int? page = 1}) async {
     var res = await fetcher(
-        url: '$apiHost/public/videos/video/recommend?page=$page&limit=50');
+        url:
+            '$apiHost/api/v1/video/recommend-short-videos?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
