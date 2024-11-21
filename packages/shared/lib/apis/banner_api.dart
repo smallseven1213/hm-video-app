@@ -50,7 +50,7 @@ class BannerApi {
     if (bannerId == 0) {
       throw Exception('bannerId is 0');
     }
-    fetcher(url: '$apiPrefix/banner/bannerClickRecord', method: 'POST', body: {
+    fetcher(url: '$apiHost/api/v1/user/banner-click', method: 'POST', body: {
       'bannerId': bannerId,
     });
   }

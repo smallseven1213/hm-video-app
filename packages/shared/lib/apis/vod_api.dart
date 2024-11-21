@@ -76,7 +76,7 @@ class VodApi {
       String keyword, int page, int limit, int film) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit&film=$film');
+            '$apiHost/api/v1/video/search?keyword=$keyword&page=$page&limit=$limit&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -100,7 +100,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
+            '$apiHost/api/v1/video/tag-videos?id=$tagId&film=1&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -160,7 +160,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/api/v1/area/videos/more?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -219,8 +219,7 @@ class VodApi {
   // });
 
   Future<Vod> getVodDetail(int vodId) async {
-    var res = await fetcher(
-        url: '$apiHost/public/videos/video/videoDetail?id=$vodId');
+    var res = await fetcher(url: '$apiHost/api/v1/video/detail?id=$vodId');
     if (res.data['code'] != '00') {
       return res.data['data'];
     }
@@ -365,7 +364,7 @@ class VodApi {
   ) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/internalTags/internalTag/views?excludeId=$excludeId&internalTagId=$internalTagId');
+            '$apiHost/api/v1/video/tag-random-videos?excludeId=$excludeId&internalTagId=$internalTagId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -430,8 +429,7 @@ class VodApi {
 
   // search keyword
   Future<List<String>> getSearchKeyword(String keyword) async {
-    var res = await fetcher(
-        url: '$apiHost/public/videos/video/keywordV2?keyword=$keyword');
+    var res = await fetcher(url: '$apiHost/api/v1/keyword?keyword=$keyword');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -450,7 +448,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/api/v1/area/videos?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return null;
     }
