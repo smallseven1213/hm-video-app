@@ -40,7 +40,7 @@ class SupplierApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/supplier/video?page=$page&limit=$limit&id=$id&film=$film');
+            '$apiHost/api/v1/video/supplier-latest-videos?page=$page&limit=$limit&id=$id&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -58,7 +58,7 @@ class SupplierApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/supplier/playlist?supplierId=$supplierId&videoId=$videoId');
+            '$apiHost/api/v1/video/area-short-videos?supplierId=$supplierId&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }
