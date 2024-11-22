@@ -1,5 +1,3 @@
-import '../utils/datetime_formatter.dart';
-
 class UserPurchaseRecord {
   final String? createdAt;
   final String? name;
@@ -12,7 +10,7 @@ class UserPurchaseRecord {
   factory UserPurchaseRecord.fromJson(Map<String, dynamic> json) {
     try {
       return UserPurchaseRecord(
-        createdAt: formatDateTime(json['createdAt']),
+        createdAt: json['createdAt'],
         name: json['video'] == null ? '' : (json['video']['title'] ?? ''),
         changedPoints: json['changedPoints'],
         usedPoints: json['usedPoints'],

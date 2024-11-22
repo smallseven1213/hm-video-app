@@ -26,7 +26,7 @@ class UserBalance extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  '${info.points}',
+                  '\$ ${info.points}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,

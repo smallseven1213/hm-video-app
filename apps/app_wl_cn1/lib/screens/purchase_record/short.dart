@@ -43,7 +43,7 @@ class PurchaseRecordShortScreen extends StatelessWidget {
             onOverrideRedirectTap: (id) {
               MyRouteDelegate.of(context).push(
                 AppRoutes.shortsByLocal,
-                args: {'videoId': vod.id, 'itemId': 2},
+                args: {'videoId': vod.id, 'itemId': 5},
               );
             },
             hasRadius: false,
