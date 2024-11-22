@@ -16,7 +16,7 @@ class RedemptionApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/redemption/redemption';
+  String get apiPrefix => '$apiHost/api/v1/redemption';
 
   Future<List<Redemption>> records() async {
     var res = await fetcher(url: '$apiPrefix/records');

@@ -20,10 +20,10 @@ class EventApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/events';
+  String get apiPrefix => '$apiHost/api/v1';
 
   Future<List<Event>> getEvents() async {
-    var res = await fetcher(url: '$apiPrefix/event/list');
+    var res = await fetcher(url: '$apiPrefix/event/latest');
     if (res.data['code'] != '00') {
       return [];
     }

@@ -489,7 +489,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
+            '$apiHost/api/v1/video/short-videos?$queryString&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

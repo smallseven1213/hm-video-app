@@ -23,7 +23,7 @@ class NoticeApi {
   // 消息中心的公告
   Future<List<Notice>> getNoticeAnnouncement(int page, int limit) async {
     var res = await fetcher(
-        url: '$apiPrefix/notice/announcement?page=$page&limit=$limit');
+        url: '$apiHost/api/v1/notice/announcement?page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return [];
     }

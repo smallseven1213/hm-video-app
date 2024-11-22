@@ -20,7 +20,6 @@ class ImageApi {
 
   String get apiHost => _systemConfigController.apiHost.value!;
   String get imgHost => _systemConfigController.imgHost.value!;
-  String get apiPrefix => '$apiHost/public/jingangs';
 
   Future<String?> getSidImageData(String sid) async {
     try {
