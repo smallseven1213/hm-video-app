@@ -58,7 +58,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/list?page=$page&limit=$limit&film=$film&$queryString');
+            '$apiHost/api/v1/video/videos?page=$page&limit=$limit&film=$film&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
@@ -233,8 +233,7 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getFollows(
       {int? page = 1}) async {
     var res = await fetcher(
-        url:
-            '$apiHost/public/videos/video/shortVideo/follow?page=$page&limit=50');
+        url: '$apiHost/api/v1/user/feed/follow-videos?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -255,7 +254,8 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
       {int? page = 1}) async {
     var res = await fetcher(
-        url: '$apiHost/public/videos/video/recommend?page=$page&limit=50');
+        url:
+            '$apiHost/api/v1/video/recommend-short-videos?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -488,7 +488,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
+            '$apiHost/api/v1/video/short-videos?$queryString&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

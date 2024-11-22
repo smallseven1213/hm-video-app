@@ -16,17 +16,14 @@ class JingangApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/public/jingangs';
+  String get apiPrefix => '$apiHost/api/v1';
 
   Future<void> recordJingangClick(int jingangId) async {
     if (jingangId == 0) {
       throw Exception('jingangId is 0');
     }
-    fetcher(
-        url: '$apiPrefix/jingang/jingangClickRecord',
-        method: 'POST',
-        body: {
-          'jingangId': jingangId,
-        });
+    fetcher(url: '$apiPrefix/user/jingang-click', method: 'POST', body: {
+      'jingangId': jingangId,
+    });
   }
 }

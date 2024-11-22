@@ -107,7 +107,7 @@ class AuthApi {
   }) async {
     var registerIp = '0.0.0.0';
     var res = await fetcher(
-      url: '$apiHost/public/auth/auth/register',
+      url: '$apiHost/api/v1/user/register',
       method: 'POST',
       body: {
         'username': username,
@@ -130,7 +130,7 @@ class AuthApi {
   Future<HMApiResponseBaseWithDataWithData?> loginByCode(String code) async {
     try {
       var res = await fetcher(
-          url: '$apiHost/public/auth/auth/code',
+          url: '$apiHost/api/v1/user/login-by-certificate',
           method: 'POST',
           body: {"code": code});
       return HMApiResponseBaseWithDataWithData.fromJson(res.data);
@@ -142,7 +142,7 @@ class AuthApi {
 
   Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {
     var res = await fetcher(
-      url: '$apiHost/public/auth/auth/code',
+      url: '$apiHost/api/v1/user/certificate',
     );
     logger.i('getLoginCode: $res');
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
@@ -153,7 +153,7 @@ class AuthApi {
     required String password,
   }) async {
     var value = await fetcher(
-      url: '$apiHost/public/auth/auth/v2/login',
+      url: '$apiHost/api/v2/user/login',
       method: 'POST',
       body: {
         'username': username,

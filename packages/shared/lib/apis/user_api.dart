@@ -161,7 +161,7 @@ class UserApi {
   }
 
   Future<String> getLinkCode() =>
-      fetcher(url: '/auth/code', method: 'GET').then((value) {
+      fetcher(url: '/user/certificate', method: 'GET').then((value) {
         var res = (value.data as Map<String, dynamic>);
         if (res['code'] != '00') {
           return '';
@@ -186,7 +186,7 @@ class UserApi {
       method: 'DELETE');
 
   Future<void> addFavoriteVideo(int vodId) => fetcher(
-      url: '$apiHost/public/users/user/collectRecord',
+      url: '$apiHost/api/v1/user/collect-video',
       method: 'POST',
       body: {'videoId': vodId});
 
@@ -196,8 +196,7 @@ class UserApi {
       body: {'supplierId': supplierId});
 
   Future<void> deleteFavoriteVideo(List<int> vodId) => fetcher(
-      url:
-          '$apiHost/public/users/user/collectRecord?videoId=${vodId.join(',')}',
+      url: '$apiHost/api/v1/user/collect-video?videoId=${vodId.join(',')}',
       method: 'DELETE');
 
   Future<void> deleteActorFavorite(List<int> vodId) => fetcher(
@@ -211,8 +210,8 @@ class UserApi {
 
   // 獲得視頻喜愛紀錄清單
   Future<BlockVod> getFavoriteVideo({int? film = 1}) async {
-    var res = await fetcher(
-        url: '$apiHost/public/users/user/collectRecord?film=$film');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/user/collect-video?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -235,8 +234,8 @@ class UserApi {
 
   // 獲得視頻收藏紀錄清單
   Future<BlockVod> getVideoCollection({int? film = 1}) async {
-    var res = await fetcher(
-        url: '$apiHost/public/users/user/favoriteRecord?film=$film');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/user/favorite-video?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -249,13 +248,12 @@ class UserApi {
   }
 
   Future<void> addVideoCollection(int videoId) => fetcher(
-      url: '$apiHost/public/users/user/favoriteRecord',
+      url: '$apiHost/api/v1/user/favorite-video',
       method: 'POST',
       body: {'videoId': videoId});
 
   Future<void> deleteVideoCollection(List<int> videoId) => fetcher(
-      url:
-          '$apiHost/public/users/user/favoriteRecord?videoId=${videoId.join(',')}',
+      url: '$apiHost/api/v1/user/favorite-video?videoId=${videoId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻購買紀錄清單
@@ -345,7 +343,7 @@ class UserApi {
       });
 
   Future<UserPromote> getUserPromote() =>
-      fetcher(url: '$apiHost/public/users/user/userPromote').then((value) {
+      fetcher(url: '$apiHost/api/v1/user/share-link').then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
         if (res['code'] != '00') {
@@ -402,7 +400,7 @@ class UserApi {
 
   Future updatePassword(String origin, String newer) async {
     var value = await fetcher(
-        url: '$apiHost/public/users/user/password',
+        url: '$apiHost/api/v1/user/modify-password',
         method: 'PUT',
         body: {'password': origin, 'newPassword': newer});
     var res = (value.data as Map<String, dynamic>);
@@ -482,7 +480,7 @@ class UserApi {
       });
 
       await fetcher(
-        url: '$apiHost/public/photos/photo',
+        url: '$apiHost/api/v1/photo',
         method: 'POST',
         form: form,
       );

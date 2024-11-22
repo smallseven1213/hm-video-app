@@ -64,7 +64,7 @@ class ActorApi {
   }
 
   Future<Actor> getOne(int actorId) async {
-    var res = await fetcher(url: '$apiPrefix/actor?id=$actorId');
+    var res = await fetcher(url: '$apiHost/api/v1/actor/detail?id=$actorId');
     if (res.data['code'] != '00') {
       return Actor(0, '演員', '');
     }
