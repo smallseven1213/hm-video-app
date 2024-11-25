@@ -31,7 +31,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     actorRegionController = Get.find<ActorRegionController>();
-    actorsController = Get.put(ActorsController(fetchWhenInit: false));
+    actorsController = Get.put(ActorsController());
 
     actorRegionController.regions.listen((regions) {
       if (regions.isNotEmpty) {

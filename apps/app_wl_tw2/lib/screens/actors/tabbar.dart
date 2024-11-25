@@ -21,7 +21,7 @@ class ActorsTabBarState extends State<ActorsTabBar>
   void initState() {
     super.initState();
 
-    actorsController = Get.put(ActorsController());
+    actorsController = Get.find<ActorsController>();
     actorRegionController = Get.find<ActorRegionController>();
 
     // actorsController.setRegion(actorRegionController.regions[0].id);
