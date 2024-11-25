@@ -13,7 +13,8 @@ class UserBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
-      child: UserInfoV2Consumer(child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+      child: UserInfoV2Consumer(
+          child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
         return Row(
           children: [
             Expanded(
@@ -26,7 +27,7 @@ class UserBalance extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  '${info.points}',
+                  '\$ ${info.points}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
