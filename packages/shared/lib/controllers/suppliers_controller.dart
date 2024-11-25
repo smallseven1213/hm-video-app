@@ -63,8 +63,8 @@ class SuppliersController extends GetxController {
         Get.find<UserFavoritesSupplierController>();
     _fetchData().then((_) {
       actors.value = actors
-          .where((supplier) =>
-              !userFavoritesSupplierController.isSupplierLiked(supplier.id ?? 0))
+          .where((supplier) => !userFavoritesSupplierController
+              .isSupplierLiked(supplier.id ?? 0))
           .toList();
     });
   }

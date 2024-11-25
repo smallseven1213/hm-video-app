@@ -28,7 +28,12 @@ class SuppliersPageState extends State<SuppliersPage>
   @override
   void initState() {
     super.initState();
-    suppliersController = Get.put(SuppliersController());
+    if (Get.isRegistered<SuppliersController>()) {
+      suppliersController = Get.find<SuppliersController>();
+      suppliersController.setName('');
+    } else {
+      suppliersController = Get.put(SuppliersController());
+    }
   }
 
   Widget _buildCustomRadioButton(int value, String label) {
