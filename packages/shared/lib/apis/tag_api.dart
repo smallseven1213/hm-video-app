@@ -140,7 +140,8 @@ class TagApi {
     required int id,
   }) async {
     var res = await fetcher(
-        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
+        url:
+            '$apiHost/api/v1/video/tag-short-videos?page=$page&limit=$limit&id=$id');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }

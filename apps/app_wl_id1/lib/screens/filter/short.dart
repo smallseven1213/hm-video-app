@@ -67,6 +67,7 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
   Widget build(BuildContext context) {
     return Obx(
       () => SliverVodGrid(
+        film: 2,
         headerExtends: [
           SliverPersistentHeader(
             pinned: true,
