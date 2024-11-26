@@ -110,7 +110,7 @@ class SuppliersPageState extends State<SuppliersPage>
                   child: SearchInput(
                     placeHolder: I18n.inputName,
                     backgroundColor:
-                        AppColors.colors[ColorKeys.formBg] as Color,
+                        AppColors.colors[ColorKeys.searchBgColor] as Color,
                     onSubmitted: (val) {
                       suppliersController.setName(val);
                     },

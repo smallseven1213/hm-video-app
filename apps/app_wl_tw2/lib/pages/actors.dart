@@ -119,7 +119,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                   child: SearchInput(
                     placeHolder: I18n.inputName,
                     backgroundColor:
-                        AppColors.colors[ColorKeys.formBg] as Color,
+                        AppColors.colors[ColorKeys.searchBgColor] as Color,
                     onSubmitted: (val) {
                       actorsController.setName(val);
                     },

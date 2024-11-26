@@ -124,7 +124,7 @@ class SearchInputState extends State<SearchInput> {
                 ),
               ),
             ),
-            style: const TextStyle(color: Colors.grey, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
             autofocus: widget.autoFocus,
             focusNode: widget.focusNode,
           ),
