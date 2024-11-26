@@ -42,6 +42,7 @@ class SearchInputState extends State<SearchInput> {
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+    _controller?.clear();
     if (widget.defaultValue != null) {
       _controller?.text = widget.defaultValue!;
     }
@@ -93,7 +94,7 @@ class SearchInputState extends State<SearchInput> {
                 ),
               ),
             ),
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Colors.grey, fontSize: 14),
             autofocus: widget.autoFocus,
             focusNode: widget.focusNode,
           ),
