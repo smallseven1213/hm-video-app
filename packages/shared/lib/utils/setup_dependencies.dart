@@ -82,10 +82,6 @@ void setupDependencies() async {
   Get.lazyPut<UserVodCollectionController>(() => UserVodCollectionController());
   Get.lazyPut<UserShortCollectionController>(
       () => UserShortCollectionController());
-  Get.lazyPut<UserVodPurchaseRecordController>(
-      () => UserVodPurchaseRecordController());
-  Get.lazyPut<UserShortPurchaseRecordController>(
-      () => UserShortPurchaseRecordController());
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
   Get.lazyPut<FilterVideoScreenController>(() => FilterVideoScreenController());
   Get.lazyPut<FilterShortScreenController>(() => FilterShortScreenController());

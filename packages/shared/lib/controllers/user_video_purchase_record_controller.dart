@@ -9,17 +9,11 @@ final userApi = UserApi();
 class UserVodPurchaseRecordController extends GetxController {
   var videos = <Vod>[].obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _init();
+  UserVodPurchaseRecordController() {
+    _fetchAndSaveCollection();
     Get.find<AuthController>().token.listen((event) {
-      _init();
+      _fetchAndSaveCollection();
     });
-  }
-
-  Future<void> _init() async {
-    await _fetchAndSaveCollection();
   }
 
   Future<void> _fetchAndSaveCollection() async {
