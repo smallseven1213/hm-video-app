@@ -13,7 +13,7 @@ class PurchaseRecordShortScreen extends StatelessWidget {
   PurchaseRecordShortScreen({Key? key}) : super(key: key);
 
   final userShortPurchaseRecordController =
-      Get.find<UserShortPurchaseRecordController>();
+      Get.put(UserShortPurchaseRecordController());
 
   @override
   Widget build(BuildContext context) {
