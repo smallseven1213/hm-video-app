@@ -9,7 +9,7 @@ final userApi = UserApi();
 class UserVodPurchaseRecordController extends GetxController {
   var videos = <Vod>[].obs;
 
-  UserVodPurchaseRecordController() {
+  void initController() {
     _fetchAndSaveCollection();
     Get.find<AuthController>().token.listen((event) {
       _fetchAndSaveCollection();

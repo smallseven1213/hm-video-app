@@ -13,10 +13,11 @@ class PurchaseRecordShortScreen extends StatelessWidget {
   PurchaseRecordShortScreen({Key? key}) : super(key: key);
 
   final userShortPurchaseRecordController =
-      Get.put(UserShortPurchaseRecordController());
+      Get.find<UserShortPurchaseRecordController>();
 
   @override
   Widget build(BuildContext context) {
+    userShortPurchaseRecordController.initController();
     return Obx(() {
       var videos = userShortPurchaseRecordController.data;
       if (videos.isEmpty) {
