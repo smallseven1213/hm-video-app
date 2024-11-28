@@ -15,6 +15,7 @@ import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
 import '../widgets/tab_bar.dart';
+import '../screens/supplier/subscription_list.dart';
 
 class SupplierPage extends StatefulWidget {
   final int id;
@@ -41,7 +42,7 @@ class _SupplierPageState extends State<SupplierPage>
   void initState() {
     super.initState();
     _parentScrollController = ScrollController();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
     shortVideoController = SupplierShortController(
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
@@ -133,7 +134,7 @@ class _SupplierPageState extends State<SupplierPage>
                     if (scrollInfo is ScrollEndNotification &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 1) {
+                        _tabController.index == 0) {
                       shortVideoController.loadMoreData();
                     }
                     return false;
@@ -153,7 +154,7 @@ class _SupplierPageState extends State<SupplierPage>
                     if (scrollInfo is ScrollEndNotification &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 2) {
+                        _tabController.index == 1) {
                       supplierVideoController.loadMoreData();
                     }
                     return false;
@@ -172,6 +173,7 @@ class _SupplierPageState extends State<SupplierPage>
                         supplierVideoController.loadMoreData();
                       })),
                 ),
+                const SubscriptionList(),
               ],
             )),
         const FloatPageBackButton()
@@ -193,7 +195,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: [I18n.shortVideo, I18n.longVideo],
+      tabs: [I18n.shortVideo, I18n.longVideo, I18n.subscription],
     );
   }
 
