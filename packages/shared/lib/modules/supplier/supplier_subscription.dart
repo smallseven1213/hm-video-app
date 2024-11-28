@@ -31,6 +31,15 @@ class SubscriptionPageState extends State<SupplierSubscription> {
     super.initState();
     productController = Get.put(ProductController(type: widget.type),
         tag: 'product-${widget.type}');
+    //要記得改成判斷是否是第一次put
+
+    //     if (!Get.isRegistered<ProductController>()) {
+    //   Get.put(ProductController(),
+    //       tag: 'product-${widget.type}');
+    // }
+    // productController = Get.find<ProductController>(
+    //     tag: 'product-${widget.type}');
+    // productController.initCollection(userId: widget.userId);
   }
 
   @override
