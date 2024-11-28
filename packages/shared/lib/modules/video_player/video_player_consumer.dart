@@ -91,13 +91,13 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     ovpController.videoPlayerController?.addListener(() {
       if (mounted && ovpController.videoPlayerController!.value.isInitialized) {
         // Configure scope with tag "video_info"
-        Sentry.configureScope((scope) {
-          scope.setTag('category', 'video_info');
-        });
+        // Sentry.configureScope((scope) {
+        //   scope.setTag('category', 'video_info');
+        // });
 
         // Capture the entire videoPlayerController value as a readable string
-        Sentry.captureMessage(
-            ovpController.videoPlayerController!.value.toString());
+        // Sentry.captureMessage(
+        //     ovpController.videoPlayerController!.value.toString());
         setState(() {
           videoAction = ovpController.videoAction.value;
           isReady = ovpController.isReady.value;

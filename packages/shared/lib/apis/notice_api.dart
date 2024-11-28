@@ -23,7 +23,7 @@ class NoticeApi {
   // 消息中心的公告
   Future<List<Notice>> getNoticeAnnouncement(int page, int limit) async {
     var res = await fetcher(
-        url: '$apiPrefix/notice/announcement?page=$page&limit=$limit');
+        url: '$apiHost/api/v1/notice/announcement?page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -49,8 +49,7 @@ class NoticeApi {
 
   // 彈窗公告
   Future<Map?> getBounce() async =>
-      await fetcher(url: '$apiHost/public/banners/banner/v2/bounceData')
-          .then((res) {
+      await fetcher(url: '$apiHost/api/v1/banner/bounce-data').then((res) {
         if (res.data['code'] != '00') {
           return null;
         }

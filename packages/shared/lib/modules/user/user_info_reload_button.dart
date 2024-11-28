@@ -14,6 +14,7 @@ class UserInfoReloadButton extends StatelessWidget {
     return InkWell(
         onTap: () {
           userController.fetchUserInfo();
+          userController.fetchUserInfoV2();
         },
         child: child);
   }

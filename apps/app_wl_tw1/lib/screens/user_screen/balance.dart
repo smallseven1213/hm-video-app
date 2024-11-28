@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/modules/user/user_info_reload_button.dart';
 
 final logger = Logger();
@@ -13,7 +13,7 @@ class UserBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
-      child: UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
+      child: UserInfoV2Consumer(child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
         return Row(
           children: [
             Expanded(
@@ -26,7 +26,7 @@ class UserBalance extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  '${info.points}',
+                  '\$ ${info.points}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,

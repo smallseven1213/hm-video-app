@@ -9,7 +9,7 @@ class ProductList extends StatelessWidget {
 
   Widget _buildWarningSection() {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xff21263d),
@@ -49,11 +49,12 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.only(top: 8, bottom: 16, left: 16, right: 16),
             decoration: const BoxDecoration(
               color: Color(0xff1c202f),
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
@@ -61,19 +62,17 @@ class ProductList extends StatelessWidget {
             child: ProductConsumer(
               type: ProductType.vip.index,
               child: (products) {
-                return ListView.builder(
-                  padding: EdgeInsets.zero, // 根据需要调整
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    return ProductCard(product: products[index]);
-                  },
+                return Column(
+                  children: products
+                      .map((product) => ProductCard(product: product))
+                      .toList(),
                 );
               },
             ),
           ),
-        ),
-        _buildWarningSection(),
-      ],
+          _buildWarningSection(),
+        ],
+      ),
     );
   }
 }

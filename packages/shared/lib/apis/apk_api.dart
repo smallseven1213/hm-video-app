@@ -26,7 +26,7 @@ class ApkApi {
     try {
       var value = await fetcher(
           url:
-              '$apiHost/public/apkBatchPackedRecords/apkBatchPackedRecord?specificVersion=$version&agentCode=$agentCode');
+              '$apiHost/api/v1/apk/check-for-updates?specificVersion=$version&agentCode=$agentCode');
       var res = (value.data as Map<String, dynamic>);
       if (res['code'] != '00') {
         return ApkUpdate(status: ApkStatus.noUpdate, url: '');

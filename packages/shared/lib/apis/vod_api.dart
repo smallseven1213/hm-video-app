@@ -58,7 +58,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/list?page=$page&limit=$limit&film=$film&$queryString');
+            '$apiHost/api/v1/video/videos?page=$page&limit=$limit&film=$film&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
@@ -76,7 +76,7 @@ class VodApi {
       String keyword, int page, int limit, int film) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit&film=$film');
+            '$apiHost/api/v1/video/search?keyword=$keyword&page=$page&limit=$limit&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -100,7 +100,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
+            '$apiHost/api/v1/video/tag-videos?id=$tagId&film=1&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -160,7 +160,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/api/v1/area/videos/more?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -219,8 +219,7 @@ class VodApi {
   // });
 
   Future<Vod> getVodDetail(int vodId) async {
-    var res = await fetcher(
-        url: '$apiHost/public/videos/video/videoDetail?id=$vodId');
+    var res = await fetcher(url: '$apiHost/api/v1/video/detail?id=$vodId');
     if (res.data['code'] != '00') {
       return res.data['data'];
     }
@@ -234,8 +233,7 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getFollows(
       {int? page = 1}) async {
     var res = await fetcher(
-        url:
-            '$apiHost/public/videos/video/shortVideo/follow?page=$page&limit=50');
+        url: '$apiHost/api/v1/user/feed/follow-videos?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -256,7 +254,8 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
       {int? page = 1}) async {
     var res = await fetcher(
-        url: '$apiHost/public/videos/video/recommend?page=$page&limit=50');
+        url:
+            '$apiHost/api/v1/video/recommend-short-videos?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -286,8 +285,7 @@ class VodApi {
   }
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
-    var res = await fetcher(
-        url: '$apiHost/api/v1/video/short-detail?id=$id');
+    var res = await fetcher(url: '$apiHost/api/v1/video/short-detail?id=$id');
     if (res.data['code'] != '00') {
       return ShortVideoDetail.fromJson({});
     }
@@ -295,8 +293,8 @@ class VodApi {
   }
 
   Future<Vod> getById(int videoId) async {
-    var res = await fetcher(
-        url: '$apiHost/api/v1/video/short-detail?id=$videoId');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/video/short-detail?id=$videoId');
 
     try {
       return Vod.fromJson(res.data['data']);
@@ -366,7 +364,7 @@ class VodApi {
   ) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/internalTags/internalTag/views?excludeId=$excludeId&internalTagId=$internalTagId');
+            '$apiHost/api/v1/video/tag-random-videos?excludeId=$excludeId&internalTagId=$internalTagId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -383,7 +381,7 @@ class VodApi {
     String? excludeId,
     String? tagId,
   }) async {
-    String url = '$apiHost/public/tags/tag/views';
+    String url = '$apiHost/api/v1/video/tag-random-videos';
     List<String> queryParams = [];
 
     if (excludeId != null) {
@@ -431,8 +429,7 @@ class VodApi {
 
   // search keyword
   Future<List<String>> getSearchKeyword(String keyword) async {
-    var res = await fetcher(
-        url: '$apiHost/public/videos/video/keywordV2?keyword=$keyword');
+    var res = await fetcher(url: '$apiHost/api/v1/keyword?keyword=$keyword');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -451,7 +448,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/api/v1/area/videos?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return null;
     }
@@ -491,7 +488,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '$apiHost/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
+            '$apiHost/api/v1/video/short-videos?$queryString&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

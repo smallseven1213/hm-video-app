@@ -24,6 +24,7 @@ class ActorApi {
   // 动态获取apiPrefix
   String get apiPrefix =>
       "${_systemConfigController.apiHost.value!}/public/actors";
+  String get apiHost => _systemConfigController.apiHost.value!;
 
   Future<List<Actor>> getManyBy({
     required int page,
@@ -40,7 +41,7 @@ class ActorApi {
 
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=$limit$nameQuery$regionQuery$isRecommendQuery&isSortByVideos=${sortBy ?? 0}');
+            '$apiHost/api/v1/actor?page=$page&limit=$limit$nameQuery$regionQuery$isRecommendQuery&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -54,7 +55,7 @@ class ActorApi {
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=48&name=$name&isSortByVideos=0');
+            '$apiHost/api/v1/actor?page=$page&limit=48&name=$name&isSortByVideos=0');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -63,7 +64,7 @@ class ActorApi {
   }
 
   Future<Actor> getOne(int actorId) async {
-    var res = await fetcher(url: '$apiPrefix/actor?id=$actorId');
+    var res = await fetcher(url: '$apiHost/api/v1/actor/detail?id=$actorId');
     if (res.data['code'] != '00') {
       return Actor(0, '演員', '');
     }
@@ -73,7 +74,8 @@ class ActorApi {
   Future<BlockVod> getManyLatestVodBy(
       {int page = 1, int limit = 10, required int actorId}) async {
     var res = await fetcher(
-        url: '$apiPrefix/actor/latest?id=$actorId&page=$page&limit=$limit');
+        url:
+            '$apiHost/api/v1/video/actor-latest-videos?id=$actorId&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -88,7 +90,8 @@ class ActorApi {
   Future<BlockVod> getManyHottestVodBy(
       {int page = 1, int limit = 10, required int actorId}) async {
     var res = await fetcher(
-        url: '$apiPrefix/actor/hottest?id=$actorId&page=$page&limit=$limit');
+        url:
+            '$apiHost/api/v1/video/actor-hottest-videos?id=$actorId&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -103,7 +106,8 @@ class ActorApi {
   Future<List<ActorWithVod>> getManyPopularActorBy(
       {int page = 1, int limit = 10}) async {
     var res = await fetcher(
-        url: '$apiPrefix/actor/popular-actor-channel?page=$page&limit=$limit');
+        url:
+            '$apiHost/api/v1/video/popular-actor-videos?page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return [];
     }

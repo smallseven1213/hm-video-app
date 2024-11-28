@@ -139,6 +139,7 @@ class SliverBlockWidget extends StatelessWidget {
                         blockId: blockId,
                         displayVideoTimes: film == 1,
                         displayViewTimes: film == 1,
+                        displayVideoFavoriteTimes: film == 2,
                         displayCoverVertical: film == 2,
                         videoFavoriteTimes: vods[index * 2].videoFavoriteTimes!,
                         displayChargeType: true,
@@ -164,6 +165,7 @@ class SliverBlockWidget extends StatelessWidget {
                               blockId: blockId,
                               displayVideoTimes: film == 1,
                               displayViewTimes: film == 1,
+                              displayVideoFavoriteTimes: film == 2,
                               displayCoverVertical: film == 2,
                               videoFavoriteTimes:
                                   vods[index * 2 + 1].videoFavoriteTimes!,

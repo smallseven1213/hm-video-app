@@ -17,24 +17,15 @@ class ActorsController extends GetxController {
   Rx<int> sortBy = Rx<int>(0);
   Rx<int> limit = Rx<int>(1000);
 
-  final actorRegionController = Get.find<ActorRegionController>();
-
   ActorsController({
     int? initialRegion,
     String? initialName,
     bool? initialIsRecommend,
     int? initialSortBy,
     int? initialLimit,
-    bool? fetchWhenInit = true,
   }) {
     if (initialRegion != null) {
       region.value = initialRegion;
-    } else {
-      ever(actorRegionController.regions, (_) {
-        if (actorRegionController.regions.isNotEmpty) {
-          region.value = actorRegionController.regions[0].id;
-        }
-      });
     }
     if (initialName != null) {
       name.value = initialName;
@@ -47,10 +38,6 @@ class ActorsController extends GetxController {
     }
     if (initialLimit != null) {
       limit.value = initialLimit;
-    }
-
-    if (fetchWhenInit == true) {
-      _fetchData();
     }
   }
 

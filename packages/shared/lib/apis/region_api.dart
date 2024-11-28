@@ -21,8 +21,8 @@ class RegionApi {
   String get apiHost => _systemConfigController.apiHost.value!;
 
   Future<List<Region>> getActorRegions() async {
-    var res = await fetcher(
-        url: '$apiHost/public/regions/region/list?page=1&limit=100');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/region/has-actor?page=1&limit=100');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -34,9 +34,8 @@ class RegionApi {
   }
 
   Future<List<Region>> getRegions(int film) async {
-    var res = await fetcher(
-        url:
-            '$apiHost/public/regions/region/list/videoFilter?page=1&limit=10&film=$film');
+    var res =
+        await fetcher(url: '$apiHost/api/v1/region?page=1&limit=10&film=$film');
     if (res.data['code'] != '00') {
       return [];
     }

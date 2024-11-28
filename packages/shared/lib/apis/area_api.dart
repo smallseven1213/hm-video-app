@@ -23,7 +23,7 @@ class AreaApi {
   Future<List<Vod>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
         url:
-            '$apiHost/public/areas/area/shortVideo/popular?areaId=$areaId&videoId=$videoId');
+            '$apiHost/api/v1/video/area-short-videos?areaId=$areaId&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

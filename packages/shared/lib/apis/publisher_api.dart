@@ -28,7 +28,7 @@ class PublisherApi {
       {required int page, String? name, int? sortBy}) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/publisher/list?page=$page&limit=48&name=$name&isSortByVideos=${sortBy ?? 0}');
+            '$apiHost/api/v1/publisher?page=$page&limit=48&name=$name&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -79,7 +79,7 @@ class PublisherApi {
 
   Future<List<Publisher>> getRecommend() async {
     var res = await fetcher(
-        url: '$apiPrefix/publisher/list?page=1&limit=100&isRecommend=true');
+        url: '$apiHost/api/v1/publisher?page=1&limit=100&isRecommend=true');
     if (res.data['code'] != '00') {
       return [];
     }

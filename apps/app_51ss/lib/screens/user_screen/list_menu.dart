@@ -18,7 +18,7 @@ import '../../config/colors.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
 import 'scan_qrcode.dart';
-
+import '../../localization/i18n.dart';
 final logger = Logger();
 
 class ListMenuItem {

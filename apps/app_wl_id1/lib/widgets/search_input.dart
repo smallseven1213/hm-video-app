@@ -45,6 +45,7 @@ class SearchInputState extends State<SearchInput> {
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+    _controller?.clear();
     if (widget.defaultValue != null) {
       _controller?.text = widget.defaultValue!;
     }

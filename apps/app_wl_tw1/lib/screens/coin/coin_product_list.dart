@@ -9,7 +9,7 @@ class CoinProductList extends StatelessWidget {
 
   Widget _buildWarningSection() {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(top: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: const Color(0xff21263d),
@@ -43,10 +43,10 @@ class CoinProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
             padding: const EdgeInsets.only(top: 8, bottom: 16),
             decoration: const BoxDecoration(
               color: Color(0xff1c202f),
@@ -55,25 +55,26 @@ class CoinProductList extends StatelessWidget {
             child: ProductConsumer(
               type: ProductType.coin.index,
               child: (products) {
-                return GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 8), // 根据需要调整
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 兩列
-                    crossAxisSpacing: 1, // 列之間的間距
-                    mainAxisSpacing: 1, // 行之間的間距
-                    childAspectRatio: 0.8, // 調整每個項目的高度和寬度比
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: products.map((product) {
+                      return SizedBox(
+                        width: (MediaQuery.of(context).size.width - 24) /
+                            2,
+                        child: CoinProductCard(product: product),
+                      );
+                    }).toList(),
                   ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    return CoinProductCard(product: products[index]);
-                  },
                 );
               },
             ),
           ),
-        ),
-        _buildWarningSection(),
-      ],
+          _buildWarningSection(),
+        ],
+      ),
     );
   }
 }

@@ -17,6 +17,7 @@ class PurchaseRecordShortScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    userShortPurchaseRecordController.initController();
     return Obx(() {
       var videos = userShortPurchaseRecordController.data;
       if (videos.isEmpty) {
@@ -43,7 +44,7 @@ class PurchaseRecordShortScreen extends StatelessWidget {
             onOverrideRedirectTap: (id) {
               MyRouteDelegate.of(context).push(
                 AppRoutes.shortsByLocal,
-                args: {'videoId': vod.id, 'itemId': 2},
+                args: {'videoId': vod.id, 'itemId': 5},
               );
             },
             hasRadius: false,
