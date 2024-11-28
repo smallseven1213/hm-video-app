@@ -50,7 +50,21 @@ class SubscriptionList extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 8, bottom: 16),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Row(
+                children: [
+                  Text('${I18n.subscriptionValidityPeriod} : ',
+                      style:
+                          const TextStyle(color: Colors.white70, fontSize: 12)),
+                  Text(I18n.notSubscribed,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 96, 96, 214),
+                          fontSize: 12))
+                ],
+              )),
+          Container(
+            padding: const EdgeInsets.only(bottom: 16),
             decoration: const BoxDecoration(
               color: Color(0xff0f1320),
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
@@ -59,10 +73,10 @@ class SubscriptionList extends StatelessWidget {
               type: ProductType.coin.index,
               child: (subscription) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
+                    spacing: 10.0,
+                    runSpacing: 10.0,
                     children: subscription.map((subscription) {
                       return SizedBox(
                         width: (MediaQuery.of(context).size.width - 24),
