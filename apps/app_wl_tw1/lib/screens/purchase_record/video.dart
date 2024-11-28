@@ -14,6 +14,7 @@ class PurchaseRecordVideoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    userVodPurchaseRecordController.initController();
     return Obx(() {
       var videos = userVodPurchaseRecordController.videos;
       if (videos.isEmpty) {

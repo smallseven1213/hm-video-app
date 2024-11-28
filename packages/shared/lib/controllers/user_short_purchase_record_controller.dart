@@ -9,7 +9,7 @@ final userApi = UserApi();
 class UserShortPurchaseRecordController extends GetxController {
   var data = <Vod>[].obs;
 
-  UserShortPurchaseRecordController() {
+  void initController() {
     _fetchAndSaveCollection();
     Get.find<AuthController>().token.listen((event) {
       _fetchAndSaveCollection();
