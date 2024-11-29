@@ -11,7 +11,7 @@ final logger = Logger();
 class UserPurchaseRecordController extends GetxController {
   var pointRecord = <UserPurchaseRecord>[].obs;
 
-  UserPurchaseRecordController({required String userId}) {
+  void initCollection({required String userId}) {
     _fetchData(userId);
     Get.find<AuthController>().token.listen((event) {
       _fetchData(userId);

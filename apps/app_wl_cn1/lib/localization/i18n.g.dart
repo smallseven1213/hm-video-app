@@ -6,7 +6,7 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Tue, 12 Nov 2024 15:29:09 +08:00
+// Generated at: Thu, 28 Nov 2024 13:55:30 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
@@ -806,4 +806,15 @@ class I18n {
 
   // purchase
   static String get purchasePlaylist => 'purchase_playlist'.tr();
+
+  // subscription
+  static String get subscription => 'subscription'.tr();
+  static String get subscriptionValidityPeriod =>
+      'subscription_validity_period'.tr();
+
+  // not
+  static String get notSubscribed => 'not_subscribed'.tr();
+
+  // to
+  static String get toSubscribe => 'to_subscribe'.tr();
 }

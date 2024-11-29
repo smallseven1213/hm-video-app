@@ -25,9 +25,13 @@ class UserPurchaseRecordConsumerState
   @override
   void initState() {
     super.initState();
-    userPurchaseRecordController = Get.put(
-        UserPurchaseRecordController(userId: widget.userId),
+    if (!Get.isRegistered<UserPurchaseRecordController>()) {
+      Get.put(UserPurchaseRecordController(),
+          tag: 'point-record-${widget.userId}');
+    }
+    userPurchaseRecordController = Get.find<UserPurchaseRecordController>(
         tag: 'point-record-${widget.userId}');
+    userPurchaseRecordController.initCollection(userId: widget.userId);
   }
 
   @override
