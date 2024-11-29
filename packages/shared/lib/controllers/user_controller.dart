@@ -102,6 +102,14 @@ class UserController extends GetxController {
         logger.i('game new wallet point $point ');
       });
     }
+    if (data['event'] == 'wallet.increase') {
+      var point = double.parse(data['data']['video.wallet'].toString());
+      // 修改至V2的points
+      infoV2.update((user) {
+        user?.points = point;
+        logger.i('buy new wallet point $point ');
+      });
+    }
   }
 
   fetchUserInfo() async {
