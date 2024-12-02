@@ -103,7 +103,7 @@ class UserController extends GetxController {
       });
     }
     if (data['event'] == 'wallet.increase') {
-      var point = double.parse(data['data']['video.wallet'].toString());
+      var point = double.parse(data['data']['wallet'].toString());
       // 修改至V2的points
       infoV2.update((user) {
         user?.points = point;
