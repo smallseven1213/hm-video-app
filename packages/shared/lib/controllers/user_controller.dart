@@ -87,7 +87,7 @@ class UserController extends GetxController {
 
   void handleEvent(dynamic data) {
     if (data['event'] == 'wallet.reduce') {
-      var point = double.parse(data['data']['video.wallet'].toString());
+      var point = double.parse(data['data']['wallet'].toString());
       // 修改至V2的points
       infoV2.update((user) {
         user?.points = point;
