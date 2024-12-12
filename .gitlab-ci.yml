@@ -29,62 +29,21 @@ testProd:
   script: 
     - echo ' i am testProd'  
 
-build-sv-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_sv -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev
 
-build-tt-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev
-    - echo "Compile complete."
 
-build-ra-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-    #variables:
-    #  - $youda =~ /^$/ || $youda =~ /ra/ || $test_tag =~/ra/
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ra -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev
-    - echo "Compile complete."
-
-build-ab-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ab -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev
-    - echo "Compile complete."
+#build-ab-job:       # This job runs in the build stage, which runs first.
+#  stage: build
+#  tags:
+#    - gke-gitlab-runner
+#  only:
+#    refs:
+#      - develop
+#  allow_failure: true
+#  script:
+#    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+#    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ab -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev .
+#    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev
+#    - echo "Compile complete."
   
 build-wl-id1-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -99,45 +58,6 @@ build-wl-id1-job:       # This job runs in the build stage, which runs first.
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_id1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_id1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_id1:dev
 
-build-wl-ph1-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_ph1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev
-
-build-wl-tw1-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev
-
-build-wl-tw2-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gke-gitlab-runner
-  only:
-    refs:
-      - develop
-  allow_failure: true
-  script:
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw2 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw2:dev .
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw2:dev
-
 build-wl-cn1-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
@@ -151,55 +71,18 @@ build-wl-cn1-job:       # This job runs in the build stage, which runs first.
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_cn1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev
 
-deploy-sv-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-sv" -f /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
 
-deploy-tt-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-tt" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
-    - echo "Application successfully deployed."
-
-deploy-ra-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-    #variables:
-    #  - $youda =~ /^$/ || $youda =~ /ra/ || $test_tag =~/ra/
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ra" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra -n video-dev
-    - echo "Application successfully deployed."
-
-deploy-ab-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
+#deploy-ab-job:      # This job runs in the deploy stage.
+#  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+#  tags:
+#    - gitlab-shared-runner
+#  only:
+#    refs:
+#      - develop
+#  script:
+#    - echo "Deploying application..."
+#    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n video-dev
+#    - echo "Application successfully deployed."
 
 deploy-wl-id1-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
@@ -213,41 +96,6 @@ deploy-wl-id1-job:      # This job runs in the deploy stage.
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-id1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-id1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-id1/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
-deploy-wl-ph1-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-ph1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-ph1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-ph1/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
-
-deploy-wl-tw1-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-tw1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
-
-deploy-wl-tw2-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-tw2" -f /home/gitlab-runner/hm-helm/helm-charts/wl-tw2/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-tw2/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
 
 deploy-wl-cn1-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
