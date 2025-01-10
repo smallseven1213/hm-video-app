@@ -29,9 +29,8 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON来源
     [
-      'https://dl.dlwlcn1.com/$env/dl.json',
-      'https://dl.dlwlcn1.net/$env/dl.json',
-      'https://dl.dlwlcn1.info/$env/dl.json',
+      'https://dl-id1-video.hmtech-dev.com/$env/dl.json',
+      'https://dl-cn1-video.hmtech-dev.com/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,
